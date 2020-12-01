@@ -1,0 +1,14 @@
+{
+  "name": "Типография друк",
+  "short_name": "друк",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#999",
+  "background_color": "#fff",
+  "icons": [{
+    "src": "ontent/uploads/2018/02/logo_square144.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }
+]
+}
