@@ -3,13 +3,22 @@
 <head>
     <!--<title>Електронний реєстр хворих сахарним діабетом</title>-->
     <meta charset="UTF-8">
-    <script type="text/javascript" async="" src="../../index_files/recaptcha__uk.js.Без названия?ts=<?=time()?> &quot;"></script>
-    <script async="" src="../../index_files/analytics.js.Без названия?ts=<?=time()?> &quot;"></script>
-    <script src="../../index_files/api.js.Без названия?ts=<?=time()?> &quot;" async="" defer=""></script>
-    <script src="https://use.fontawesome.com/eb1d0b8994.js?ts=<?=time()?> &quot;"></script>
-    <script src="https://kit.fontawesome.com/359d037434.js?ts=<?=time()?> &quot;" crossorigin="anonymous"></script>
+    <link href="../../css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../index_files/styles.fb966e9386e8aa2eeaea.css?ts=<?=time()?> &quot;" >
-    <style>@media (min-width: 0px) {
+    <style>
+
+
+        @media screen and (max-device-width:480px){
+            .main[_ngcontent-c0]{
+                margin-top: 30px;
+            }
+            .sidebar{
+                margin-top: 30px;
+            }
+            /*Далее остальные стили*/
+        }
+
+        @media (min-width: 0px) {
             .main[_ngcontent-c0] {
                 padding-left: 20px
             }
@@ -279,6 +288,12 @@
             top: 0;
             border: 0 none
         }
+        .showPal,.onkoshow,.showProt,.showNoga,.showPrep,.showGolod,.showDeth{
+            display: none;
+        }
+        .showDiabet{
+            display: none;
+        }
     </style>
     <style type="text/css">.pixelParallel-grids {
             position: relative;
@@ -364,7 +379,11 @@
         .pixelParallel-rulers-enabled .pixelParallel-ruler-x, .pixelParallel-rulers-enabled .pixelParallel-ruler-y {
             display: block
         }
+        .hidd1{
+            display: none;
+        }
     </style>
+
     <script src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script>
 </head>
 <body>
@@ -388,7 +407,7 @@
         <div _ngcontent-c1="" class="fixed-top">
             <div _ngcontent-c1="" class="cb-header">
                 <div _ngcontent-c1="" class="d-flex align-items-center"><a _ngcontent-c1=""
-                                                                           href="<?=Url::local('programm')?>">
+                                                                           href="<?=Url::local('programm2?start=А')?>">
                         <div _ngcontent-c1="" class="cb-text-header d-none d-md-block"><img _ngcontent-c1="" class="p-1"
                                                                                             src="../../index_files/new_logo1.png"><span
                                     _ngcontent-c1="">Електронний реєстр </span></div>
@@ -403,7 +422,7 @@
                         </div><!---->
                         <div _ngcontent-c3="" class="d-none d-md-block ng-star-inserted"><a _ngcontent-c3=""
                                                                                             class="nav-link nav-link-ext"
-                                                                                            href="<?=Url::local('programm')?>"><span
+                                                                                            href="<?=Url::local('programm2/?start=А')?>"><span
                                         _ngcontent-c3="" class="nav-link-text">Картотека</span></a></div>
                         <div _ngcontent-c3="" class="d-none d-md-block ng-star-inserted"><a _ngcontent-c3=""
                                                                                             class="nav-link nav-link-ext"
@@ -513,10 +532,529 @@
         <?= $content ?>
     </div>
 </app-root>
-<script type="text/javascript" src="../../index_files/runtime.582ae615c3bb6a8cceab.js.Без названия"></script>
-<script type="text/javascript" src="../../index_files/polyfills.8c697f65f46ae48313a2.js.Без названия"></script>
-<script type="text/javascript" src="../../index_files/scripts.35af79d45c3459b959e1.js.Без названия"></script>
+<script>
+    function showPal(v) {
+        if(v=='Так'){
+            document.getElementById('chastoPal').classList.remove('showPal');
+            document.getElementById('kolPal').classList.remove('showPal');
+        }
+        else{
+            document.getElementById('smoukkol').value='';
+            document.getElementById('smoukTime').value='--';
+            document.getElementById('chastoPal').classList.add('showPal');
+            document.getElementById('kolPal').classList.add('showPal');
+            var el=document.getElementById('smoukkol1');
+            if(el){
+                document.getElementById('smoukkol1').value='';
+            }
+
+        }
+    }
+    function showDeth(v) {
+        if(v=='Так'){
+            document.getElementById('chastoDeth').classList.remove('showDeth');
+            document.getElementById('sincD').classList.remove('showDeth');
+        }
+        else{
+           document.getElementById('datedeth').value='';
+            document.getElementById('sincdeth').value='';
+            document.getElementById('chastoDeth').classList.add('showDeth');
+            document.getElementById('sincD').classList.add('showDeth');
+            var el=document.getElementById('datedeth1');
+            if(el){
+                document.getElementById('datedeth1').value='';
+            }
+        }
+    }
+
+    function ss4(el) {
+        if(el.value=='Так'){
+            document.getElementById('h8').style.display='block';
+            document.getElementById('h9').style.display='block';
+        }
+        else{
+            document.getElementById('h8').style.display='none';
+            document.getElementById('h9').style.display='none';
+            document.getElementById('h9').value='--';
+        }
+    }
+    function showDiab(v) {
+        if(v=='' || v=='Не хворіє'){
+
+            document.getElementById('yearD').value='';
+            document.getElementById('vekD').value='';
+            document.getElementById('longD').value='';
+            document.getElementById('yearD').removeAttribute('required');
+            document.getElementById('vekD').removeAttribute('required');
+            document.getElementById('longD').removeAttribute('required');
+            var el1=document.getElementById('yearD1');
+            if(el1){
+                el1.value='';
+            }
+            var el2=document.getElementById('vekD1');
+            if(el2){
+                el2.value='';
+            }
+            var el3=document.getElementById('longD1');
+            if(el3){
+                el3.value='';
+            }
+            document.getElementById('showDiabRik').classList.add('showDiabet');
+            document.getElementById('showDiabVik').classList.add('showDiabet');
+            document.getElementById('showDiabkol').classList.add('showDiabet');
+
+        }
+        else{
+            document.getElementById('yearD').setAttribute('required','required');
+            document.getElementById('yearD').setCustomValidity('Потрібно заповнити обов\'язкове поле: Рік постановки діагнозу');
+            document.getElementById('vekD').setAttribute('required','required');
+            document.getElementById('vekD').setCustomValidity('Потрібно заповнити обов\'язкове поле: Вік дебюту діабету (років)');
+            document.getElementById('longD').setAttribute('required','required');
+            document.getElementById('longD').setCustomValidity('Потрібно заповнити обов\'язкове поле: Тривалість діабету (років)');
+            document.getElementById('showDiabRik').classList.remove('showDiabet');
+            document.getElementById('showDiabVik').classList.remove('showDiabet');
+            document.getElementById('showDiabkol').classList.remove('showDiabet');
+        }
+    }
+
+    function onko(v) {
+        if(v=='--' || v=='Ні'){
+
+            document.getElementById('vidOnko').value='';
+            document.getElementById('dateOnko').value='';
+            document.getElementById('onkoLek').value='';
+            var el1=document.getElementById('vidOnko1');
+            if(el1){
+                el1.value='';
+            }
+            var el2=document.getElementById('dateOnko1');
+            if(el2){
+                el2.value='';
+            }
+            var el3=document.getElementById('onkoLek1');
+            if(el3){
+                el3.value='';
+            }
+            document.getElementById('likOnko').classList.add('onkoshow');
+            document.getElementById('datOnko').classList.add('onkoshow');
+            document.getElementById('vidOnkoz').classList.add('onkoshow');
+
+        }
+        else{
+            document.getElementById('likOnko').classList.remove('onkoshow');
+            document.getElementById('datOnko').classList.remove('onkoshow');
+            document.getElementById('vidOnkoz').classList.remove('onkoshow');
+        }
+    }
+    function protein(v) {
+        if(v=='--' || v=='Ні'){
+
+            document.getElementById('posIzm').value='';
+            document.getElementById('datProtein').value='';
+                       var el1=document.getElementById('posIzm1');
+            if(el1){
+                el1.value='';
+            }
+            var el2=document.getElementById('datProtein1');
+            if(el2){
+                el2.value='';
+            }
+
+            document.getElementById('prote').classList.add('showProt');
+            document.getElementById('datprote').classList.add('showProt');
+                }
+        else{
+            document.getElementById('prote').classList.remove('showProt');
+            document.getElementById('datprote').classList.remove('showProt');
+                   }
+    }
+    function bolNoga(v) {
+        if(v=='--' || v=='Ні' || v=='Ні, болю немає' || v=='Ні, біль з одного боку'){
+
+            document.getElementById('Boltwo').value='';
+            document.getElementById('BolInten').value='';
+            document.getElementById('Bolkak').value='';
+            var el1=document.getElementById('Bolkak1');
+            if(el1){
+                el1.value='';
+            }
+            var el2=document.getElementById('BolInten1');
+            if(el2){
+                el2.value='';
+            }
+            var el3=document.getElementById('Boltwo1');
+            if(el3){
+                el3.value='';
+            }
+            document.getElementById('bolProjav').classList.add('showNoga');
+            document.getElementById('bolIntens').classList.add('showNoga');
+            document.getElementById('bolStopa').classList.add('showNoga');
+        }
+        else{
+            document.getElementById('bolProjav').classList.remove('showNoga');
+            document.getElementById('bolIntens').classList.remove('showNoga');
+            document.getElementById('bolStopa').classList.remove('showNoga');
+        }
+    }
+    function preparat(v) {
+        if(v=='--' || v=='Ні'){
+
+            document.getElementById('PreparatKakie').value='';
+                       var el1=document.getElementById('PreparatKakie1');
+            if(el1){
+                el1.value='';
+            }
+
+            document.getElementById('whatPrep').classList.add('showPrep');
 
 
+        }
+        else{
+            document.getElementById('whatPrep').classList.remove('showPrep');
+
+        }
+    }
+    function ss677()
+    {
+        if(document.getElementById('golodsem123').value=='Так')
+        {
+            if(document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+            {
+                document.getElementById('g1m').setAttribute('required','required');
+                document.getElementById('g1m').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Мати: роках)');
+                document.getElementById('g2m').setAttribute('required','required');
+                document.getElementById('g3m').setAttribute('required','required');
+            }
+        }
+        else if(document.getElementById('golodsem123').value!='Так')
+        {
+            if(document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+            {
+                document.getElementById('g1m').removeAttribute('required');
+                document.getElementById('g2m').removeAttribute('required');
+                document.getElementById('g3m').removeAttribute('required');
+            }
+        }
+        else if(document.getElementById("g1m").checked == true)
+        {
+            document.getElementById('g2m').setCustomValidity('');
+            document.getElementById('g3m').setCustomValidity('');
+            document.getElementById('g2m').removeAttribute('required');
+            document.getElementById('g3m').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g2m").checked == true)
+        {
+
+            document.getElementById('g1m').setCustomValidity('');
+            document.getElementById('g3m').setCustomValidity('');
+            document.getElementById('g1m').removeAttribute('required');
+            document.getElementById('g3m').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3m").checked == true)
+        {
+
+            document.getElementById('g1m').setCustomValidity('');
+            document.getElementById('g2m').setCustomValidity('');
+            document.getElementById('g1m').removeAttribute('required');
+            document.getElementById('g2m').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1m").checked == true && document.getElementById("g2m").checked == true)
+        {
+
+
+            document.getElementById('g3m').setCustomValidity('');
+            document.getElementById('g3m').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3m").checked == true && document.getElementById("g2m").checked == true)
+        {
+
+            document.getElementById('g1m').setCustomValidity('');
+            document.getElementById('g1m').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1m").checked == true && document.getElementById("g3m").checked == true)
+        {
+
+            document.getElementById('g2m').setCustomValidity('');
+            document.getElementById('g2m').removeAttribute('required');
+
+        }
+    }
+    function ss688()
+    {
+        if(document.getElementById('golodsem123').value == 'Так')
+        {
+            if(document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false)
+            {
+                document.getElementById('g1o').setAttribute('required','required');
+                document.getElementById('g1o').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Батько: роках)');
+                document.getElementById('g2o').setAttribute('required','required');
+                document.getElementById('g3o').setAttribute('required','required');
+            }
+        }
+        else if(document.getElementById('golodsem123').value!='Так')
+        {
+            if(document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false)
+            {
+                document.getElementById('g1o').removeAttribute('required');
+                document.getElementById('g2o').removeAttribute('required');
+                document.getElementById('g3o').removeAttribute('required');
+            }
+        }
+        else if(document.getElementById("g1o").checked == true)
+        {
+
+            document.getElementById('g2o').setCustomValidity('');
+            document.getElementById('g3o').setCustomValidity('');
+            document.getElementById('g2o').removeAttribute('required');
+            document.getElementById('g3o').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g2o").checked == true)
+        {
+
+            document.getElementById('g1o').setCustomValidity('');
+            document.getElementById('g3o').setCustomValidity('');
+            document.getElementById('g1o').removeAttribute('required');
+            document.getElementById('g3o').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3o").checked == true)
+        {
+
+            document.getElementById('g1o').setCustomValidity('');
+            document.getElementById('g2o').setCustomValidity('');
+            document.getElementById('g1o').removeAttribute('required');
+            document.getElementById('g2o').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1o").checked == true && document.getElementById("g2o").checked == true)
+        {
+
+
+            document.getElementById('g3o').setCustomValidity('');
+            document.getElementById('g3o').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3o").checked == true && document.getElementById("g2o").checked == true)
+        {
+
+            document.getElementById('g1o').setCustomValidity('');
+            document.getElementById('g1o').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1o").checked == true && document.getElementById("g3o").checked == true)
+        {
+
+            document.getElementById('g2o').setCustomValidity('');
+            document.getElementById('g2o').removeAttribute('required');
+
+        }
+    }
+    function addPrep2(el) {
+        if(el=='Ні' || el=='--') {
+
+            var el = document.getElementById('datPrep2');
+            var el1 = document.getElementById('datPrep2L');
+            el.remove();
+            el1.remove();
+        }
+        else{
+            var el = document.getElementById('datPrep2');
+            var el1 = document.getElementById('datPrep2L');
+            if(el)
+            {
+                el.remove();
+                el1.remove();
+            }
+
+            var lab = document.createElement("label");
+            var inp1 = document.createElement('input');
+            inp1.type = 'date';
+            inp1.name = 'datPrep2';
+            inp1.id = 'datPrep2';
+            inp1.setAttribute("class", "form-control");
+            inp1.setAttribute("width", "100px");
+            lab.innerText='Дата постановки';
+            lab.id='datPrep2L';
+            var sp=document.getElementById('kiPrep12');
+            var sp2=document.getElementById('kiPrep22');
+            sp.appendChild(lab);
+            sp2.appendChild(inp1);
+
+        }
+
+    }
+    function ss699()
+    {
+        if(document.getElementById('golodsem123').value == 'Так')
+        {
+            if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false)
+            {
+                document.getElementById('g1s').setAttribute('required','required');
+                document.getElementById('g1s').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Рідні брати/сестри: роках)');
+                document.getElementById('g2s').setAttribute('required','required');
+                document.getElementById('g3s').setAttribute('required','required');
+
+            }
+
+        }
+        else if(document.getElementById('golodsem123').value != 'Так')
+        {
+            if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false)
+            {
+                document.getElementById('g1s').removeAttribute('required');
+                document.getElementById('g2s').removeAttribute('required');
+                document.getElementById('g3s').removeAttribute('required');
+            }
+        }
+        else if(document.getElementById("g1s").checked == true)
+        {
+
+            document.getElementById('g2s').setCustomValidity('');
+            document.getElementById('g3s').setCustomValidity('');
+            document.getElementById('g2s').removeAttribute('required');
+            document.getElementById('g3s').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g2s").checked == true)
+        {
+
+            document.getElementById('g1s').setCustomValidity('');
+            document.getElementById('g3s').setCustomValidity('');
+            document.getElementById('g1s').removeAttribute('required');
+            document.getElementById('g3s').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3s").checked == true)
+        {
+
+            document.getElementById('g1s').setCustomValidity('');
+            document.getElementById('g2s').setCustomValidity('');
+            document.getElementById('g1s').removeAttribute('required');
+            document.getElementById('g2s').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1s").checked == true && document.getElementById("g2s").checked == true)
+        {
+
+
+            document.getElementById('g3s').setCustomValidity('');
+            document.getElementById('g3s').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g3s").checked == true && document.getElementById("g2s").checked == true)
+        {
+
+            document.getElementById('g1s').setCustomValidity('');
+            document.getElementById('g1s').removeAttribute('required');
+
+        }
+        else if(document.getElementById("g1s").checked == true && document.getElementById("g3s").checked == true)
+        {
+
+            document.getElementById('g2s').setCustomValidity('');
+            document.getElementById('g2s').removeAttribute('required');
+
+        }
+    }
+    function ss6(el) {
+
+        if (el.value == 'Так')
+        {
+            document.getElementById('tabGolodO').classList.remove('showGolod');
+            document.getElementById('tabGolodS').classList.remove('showGolod');
+            document.getElementById('tabGolodM').classList.remove('showGolod');
+            document.getElementById('mamGolod').classList.remove('showGolod');
+            document.getElementById('papGolod').classList.remove('showGolod');
+            document.getElementById('bratGolod').classList.remove('showGolod');
+
+            document.getElementById('g1m').setAttribute('required','required');
+            document.getElementById('g1m').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Мати: роках)');
+            document.getElementById('g2m').setAttribute('required','required');
+            document.getElementById('g3m').setAttribute('required','required');
+
+
+            document.getElementById('g1o').setAttribute('required','required');
+            document.getElementById('g1o').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Батько: роках)');
+            document.getElementById('g2o').setAttribute('required','required');
+            document.getElementById('g3o').setAttribute('required','required');
+
+            document.getElementById('g1s').setAttribute('required','required');
+            document.getElementById('g1s').setCustomValidity('Потрібно вибрати один із варіантів відповіді поле: (Рідні брати/сестри: роках)');
+            document.getElementById('g2s').setAttribute('required','required');
+            document.getElementById('g3s').setAttribute('required','required');
+        }
+        else {
+            document.getElementById('g1m').removeAttribute('required');
+            document.getElementById('g1m').setCustomValidity('');
+            document.getElementById('g2m').removeAttribute('required');
+            document.getElementById('g3m').removeAttribute('required');
+            document.getElementById('g1o').removeAttribute('required');
+            document.getElementById('g1o').setCustomValidity('');
+            document.getElementById('g2o').removeAttribute('required');
+            document.getElementById('g3o').removeAttribute('required');
+            document.getElementById('g1s').removeAttribute('required');
+            document.getElementById('g1s').setCustomValidity('');
+            document.getElementById('g2s').removeAttribute('required');
+            document.getElementById('g3s').removeAttribute('required');
+
+
+            document.getElementById('g1m').checked = false;
+            var el1=document.getElementById('g1m1');
+            if(el1){
+                el1.checked = false;
+            }
+            document.getElementById('g2m').checked = false;
+            var el2=document.getElementById('g2m1');
+            if(el2){
+                el2.checked = false;
+            }
+            document.getElementById('g3m').checked = false;
+            var el3=document.getElementById('g3m1');
+            if(el3){
+                el3.checked = false;
+            }
+            document.getElementById('g1o').checked = false;
+            var el4=document.getElementById('g1o1');
+            if(el4){
+                el4.checked = false;
+            }
+            document.getElementById('g2o').checked = false;
+            var el5=document.getElementById('g2o1');
+            if(el5){
+                el5.checked = false;
+            }document.getElementById('g3o').checked = false;
+            var el6=document.getElementById('g3o1');
+            if(el6){
+                el6.checked = false;
+            }
+            document.getElementById('g1s').checked = false;
+            var el7=document.getElementById('g1s1');
+            if(el7){
+                el7.checked = false;
+            }
+            document.getElementById('g2s').checked = false;
+            var el8=document.getElementById('g2s1');
+            if(el8){
+                el8.checked = false;
+            }document.getElementById('g3s').checked = false;
+            var el9=document.getElementById('g3s1');
+            if(el9){
+                el9.checked = false;
+            }
+            document.getElementById('tabGolodM').classList.add('showGolod');
+            document.getElementById('tabGolodS').classList.add('showGolod');
+            document.getElementById('tabGolodO').classList.add('showGolod');
+            document.getElementById('mamGolod').classList.add('showGolod');
+            document.getElementById('papGolod').classList.add('showGolod');
+            document.getElementById('bratGolod').classList.add('showGolod');
+        }
+    }
+</script>
 </body>
 </html>

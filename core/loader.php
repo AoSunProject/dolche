@@ -21,6 +21,31 @@ Router::add("news/<page>?",[
     "action"=>"index",
    "page"=>1
 ]);
+Router::add("programm1/?",[
+    "controller"=>"programm1",
+    "action"=>"index",
+    "start"=>1
+]);
+Router::add("edit/?",[
+    "controller"=>"edit",
+    "action"=>"index",
+    "start"=>1
+]);
+Router::add("programm2/?",[
+    "controller"=>"programm2",
+    "action"=>"index",
+    "start"=>1
+]);
+Router::add("programm1/findA?",[
+    "controller"=>"programm1",
+    "action"=>"index",
+    "start"=>1
+]);
+Router::add("programm1/findR?",[
+    "controller"=>"programm1",
+    "action"=>"index",
+    "start"=>1
+]);
 Router::add("changepass?",[
     "controller"=>"changepass",
     "action"=>"index",

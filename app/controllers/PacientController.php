@@ -8,6 +8,7 @@ public function action_index(){
 
     $c=new PacientController();
     $v->user=MainModel::Instance()->getuser1();
+    $v->klinika=MainModel::Instance()->getklinika1();
     $v->spis=MainModel::Instance()->getKarta();
      $v->viewTemplate();
      $this->responce($v);
@@ -18,7 +19,7 @@ public function action_index(){
 
         if(!$this->post("name")) throw new RoutExeption("404 param not valid",404);
 
-        $dbo=new PDO("","","");
+        $dbo=new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc","uh1108308_dlc","NPyuW3gnhxQT");
 
         $sth= $dbo->prepare("SELECT COUNT(*)FROM `karta`  WHERE `name`=? and `fname`=? and `sname`=? and `datB`=?");
         $sth->execute([
@@ -29,11 +30,82 @@ public function action_index(){
         ]);
         if ($sth->fetchColumn(0)){
 
-            $this->redirect(Url::getAction("programm","userIsset"));
+            $this->redirect(Url::getAction("programm1","userIsset"));
 
 
         }
         else {
+            if(isset($_POST['g1o']) and !isset($_POST['g2o']) and !isset($_POST['g3o'])) {
+                $periodGolodO=$_POST['g1o'];
+            }
+
+            elseif(isset($_POST['g1o']) and isset($_POST['g2o']) and !isset($_POST['g3o'])){
+                $periodGolodO=$_POST['g1o'].";".$_POST['g2o'];
+            }
+            elseif(isset($_POST['g1o']) and isset($_POST['g2o']) and isset($_POST['g3o'])){
+    $periodGolodO=$_POST['g1o'].";".$_POST['g2o'].";".$_POST['g3o'];
+}
+            elseif (!isset($_POST['g1o']) and isset($_POST['g2o']) and isset($_POST['g3o'])){
+                $periodGolodO=$_POST['g2o'].";".$_POST['g3o'];
+            }
+            elseif (!isset($_POST['g1o']) and isset($_POST['g2o']) and !isset($_POST['g3o'])){
+                $periodGolodO=$_POST['g2o'];
+            }
+
+            elseif (!isset($_POST['g1o']) and !isset($_POST['g2o']) and isset($_POST['g3o'])){
+                $periodGolodO=$_POST['g3o'];
+            }
+            elseif (isset($_POST['g1o']) and !isset($_POST['g2o']) and isset($_POST['g3o'])){
+                $periodGolodO=$_POST['g1o'].";".$_POST['g3o'];
+            }
+
+            if(isset($_POST['g1m']) and !isset($_POST['g2m']) and !isset($_POST['g3m'])) {
+                $periodGolodM=$_POST['g1m'];
+            }
+
+            elseif(isset($_POST['g1m']) and isset($_POST['g2m']) and !isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g1m'].";".$_POST['g2m'];
+            }
+            elseif(isset($_POST['g1m']) and isset($_POST['g2m']) and isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g1m'].";".$_POST['g2m'].";".$_POST['g3m'];
+            }
+            elseif (!isset($_POST['g1m']) and isset($_POST['g2m']) and isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g2m'].";".$_POST['g3m'];
+            }
+            elseif (!isset($_POST['g1m']) and isset($_POST['g2m']) and !isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g2m'];
+            }
+
+            elseif (!isset($_POST['g1m']) and !isset($_POST['g2m']) and isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g3m'];
+            }
+            elseif (isset($_POST['g1m']) and !isset($_POST['g2m']) and isset($_POST['g3m'])){
+                $periodGolodM=$_POST['g1m'].";".$_POST['g3m'];
+            }
+
+            if(isset($_POST['g1s']) and !isset($_POST['g2s']) and !isset($_POST['g3s'])) {
+                $periodGolodS=$_POST['g1s'];
+            }
+
+            elseif(isset($_POST['g1s']) and isset($_POST['g2s']) and !isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g1s'].";".$_POST['g2s'];
+            }
+            elseif(isset($_POST['g1s']) and isset($_POST['g2s']) and isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g1s'].";".$_POST['g2s'].";".$_POST['g3s'];
+            }
+            elseif (!isset($_POST['g1s']) and isset($_POST['g2s']) and isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g2s'].";".$_POST['g3s'];
+            }
+            elseif (!isset($_POST['g1s']) and isset($_POST['g2s']) and !isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g2s'];
+            }
+
+            elseif (!isset($_POST['g1s']) and !isset($_POST['g2s']) and isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g3s'];
+            }
+            elseif (isset($_POST['g1s']) and !isset($_POST['g2s']) and isset($_POST['g3s'])){
+                $periodGolodS=$_POST['g1s'].";".$_POST['g3s'];
+            }
             PacientModel::Instance()->addcart($this->apostr($this->post("name")), $this->apostr($this->post("fname")),
                 $this->post("sname"), $this->apostr($this->post("ychas")), $this->post("nomIss"), $this->post("sex")
                 , $this->post("datB"), $this->apostr($this->post("city")), $this->apostr($this->post("rajon")),
@@ -49,8 +121,8 @@ public function action_index(){
                 $this->apostr($this->post("oblM")), $this->apostr($this->post("cityM")),
                 $this->apostr($this->post("lechM")), $this->apostr($this->post("lechMKak")),
                 $this->apostr($this->post("lechBS")), $this->apostr($this->post("lechBSKak")),
-                $this->apostr($this->post("golodM")), $this->apostr($this->post("golodO")),
-                $this->apostr($this->post("golodSister")), $this->apostr($this->post("death1")),
+                $periodGolodM, $periodGolodO,
+                $periodGolodS, $this->apostr($this->post("death1")),
                 $this->apostr($this->post("death2")), $this->apostr($this->post("ves")),
                 $this->apostr($this->post("rost")), $this->apostr($this->post("tal")),
                 $this->apostr($this->post("bed")), $this->apostr($this->post("index")),
@@ -105,7 +177,7 @@ public function action_index(){
                 $this->apostr($this->post("LipidVis")), $this->apostr($this->post("LipidNiz")),
                 $this->apostr($this->post("Trigliz")), $this->apostr($this->post("Asparta")),
                 $this->post("Alanin"), $this->post("BelocS"),
-
+                $this->apostr($this->post("Peptid")), $this->apostr($this->post("PeptiEdIzm")),
                 $this->apostr($this->post("PeptidPmol")), $this->apostr($this->post("PeptidNmol")),
                 $this->apostr($this->post("S_Pep")), $this->apostr($this->post("Sivor")),
 
@@ -144,9 +216,15 @@ public function action_index(){
                 $this->apostr($this->post("atGad")),
                 $this->post("atGaddat"),
                 $this->post("dieta"),
-                $this->post("disttisk")
+                $this->post("disttisk"),
+                $this->post("nomV"),
+                $this->post("datV"),
+                $this->post("statysA"),
+                $this->post("vlasnik"),
+                $this->post("pomer")
+                
             );
-            $this->redirect(Url::local("programm"));
+            $this->redirect(Url::local("programm2?start=А"));
         }
     }
 }

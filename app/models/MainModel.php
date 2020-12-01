@@ -21,11 +21,58 @@ public static function Instance(){return self::$instance===NULL? self::$instance
     $tmp=DatabaseModule::instance()->db_users->select('id>0 order by dat desc');
     return $tmp;
 }
+    public function getkarta2($id){
+        $id=str_replace('o','',$id);
+        $st1="Select nomPac from karta where id={$id}";
+
+        $tmp=DatabaseModule::instance()->karta->exec1($st1);
+
+
+        $nomPac=$tmp[0]['nomPac'];
+        $wh='nomPac='.$nomPac." and nomV=(Select max(nomV) from karta where nomPac={$nomPac})";
+
+        $tmp=DatabaseModule::instance()->karta->select($wh);
+        return $tmp;
+    }
+    public function getkarta20($id){
+
+        $st1="Select nomPac from karta where id={$id}";
+
+        $tmp=DatabaseModule::instance()->karta->exec1($st1);
+
+
+        $nomPac=$tmp[0]['nomPac'];
+        $wh='nomPac='.$nomPac." and nomV=(Select max(nomV) from karta where nomPac={$nomPac})";
+
+        $tmp=DatabaseModule::instance()->karta->select($wh);
+        return $tmp;
+    }
     public function getkarta1($id){
         $id=str_replace('o','',$id);
         $wh='id='.$id;
 
         $tmp=DatabaseModule::instance()->karta->select($wh);
+        return $tmp;
+    }
+    public function getVizit($id){
+        $id=str_replace('o','',$id);
+        $st1="Select nomPac from karta where id={$id}";
+
+        $tmp=DatabaseModule::instance()->karta->exec1($st1);
+
+
+ $nomPac=$tmp[0]['nomPac'];
+        $st="Select nomV from karta where nomPac={$nomPac}";
+
+        $tmp=DatabaseModule::instance()->karta->exec1($st);
+
+        return $tmp;
+    }
+    public function getVizit1($id){
+
+        $st="Select nomV from karta where nomPac={$id}";
+        $tmp=DatabaseModule::instance()->karta->exec1($st);
+
         return $tmp;
     }
     public function gethist($id){
@@ -49,13 +96,66 @@ public static function Instance(){return self::$instance===NULL? self::$instance
 
         return $tmp;
     }
+    public function getklinika1(){
+
+        $str="SELECT klinika.name FROM `db_users` inner join klinika on klinika.id=db_users.id_kliniki WHERE db_users.id={$_SESSION['id']}";
+
+        $tmp=DatabaseModule::instance()->klinika->exec($str);
+
+        return $tmp;
+    }
     public function getKarta(){
         $tmp=DatabaseModule::instance()->karta->select();
 
         return $tmp;
     }
-    public function getKartaFind($buk){
-        $tmp=DatabaseModule::instance()->karta->select("fname like '{$buk}%'");
+    public function getKartaCount(){
+        $tmp=DatabaseModule::instance()->karta->query("Select count(*) from karta");
+
+       $count=$tmp[0]['count(*)'];
+       // var_dump($count);die();
+       return $count;
+    }
+    public function getKartaCountlimit(){
+        $tmp=DatabaseModule::instance()->karta->query("Select count(*) from karta limit 200");
+
+        $count=$tmp[0]['count(*)'];
+        // var_dump($count);die();
+        return $count;
+    }
+    public function getKartaP($s,$o){
+
+
+        $ss="select * from (select * from karta order by nomPac, nomV desc,id) x group by nomPac
+         LIMIT  {$o}
+         OFFSET {$s}";
+
+        $tmp=DatabaseModule::instance()->karta->query($ss);
+//var_dump($tmp);die();
+        return $tmp;
+    }
+    public function getKartaPlimit($s,$o){
+        $ss="SELECT *
+         FROM `karta`
+         LIMIT  {$o}
+         OFFSET {$s}";
+
+        $tmp=DatabaseModule::instance()->karta->query($ss);
+//var_dump($tmp);die();
+        return $tmp;
+    }
+    public function getKartaFindCount($buk){
+        $tmp=DatabaseModule::instance()->karta->query("Select count(*) from karta where fname like '{$buk}%'");
+
+        $count=$tmp[0]['count(*)'];
+        // var_dump($count);die();
+        return $count;
+    }
+    public function getKartaFind($buk,$s,$o){
+        $ss="select * from (select * from karta order by nomPac, nomV desc,id) x where fname like '{$buk}%' group by nomPac
+         LIMIT  {$o}
+         OFFSET {$s}";
+        $tmp=DatabaseModule::instance()->karta->query($ss);
 
         return $tmp;
     }
@@ -108,6 +208,30 @@ public static function Instance(){return self::$instance===NULL? self::$instance
                 if (!empty($mas['datB'])) {
 
                     $ss = $ss . "datB<='{$item}' and ";
+
+                }
+            }
+            else if($key=='golodM'){
+                if (!empty($mas['golodM'])) {
+                    $item = substr($item, 0, -1);
+
+                    $ss = $ss . "golodM like'{$item}' and ";
+
+                }
+            }
+            else if($key=='golodO'){
+                if (!empty($mas['golodO'])) {
+                    $item = substr($item, 0, -1);
+
+                    $ss = $ss . "golodO like'{$item}' and ";
+
+                }
+            }
+            else if($key=='golodSis'){
+                if (!empty($mas['golodSis'])) {
+                    $item = substr($item, 0, -1);
+
+                    $ss = $ss . "golodSister like'{$item}' and ";
 
                 }
             }
@@ -222,7 +346,7 @@ public static function Instance(){return self::$instance===NULL? self::$instance
             else if($key=='bed'){
                 if (!empty($mas['bed'])) {
 
-                    $ss = $ss . "bed<='{$item}' and ";
+                    $ss = $ss . "bed<'{$item}' and ";
 
                 }
             }
@@ -545,7 +669,7 @@ public static function Instance(){return self::$instance===NULL? self::$instance
             else if($key=='lekoz'){
                 if (!empty($mas['lekoz'])) {
 
-                    $ss = $ss . "lekoz<='{$item}' and ";
+                    $ss = $ss . "lekoz<'{$item}' and ";
 
                 }
             }
@@ -898,7 +1022,7 @@ public static function Instance(){return self::$instance===NULL? self::$instance
 
                 }
             }
-           /*     pmol/l*/
+           /*     нг/мл*/
             else if($key=='PeptidPmol0'){
                 if (!empty($mas['PeptidPmol0'])) {
 
@@ -1028,6 +1152,34 @@ public static function Instance(){return self::$instance===NULL? self::$instance
                 if (!empty($mas['dateOnko'])) {
 
                     $ss = $ss . "dateOnko<='{$item}' and ";
+
+                }
+            }
+            else if($key=='datStad0'){
+                if (!empty($mas['datStad0'])) {
+
+                    $ss = $ss . "datStad>='{$item}' and ";
+
+                }
+            }
+            else if($key=='datStad'){
+                if (!empty($mas['datStad'])) {
+
+                    $ss = $ss . "datStad<='{$item}' and ";
+
+                }
+            }
+            else if($key=='datIns0'){
+                if (!empty($mas['datIns0'])) {
+
+                    $ss = $ss . "datIns>='{$item}' and ";
+
+                }
+            }
+            else if($key=='datIns'){
+                if (!empty($mas['datIns'])) {
+
+                    $ss = $ss . "datIns<='{$item}' and ";
 
                 }
             }
@@ -1174,10 +1326,7 @@ public static function Instance(){return self::$instance===NULL? self::$instance
             $ss = substr($ss, 0, -4);
         }
 
-//echo $ss;die();
         $tmp=DatabaseModule::instance()->karta->select($ss);
-//echo "kjkk";die();
-
         return $tmp;
     }
     public function getKartaFindR($fname,
@@ -1258,6 +1407,177 @@ if($ss==''){
 }else {
     $ss = substr($ss, 0, -4);
 }
+
+        $tmp=DatabaseModule::instance()->karta->select($ss);
+
+
+        return $tmp;
+    }
+    public function getKartaCount2($fname,
+                                   $year1, $year2,
+                                   $nom1, $nom2,
+                                   $name,
+                                   $sex,
+                                   $dat_izm,
+                                   $sname,
+                                   $typeDiab,
+                                   $moi,
+                                   $nasPynkt){
+        if($moi==1){
+
+            if($_SESSION['role']=='2'){
+
+                $m='';
+            }else{
+                $m="id_user={$_SESSION['id']}";
+            }
+
+        }else{
+            $m='';
+        }
+        $ss='';
+        if(isset($_SESSION['find'])){
+            $_POST=$_SESSION['find'];
+        }
+        //var_dump($_POST);die();
+        foreach($_POST as $key =>$item):
+
+            if(!empty($item)) {
+                if ($key == 'year1') {
+
+                    $ss = $ss . "year(datB)>={$item} and ";
+
+
+
+                }
+                elseif ($key == 'year2') {
+                    $ss = $ss . "year(datB)<={$item} and ";
+
+                }
+                elseif ($key=='moi'){
+                    if($m==''){
+                        $ss=$ss.$m;
+
+                    }else{
+                        $ss=$ss.$m." and ";
+                    }
+
+                }
+                elseif($key=='nom1'){
+                    $ss = $ss . "id>={$item} and ";
+                }
+                elseif($key=='nom2'){
+                    $ss = $ss . "id<={$item} and ";
+                }
+                else {
+                    $pos      = strripos($item, '*');
+                    if ($pos === false) {
+                        $ss = $ss . "{$key}='{$this->apostr($item)}' and ";
+                    }else{
+                        $item=str_replace('*','%',$item);
+
+                        $ss = $ss . "{$key} like '{$this->apostr($item)}' and ";
+                    }
+
+                }
+            }
+
+        endforeach;
+        //echo $ss;die();
+        if($ss==''){
+
+            $ss="id>0";
+        }else {
+            $ss = substr($ss, 0, -4);
+        }
+
+        $tmp=DatabaseModule::instance()->karta->query("Select count(*) from karta where {$ss}");
+
+        $count=$tmp[0]['count(*)'];
+        // echo $count;die();
+        return $count;
+    }
+    public function getKartaFindR2($fname,
+                                  $year1, $year2,
+                                  $nom1, $nom2,
+                                  $name,
+                                  $sex,
+                                  $dat_izm,
+                                  $sname,
+                                  $typeDiab,
+                                  $moi,
+                                  $nasPynkt,$s,$o){
+
+        if($moi==1){
+
+            if($_SESSION['role']=='2'){
+
+                $m='';
+            }else{
+                $m="id_user={$_SESSION['id']}";
+            }
+
+        }else{
+            $m='';
+        }
+        $ss='';
+        if(isset($_SESSION['find'])){
+            $_POST=$_SESSION['find'];
+        }
+        //var_dump($_POST);die();
+        foreach($_POST as $key =>$item):
+
+            if(!empty($item)) {
+                if ($key == 'year1') {
+
+                    $ss = $ss . "year(datB)>={$item} and ";
+
+
+
+                }
+                elseif ($key == 'year2') {
+                    $ss = $ss . "year(datB)<={$item} and ";
+
+                }
+                elseif ($key=='moi'){
+                    if($m==''){
+                        $ss=$ss.$m;
+
+                    }else{
+                        $ss=$ss.$m." and ";
+                    }
+
+                }
+                elseif($key=='nom1'){
+                    $ss = $ss . "id>={$item} and ";
+                }
+                elseif($key=='nom2'){
+                    $ss = $ss . "id<={$item} and ";
+                }
+                else {
+                    $pos      = strripos($item, '*');
+                    if ($pos === false) {
+                        $ss = $ss . "{$key}='{$this->apostr($item)}' and ";
+                    }else{
+                        $item=str_replace('*','%',$item);
+
+                        $ss = $ss . "{$key} like '{$this->apostr($item)}' and ";
+                    }
+
+                }
+            }
+
+        endforeach;
+       // echo $ss;die();
+        if($ss==''){
+
+            $ss="id>0";
+        }else {
+            $ss = substr($ss, 0, -4);
+        }
+        $ss=$ss." LIMIT  {$o}
+         OFFSET {$s}";
+
         $tmp=DatabaseModule::instance()->karta->select($ss);
 //echo "kjkk";die();
 
@@ -1275,6 +1595,7 @@ if($tmp != null){
     $_SESSION['id_z']=$tmp[0]['id_z'];
     $_SESSION['id']=$tmp[0]['id'];
     $_SESSION['role']=$tmp[0]['role'];
+
     return $tmp;
 }else{
 

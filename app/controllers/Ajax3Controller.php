@@ -3,7 +3,7 @@ class Ajax3Controller extends Controller
 {
     public function action_index()
     {
-        $pdo = new PDO("", "", "");
+        $pdo = new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc", "uh1108308_dlc", "NPyuW3gnhxQT");
         if (isset($_POST['id'])) {
 
             $sql = "update karta set del_k=0 where id={$_POST['id']}";

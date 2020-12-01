@@ -4,7 +4,7 @@ class Ajax9Controller extends Controller
 {
     public function action_index()
     {
-        $pdo = new PDO("", "", "");
+        $pdo = new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc", "uh1108308_dlc", "NPyuW3gnhxQT");
 
         if ($_POST['moi'] == 1) {
 
@@ -22,7 +22,7 @@ class Ajax9Controller extends Controller
 
         foreach ($_POST as $key => $item):
 
-            if (!empty($item)) {
+            if (!empty($item) and $item!='--') {
                 if ($key == 'year1') {
 
                     $ss = $ss . "year(datB)>={$item} and ";
@@ -57,7 +57,7 @@ class Ajax9Controller extends Controller
             }
 
         endforeach;
-        //echo $ss;die();
+      //  echo $ss;die();
         if ($ss == '') {
 
             $ss = "id>0";

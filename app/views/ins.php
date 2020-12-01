@@ -22,7 +22,7 @@ if(isset($_SESSION['user'])){
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ];
 
-            $dbh = new PDO("", "", "", $opt);
+            $dbh = new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc", "uh1108308_dlc", "NPyuW3gnhxQT", $opt);
             if (file_exists($fileName)) {
                 echo "The file $fileName exists";
 
@@ -40,7 +40,8 @@ if(isset($_SESSION['user'])){
 
             $countRow = 0;
             $n = 0;
-
+$diabDiab='Ні';
+$diabNefro='Ні';
             foreach ($tables as $table) {
 
                 foreach ($table as $row) {
@@ -177,6 +178,7 @@ if(isset($_SESSION['user'])){
                                 $diabNep = 'Ні';
                             } elseif ($row[52] == 1) {
                                 $diabNep = 'Так';
+                                $diabDiab = 'Так';
                             } else {
                                 $diabNep = '--';
                             }
@@ -184,6 +186,7 @@ if(isset($_SESSION['user'])){
                                 $diabPrep = 'Ні';
                             } elseif ($row[54] == 1) {
                                 $diabPrep = 'Так';
+                                $diabDiab = 'Так';
                             } else {
                                 $diabPrep = '--';
                             }
@@ -191,6 +194,7 @@ if(isset($_SESSION['user'])){
                                 $diabPrep2 = 'Ні';
                             } elseif ($row[56] == 1) {
                                 $diabPrep2 = 'Так';
+                                $diabDiab = 'Так';
                             } else {
                                 $diabPrep2 = '--';
                             }
@@ -212,6 +216,7 @@ if(isset($_SESSION['user'])){
                                 $diabPochNEd = 'Ні';
                             } elseif ($row[64] == 1) {
                                 $diabPochNEd = 'Так';
+                                $diabNefro = 'Так';
                             } else {
                                 $diabPochNEd = '--';
                             }
@@ -219,6 +224,7 @@ if(isset($_SESSION['user'])){
                                 $diabPochSt = 'Ні';
                             } elseif ($row[66] == 1) {
                                 $diabPochSt = 'Так';
+                                $diabNefro = 'Так';
                             } else {
                                 $diabPochSt = '--';
                             }
@@ -405,11 +411,11 @@ if(isset($_SESSION['user'])){
                                 $infarkt = 'Так';
                                 if ($row[34]==1 and $row[36] ==0){
                                     $kolinf =1;
-                                    $datInf ="{$row['35']};;";
+                                    $datInf ="{$row['35']}.01.01";
                                 }
                                 elseif ($row[34]==1 and $row[36] ==1) {
                                     $kolinf =2;
-                                    $datInf = "{$row['35']};{$row['37']};;";
+                                    $datInf = "{$row['36']}.01.01"+';'+"{$row['37']}.01.01";
                                 }
                                 else
                                 {$kolinf ='';
@@ -423,13 +429,12 @@ if(isset($_SESSION['user'])){
                                 $insult = 'Так';
                                 if ($row[38]==1 and $row[40] ==0){
                                     $kolins ='1';
-                                    $datIns = "{$row['39']};;";
+                                    $datIns = "{$row['39']}.01.01";
 
                                 }
                                 elseif ($row[38]==1 and $row[40] ==1) {
                                     $kolins ='2';
-                                    $datIns = "{$row['39']};{$row['41']};;";
-
+                                    $datIns = "{$row['39']}.01.01"+';'+"{$row['41']}.01.01";
                                 }
                                 else
                                 {$kolins ='';
@@ -512,11 +517,11 @@ if(isset($_SESSION['user'])){
 `art`,`systisk`,`art1`,`disttisk`,
                    `smouk`,`smokeKol`,
                    `alkogol`, `typeDiab`,`yearD`,`longD`,`infarkt`,`kolinf`,`datInf`,`insult`,`kolins`,`datIns`,`datStad`, `diabAngin`,`datAngin`,`glaz`,`Katar`,`datKatar`,
-                   `Mal`, `datMal`,`diabNep`,`datNep`,`diabPrep`,`datPrep`,`diabPrep2`,`datPrep2`,`Slep`,`datSlep`,`Lazer`,`datLazer`
-                   ,`pochki`, `diabPochNEd`,`datPochNEd`, `diabPochSt`,`datPochSt`,`datStopObsl`,`SnizhT`,`Chyvs`,`NarVibr`,`Jazv`,`GnojJazv`
+                   `Mal`, `datMal`,`diabDiab`,`diabNep`,`datNep`,`diabPrep`,`datPrep`,`diabPrep2`,`datPrep2`,`Slep`,`datSlep`,`Lazer`,`datLazer`
+                   ,`pochki`,`diabNefro`, `diabPochNEd`,`datPochNEd`, `diabPochSt`,`datPochSt`,`datStopObsl`,`SnizhT`,`Chyvs`,`NarVibr`,`Jazv`,`GnojJazv`
                    , `PylsStopa`, `Shynt`, `diabNejr`, `Hrom`, `Ampyt`, `datAmput`,`datLab`,`nmol`,`Datnmol`,`vidsot`,`Datgemogl`,`kreat`,`datkreat`
                    ,`Protein`,`datProtein`,`Mikroalmb`,`datMikro`,`Sivor`,`Plazma`,`DNK`,`PrimZAbKrov`,`LechDIabet`,`dieta`,`LechInsul`,`diabLechTab`, `LechGiper`
-                   ,`LechLipidGiper`,`rajon`,`Holest`,`LipidVis`,`LipidNiz`,`Trigliz`,`atGad`,`atGaddat`,`Peptid`,`Lipiddat`,`S_Pep`,`diabDializ`,`datDializ`,`inf`
+                   ,`LechLipidGiper`,`rajon`,`Holest`,`LipidVis`,`LipidNiz`,`Trigliz`,`atGad`,`atGaddat`,`PeptidNmol`,`Lipiddat`,`S_Pep`,`diabDializ`,`datDializ`,`inf`
                    ,`aut`,`porok`,`endoc`,`patol`,`Onko`)
                      VALUES('{$priz[0]}','{$priz[1]}','{$priz[2]}',
                       '$datesave', 
@@ -532,27 +537,30 @@ if(isset($_SESSION['user'])){
                       '$row[18]','$row[19]','$row[22]','$row[23]',
                       '$smouk','$row[27]',
                       '$alkogol','$typeDiab','$row[32]','$row[33]','$infarkt','$kolinf','$datInf','$insult','$kolins','$datIns','$row[44]','$diabAngin','$datAngin','$glaz','$Katar','$datKatar',
-                      '$Mal','$datMal','$diabNep','$datNep','$diabPrep','$datPrep','$diabPrep2','$datPrep2','$Slep','$datSlep','$Lazer','$datLazer'
-                      ,'$pochki','$diabPochNEd','$datPochNEd','$diabPochSt','$datPochSt','$datStopObsl','$SnizhT','$Chyvs','$NarVibr','$Jazv','$GnojJazv'
+                      '$Mal','$datMal','$diabDiab','$diabNep','$datNep','$diabPrep','$datPrep','$diabPrep2','$datPrep2','$Slep','$datSlep','$Lazer','$datLazer'
+                      ,'$pochki','$diabNefro','$diabPochNEd','$datPochNEd','$diabPochSt','$datPochSt','$datStopObsl','$SnizhT','$Chyvs','$NarVibr','$Jazv','$GnojJazv'
                       , '$PylsStopa','$Shynt','$diabNejr', '$Hrom','$Ampyt', '$datAmput','$datLab','$row[87]','$Datnmol','$row[89]','$Datgemogl','$row[93]','$datkreat'
                       ,'$Protein','$datProtein','$Mikroalmb','$datMikro','$Sivor','$Plazma','$DNK','$row[102]','$LechDIabet','$dieta','$LechInsul','$diabLechTab','$LechGiper'
                       ,'$LechLipidGiper','$row[147]','$row[149]','$row[150]','$row[151]','$row[152]','$row[153]','$atGaddat','$row[154]','$Lipiddat','$S_Pep','$diabDializ','$datDializ','$row[165]',
                       '$row[166]','$row[167]','$row[168]','$row[169]','$Onko')";
 
-              // echo $sql_1;die();
-                            $dbh->query($sql_1);
+              // echo $sql_1."<br>";
+                           $dbh->query($sql_1);
                         }
                         $n++;
 
                     }
-
+                    $diabDiab='Ні';
+                    $diabNefro='Ні';
                 }
+
             }
             } else {
                 echo "The file $fileName does not exist";
 
 
             }
+
         }
     }else{
 

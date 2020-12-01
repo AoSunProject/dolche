@@ -4,7 +4,7 @@ class Ajax8Controller extends Controller
 {
     public function action_index()
     {
-        $pdo = new PDO("", "", "");
+        $pdo = new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc", "uh1108308_dlc", "NPyuW3gnhxQT");
 
         if ($_POST['moi'] == 1) {
 
@@ -22,7 +22,7 @@ class Ajax8Controller extends Controller
 
         foreach ($_POST as $key => $item):
 
-            if (!empty($item)) {
+            if (!empty($item) and $item!='--') {
                 if ($key == 'year1') {
 
                     $ss = $ss . "year(datB)>={$item} and ";
@@ -65,7 +65,7 @@ class Ajax8Controller extends Controller
             $ss = substr($ss, 0, -4);
         }
         $spis = "Select * from karta where {$ss}";
-        echo $spis;
+        //echo $spis;die();
         $spis = $pdo->query($spis);
 ?>
         <link href="../../css/1.css" rel="stylesheet">
@@ -82,7 +82,7 @@ class Ajax8Controller extends Controller
                 if($item['del_k']==1){
                     echo "style='color:red;'";
                 }
-                echo "id='o{$item['id']}' onclick='save1(this.id)'><td><form method='post' name='k{$item['id']}' id='k{$item['id']}' action=''><input type='hidden' name='id_k' value='{$item['id']}'></form> {$item['id']}</td>
+                echo "id='o{$item['nomPac']}' onclick='save1(this.id)'><td><form method='post' name='k{$item['id']}' id='k{$item['id']}' action=''><input type='hidden' name='id_k' value='{$item['id']}'></form> {$item['id']}</td>
     <td>{$item['fname']} {$item['name']} {$item['sname']}</td><td>{$item['sex']}</td><td>{$item['datB']}</td>
             <td>{$item['typeDiab']}</td><td>{$item['city']}</td><td>{$item['date_izm']}</td></tr>";
             endforeach;

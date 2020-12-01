@@ -45,7 +45,7 @@ public function action_register(){
         });
 
 
-            $dbo=new PDO("","","");
+            $dbo=new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc","uh1108308_dlc","NPyuW3gnhxQT");
 
             $sth= $dbo->prepare("SELECT COUNT(*)FROM `db_users`  WHERE `login`=? OR `phone`=? OR `email`=?");
             $sth->execute([
@@ -113,7 +113,7 @@ public function action_register(){
         $nanodok= "35y6ru6y562335745st47rwebriudsrg1";
         $serverdok= "otjhirhgorij40ty409b98yh98ywertb9c8rbieyr23b9ysqsj10";
         $autoc="12345678910";
-        $dbo=new PDO("","","");
+        $dbo=new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc","uh1108308_dlc","NPyuW3gnhxQT");
         $ss="SELECT `email` FROM `db_users` WHERE `login`='{$_GET['login']}'";
 
         $activetrue= $dbo->prepare($ss);

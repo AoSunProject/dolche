@@ -36,7 +36,9 @@ padding: 7px;
         font-weight: 400;
         line-height: 1.5;
     }
-
+/*.mainT tr td{
+    width: 100%;
+}*/
     /* Change background color of buttons on hover */
     .tab button:hover {
         background-color:#ddd ;
@@ -274,6 +276,119 @@ padding: 7px;
          document.getElementById(id).value=min;
      }
     }*/
+    function chch(el){
+        if (el.checked) {
+            var zn=el.value;
+
+            if(document.getElementById('golodM').value!= '') {
+
+                if(zn=='1932-33'){
+                    document.getElementById('golodM').value = zn+";"+document.getElementById('golodM').value   ;
+                }else if(zn=='1946-47'){
+                    document.getElementById('golodM').value = document.getElementById('golodM').value + zn+";" ;
+                }
+                else{
+                    var str=document.getElementById('golodM').value;
+
+                   // document.getElementById('golodM').value = document.getElementById('golodM').value + zn+";" ;
+                  if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==8){
+
+                        document.getElementById('golodM').value = '1932-33;1941-45;1946-47;';
+                    }else if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==-1){
+
+                        document.getElementById('golodM').value ='1932-33;1941-45;';
+
+                    }else if(str.indexOf('1932-33')==-1 && str.indexOf('1946-47')==0){
+                      document.getElementById('golodM').value ='1941-45;1946-47;';
+                  }
+
+                }
+
+            }else{
+                document.getElementById('golodM').value=zn+";";
+            }
+        }
+        else {
+            var zn=el.value;
+
+            var teczn=document.getElementById('golodM').value;
+            var p=teczn.replace(zn+";",'');
+            document.getElementById('golodM').value=p;
+        }
+       }
+    function chch1(el){
+        if (el.checked) {
+            var zn=el.value;
+
+            if(document.getElementById('golodO').value!= '') {
+                if(zn=='1932-33'){
+                    document.getElementById('golodO').value = zn+";"+document.getElementById('golodO').value   ;
+                }else if(zn=='1946-47'){
+                    document.getElementById('golodO').value = document.getElementById('golodO').value + zn+";" ;
+                }else{
+                    var str=document.getElementById('golodO').value;
+
+                    // document.getElementById('golodM').value = document.getElementById('golodM').value + zn+";" ;
+                    if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==8){
+
+                        document.getElementById('golodO').value = '1932-33;1941-45;1946-47;';
+                    }else if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==-1){
+
+                        document.getElementById('golodO').value ='1932-33;1941-45;';
+
+                    }else if(str.indexOf('1932-33')==-1 && str.indexOf('1946-47')==0){
+                        document.getElementById('golodO').value ='1941-45;1946-47;';
+                    }
+                }
+            }else{
+                document.getElementById('golodO').value=zn+";";
+            }
+        }
+        else {
+            var zn=el.value;
+
+            var teczn=document.getElementById('golodO').value;
+            var p=teczn.replace(zn+";",'');
+            document.getElementById('golodO').value=p;
+        }
+    }
+    function chch2(el){
+        if (el.checked) {
+            var zn=el.value;
+
+            if(document.getElementById('golodSis').value!= '') {
+                if(zn=='1932-33'){
+                    document.getElementById('golodSis').value = zn+";"+document.getElementById('golodSis').value   ;
+                }else if(zn=='1946-47'){
+                    document.getElementById('golodSis').value = document.getElementById('golodSis').value + zn+";" ;
+                }else{
+                    var str=document.getElementById('golodSis').value;
+
+                    // document.getElementById('golodM').value = document.getElementById('golodM').value + zn+";" ;
+                    if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==8){
+
+                        document.getElementById('golodSis').value = '1932-33;1941-45;1946-47;';
+                    }else if(str.indexOf('1932-33')==0 && str.indexOf('1946-47')==-1){
+
+                        document.getElementById('golodSis').value ='1932-33;1941-45;';
+
+                    }else if(str.indexOf('1932-33')==-1 && str.indexOf('1946-47')==0){
+                        document.getElementById('golodSis').value ='1941-45;1946-47;';
+                    }
+
+                }
+            }else{
+                document.getElementById('golodSis').value=zn+";";
+            }
+        }
+        else {
+            var zn=el.value;
+
+            var teczn=document.getElementById('golodSis').value;
+            var p=teczn.replace(zn+";",'');
+            document.getElementById('golodSis').value=p;
+        }
+    }
 </script>
 <link rel="stylesheet" href="../../js/bootstrap.css">
 <?php
@@ -291,7 +406,7 @@ if(isset($_SESSION['user'])){
                                 id="empty"><!----><span class="ui-menuitem-text"></span></a><!----></li><!---->
                     <li class="ui-breadcrumb-chevron pi pi-chevron-right ng-star-inserted"></li><!---->
                     <li role="menuitem" class="ng-star-inserted"><!----><a
-                                class="ui-menuitem-link ng-star-inserted" href="<?=Url::local('pacient')?>"
+                                class="ui-menuitem-link ng-star-inserted"
                                 id="login"><!----><span class="ui-menuitem-text">Розширенний пошук</span></a><!----></li>
                     <!----><!----></ul>
             </div>
@@ -369,7 +484,7 @@ if(isset($_SESSION['user'])){
                             <li role="presentation" id="one1" class="zag" onclick="hide11(this.id)"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 1. Опитування пацієнта</a></li>
                             <li role="presentation" class="active pod1" id="one11"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">А. Загальні дані</a></li>
                             <li role="presentation" class="pod1" id="one12"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Б. Сімейний анамнез</a></li>
-                            <li role="presentation" class="pod1" id="one13"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація по голодомору</a></li>
+                            <li role="presentation" class="pod1" id="one13"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація щодо голодомору</a></li>
                             <li role="presentation" id="one2" class="zag" onclick="hide11(this.id)"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 2. Огляд пацієнта</a></li>
                             <li role="presentation" class="pod1 hh" id="one21"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">А. Антропометричні дані</a></li>
                             <li role="presentation" class="pod1 hh" id="one22"><a href="#zhitt" aria-controls="zhitt" role="tab" data-toggle="tab">Б. Спосіб життя</a></li>
@@ -381,7 +496,7 @@ if(isset($_SESSION['user'])){
                                     Статус ССС</a></li>
                             <li role="presentation" class="pod1 hh" id="one31"><a href="#ser" aria-controls="ser" role="tab" data-toggle="tab">А. Обстеження серцево-судинної системи</a></li>
                             <li role="presentation" id="one4" class="zag" onclick="hide11(this.id)"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 4.
-                                    Діабетична ретінопатія</a></li>
+                                    Діабетична ретинопатія</a></li>
                             <li role="presentation" class="pod1 hh" id="one41"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab">А. Обстеження очей</a></li>
                             <li role="presentation" id="one5" class="zag" onclick="hide11(this.id)"><a href="#nefr" aria-controls="nefr" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 5.
                                     Нефропатія</a></li>
@@ -398,8 +513,8 @@ if(isset($_SESSION['user'])){
                                     Лікування</a></li>
                             <li role="presentation" class="pod1 hh" id="one81"><a href="#lik" aria-controls="lik" role="tab" data-toggle="tab">А. Лікування</a></li>
                             <li role="presentation" id="one9" class="zag" onclick="hide11(this.id)"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 9.
-                                    Геніаологічне дерево</a></li>
-                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Геніаологічне дерево</a></li>
+                                    Генеалогічне дерево</a></li>
+                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Генеалогічне дерево</a></li>
                         </ul>
 
 
@@ -517,8 +632,18 @@ if(isset($_SESSION['user'])){
                         margin: 0 0 1rem 0;
                         font-weight: 300;
                         line-height: 1.3;
-                        color: #009032;
-                        text-shadow: 1px 2px 4px #ddd;
+                        color: #000000;
+                       /* text-shadow: 1px 2px 4px #ddd;*/
+                    }
+                    .popup #tr222
+                    {
+
+                        background: #2b5e93; color:white
+                    }
+                    .popup #tr2222
+                    {
+
+                        background: #d9d9d9; color:#337ab7
                     }
                     /* кнопка закрытия */
                     .close {
@@ -607,15 +732,31 @@ if(isset($_SESSION['user'])){
                         'Місце народження: область','Місце народження: місто','Чи хворів на діабет батько?','Якщо так - яке було лікування у батька?',
 
                         'Прізвище матері', 'Ім`я матері', 'По-батькові матері','Чи брала участь Мати раніше в цьому дослідженні?',
-                       'Номер випробування','Дата народження матирі з','Дата народження батька по',
+                       'Номер випробування','Дата народження матері з','Дата народження матері по',
                         'Місце народження: область','Місце народження: місто','Чи хворіла на діабет мати?','Якщо так - яке було лікування у матері?',
-                        'Чи хворіли на діабет рідні брати сестри? Якщо так – яке було лікування у братів/сестер?','Якщо так – яке було лыкування у братів/сестер?',
+                        'Чи хворіли на діабет рідні брати сестри? Якщо так – яке було лікування у братів/сестер?','Якщо так – яке було лікування у братів/сестер?',
                         /*1.В. Інформація по голодомору*/
-                        'Голодувала ваша сім`я в 1932-33, 1941-45 і / або 1946-47 роках:','Якщо сім`я голодувала - вказати період голодування сім`ї','Мати:','Батько:',
-                        'Рідні брати/сестри:','Померли чи мати / батько / рідні брати або сестри з причин, пов`язаних з голодом в 1932-33, 1941-45 і / або 1946-47 році:',
-                        'Пережили ви період голоду в 1932-33, 1941-45 і / або 1946-47 роках (Голодували ви?). Якщо так - вказати період:',
+                        'Голодувала ваша сім`я в 1932-33, 1941-45 і / або 1946-47 роках:','Мати:','Батько:','Рідні брати/сестри:'];
+
+               /*if($_POST['golodSem']=='Так'){
+                    if(!empty($_POST['golodM'])){
+                        array_push($masName,'Мати:');
+                    }
+                    if(!empty($_POST['golodO'])){
+                        array_push($masName,'Батько:');
+                    }
+                    if(!empty($_POST['golodSis'])){
+                        array_push($masName,'Рідні брати/сестри:');
+                    }
+
+
+                }*/
+
+
+                array_push($masName,'Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з голодом в 1932-33, 1941-45 і / або 1946-47 році:',
+                        'Чи голодували Ви особисто у періоди голоду в  1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати період:',
                         /*2.А. Антропометричні дані*/
-                        'Вага (кг) з', 'Вага (кг) по','Зріст (см) з','Зріст (см) по','Об`єм талії (см) з', 'Об`єм талії (см) по','Окружність стегон (см) з','Окружність стегон (см) по',
+                        'Вага (кг) з', 'Вага (кг) по','Зріст (см) з','Зріст (см) по','Окружність талії (см) з', 'Окружність талії (см) по','Окружність стегон (см) з','Окружність стегон (см) по',
                        'Індекс маси тіла (кг/м 2 ) з', 'Індекс маси тіла (кг/м 2 ) по','Систолічний артеріальний тиск (сидячи) 0` з','Систолічний артеріальний тиск (сидячи) 0` по','Систолічний артеріальний тиск (сидячи) 10` з','Систолічний артеріальний тиск (сидячи) 10` по','Діастолічний артеріальний тиск (сидячи) 0` з','Діастолічний артеріальний тиск (сидячи) 0` по','Діастолічний артеріальний тиск (сидячи) 10` з','Діастолічний артеріальний тиск (сидячи) 10` по',
                         /*2.Б. Спосіб життя*/
                         'Ви палите?','Якщо курите, як часто?','Кількість викурених сигарет за 1 день з','Кількість викурених сигарет за 1 день по','Як часто Ви вживаєте алкоголь?',
@@ -623,28 +764,37 @@ if(isset($_SESSION['user'])){
                         'Тип діабету:','Рік постановки діагнозу з:','Рік постановки діагнозу по:','Вік дебюту діабету (років) з:','Вік дебюту діабету (років) по:',
                        'Тривалість діабету (років) з:','Тривалість діабету (років) по:',
                         /*2.Г. Хвороби, що супруводжують:*/
-                        'Інфекційні:','Аутоімунні (вказати):','Вроджені вади (вказати):','Інші ендокринні (вказати):','Інша патологія (вказати):','Класифікація супутніх захворювань по DRG:',
+                        'Інфекційні:','Аутоімунні (вказати):','Вроджені вади (вказати):','Інші ендокринні (вказати):',
+                    'Інша патологія (вказати):','Класифікація супутніх захворювань по DRG:','ЧИ хворієте Ви на онкологічні захворювання?','Вкажіть вид онкозахворювання',
+                       'Дата постановки діагнозу онкозахворювання з','Дата постановки діагнозу онкозахворювання по');
+                   if($_POST['OnkoLek']!='') {
+                          array_push($masName,'Якщо так - лікування онкозахворювання (Препарати - назва препаратів, група)?');
+                    }
                         /*3.А. Обстеження серцево-судинної системи*/
-                        'Чи був у вас інфаркт?'];
+                array_push($masName,   'Чи був у вас інфаркт?');
                     if($_POST['infarkt']=='Так'){
-                         array_push($masName,'Введіть кількість інфарктів' );
-                         $kol=$_POST['kolinf'];
 
-                             array_push($masName,'Рік інфаркту  з');
-                             array_push($masName,'Рік інфаркту  по');
+                         array_push($masName,'Введіть кількість інфарктів' );
+                         if(!empty($_POST['kolinf'])) {
+                             $kol = $_POST['kolinf'];
+
+                             array_push($masName, 'Рік інфаркту  з');
+                             array_push($masName, 'Рік інфаркту  по');
+                         }
 
                     }
  array_push($masName,'Чи був у вас інсульт?');
-                     if($_POST['insult']=='Так'){
+                     if($_POST['insult']=='Так' ){
                          array_push($masName,'Введіть кількість інсультів' );
                          $kol=$_POST['kolins'];
-
-                         array_push($masName,'Рік інсульту  з');
-                             array_push($masName,'Рік інсульту  по');
+  if(!empty($_POST['kolins'])) {
+      array_push($masName, 'Рік інсульту  з');
+      array_push($masName, 'Рік інсульту  по');
+  }
 
                     }
                    array_push($masName,'Хронічна серцева недостатність - вказати стадію');
-                     if($_POST['hronSerd']!='--'){
+                     if($_POST['hronSerd']!='--' and $_POST['hronSerd']!=='Ні'){
                          array_push($masName,'Дата постановки (рік) з');
                          array_push($masName,'Дата постановки (рік) по');
                      }
@@ -658,18 +808,18 @@ if(isset($_SESSION['user'])){
                         array_push($masName,'Дата постановки по');
                     }
 
-                    array_push($masName,'Непролиферативная ретинопатія?');
+                    array_push($masName,'Непроліферативна ретинопатія?');
                     if($_POST['diabNep']=='Так'){
                         array_push($masName,'Дата постановки з');
                         array_push($masName,'Дата постановки по');
                     }
-                    array_push($masName,'Препроліфератівная ретинопатія?');
+                    array_push($masName,'Препроліферативна ретинопатія?');
                     if($_POST['diabPrep']=='Так'){
                         array_push($masName,'Дата постановки з');
                         array_push($masName,'Дата постановки по');
                     }
                     array_push($masName,
-                        'Пролиферативная ретинопатія?');
+                        'Проліферативна ретинопатія?');
                     if($_POST['diabPrep2']=='Так'){
                         array_push($masName,'Дата постановки з');
                         array_push($masName,'Дата постановки по');
@@ -700,7 +850,7 @@ if(isset($_SESSION['user'])){
                         array_push($masName,'Дата постановки з');
                         array_push($masName,'Дата постановки по');
                     }
-                    array_push($masName,'На сьогодні лікування ДР:','Дані OST:',
+                    array_push($masName,'На сьогодні лікування ДР:','Дані OCT:',
                         /*5.А. Обстеження нирок*/
                         'Дата обстеження нирок з: дд-мм-рр','Дата обстеження нирок по: дд-мм-рр','Діабетична нефропатія?');
                     if($_POST['diabNefro']=='Так'){
@@ -742,7 +892,7 @@ if(isset($_SESSION['user'])){
                         'Дата обстеження стопи: дд-мм-рр? з','Дата обстеження стопи: дд-мм-рр? по','Зниження температури?','Порушення тактильної чутливості?',
                         'Порушення вібраційної чутливості?','Зниження / відсутність рефлексів?',
                         'Наявність виразок?','Нагноєння виразок?','Пульс на стопі?','Шунтування / ангіопластика?',
-                        'Перемежовуються кульгавість?','Ампутація?');
+                        'Синдром переміжної кульгавості?','Ампутація?');
                     if($_POST['Ampyt']!='Ні' and $_POST['Ampyt']!='--'){
                         array_push($masName,'Локалізація ампутації?','Рік ампутації з','Рік ампутації по');
                     }
@@ -751,27 +901,26 @@ if(isset($_SESSION['user'])){
 
                         /*7.А. Лабораторні дослідження*/
                     array_push($masName,'Дата обстеження з: дд-мм-рр','Дата обстеження по: дд-мм-рр', 'Ви зараз натщесерце?',
-                        'О котрій годині був останній прийом їжі (напередодні ввечері) з?','О котрій годині був останній прийом їжі (напередодні ввечері)? по','Показник, nmol / l з','Показник, nmol / l по','Дата, дд-мм-рр з','Дата, дд-мм-рр по','Глікозилювання гемоглобін % з','Глікозилювання гемоглобін % по','Глікозилювання гемоглобін pmol/pmol з','Глікозилювання гемоглобін pmol/pmol по','Дата Глікозилювання гемоглобіна, дд-мм-рр з','Дата Глікозилювання гемоглобіна, дд-мм-рр по',
+                        'О котрій годині був останній прийом їжі (напередодні ввечері) з?','О котрій годині був останній прийом їжі (напередодні ввечері)? по','Показник, ммоль/л з','Показник, ммоль/л по','Дата, дд-мм-рр з','Дата, дд-мм-рр по','Глікований гемоглобін % з','Глікований гемоглобін % по','Глікований гемоглобін pmol/pmol з','Глікований гемоглобін pmol/pmol по','Дата Глікований гемоглобін, дд-мм-рр з','Дата Глікований гемоглобін, дд-мм-рр по',
                         'Загальний аналіз крові (дата) з?','Загальний аналіз крові (дата) по?','Еритроцити з','Еритроцити по','Гемоглобін з','Гемоглобін по','Лейкоцити (кількість) з','Лейкоцити (кількість) по','Нейтрофіли (абс к-ть) з','Нейтрофіли (абс к-ть) по','Моноцити (абс к-ть) з','Моноцити (абс к-ть) по',
                         'Лімфоцити (абс к-во) з','Лімфоцити (абс к-во) по','Тромбоцити (абс к-во) з','Тромбоцити (абс к-во) по','Тромбоцити, MPV з','Тромбоцити, MPV по','Інше (показник) з','Інше (показник) по',
                         'Показник, мкмоль / л з', 'Показник, мкмоль / л по','Дата, дд-мм-рр з','Дата, дд-мм-рр по','Показник, мкмоль / л з','Показник, мкмоль / л по','Дата, дд-мм-рр з','Дата, дд-мм-рр по','Кліренс креатиніну (СКФ, швидкості клубочкової фільтрації) з','Кліренс креатиніну (СКФ, швидкості клубочкової фільтрації) по','Протеїнурія','Останній вимір, мг / сут з','Останній вимір, мг / сут по',
                         'Дата, дд-мм-рр з','Дата, дд-мм-рр по','Мікроальбумінурія');
                     if($_POST['Mikroalmb']=='Так'){
-                        array_push($masName,'Якщо так – показник, мг/л','Дата з','Дата по');
+                        array_push($masName,'Якщо так – показник, мг/л з','Якщо так – показник, мг/л по','Дата з','Дата по');
                     }
 
                     array_push($masName,'Лабораторний аналіз ліпідів в крові (дата) з:','Лабораторний аналіз ліпідів в крові (дата) по:',
                         'Холестерин (показник) з', 'Холестерин (показник) по','Ліпіди високої щільності (Показник) з','Ліпіди високої щільності (Показник) по','Ліпіди низької щільності (показник) з','Ліпіди низької щільності (показник)по',
                         'Тригліцериди (показник) з','Тригліцериди (показник) по','Аспартатамінотрансфераза (АСТ) з','Аспартатамінотрансфераза (АСТ) по','Аланінамінотрансфераза (АСТ) з','Аланінамінотрансфераза (АСТ) по','С-реактивний білок з','С-реактивний білок по',
-                        'C-пептид, показник з:','C-пептид, показник по:','C-пептид, одиниця виміру з:','C-пептид, одиниця виміру по:','pmol/l з','pmol/l по','nmol/l з:','nmol/l по:','C-пептід, Дата: дд-мм-рр: з','C-пептід, Дата: дд-мм-рр: по',
+                        'C-пептид, показник з:','C-пептид, показник по:','C-пептид, одиниця виміру з:','C-пептид, одиниця виміру по:','C-пептид, одиниця виміру нг/мл: з','C-пептид, одиниця виміру нг/мл: по','C-пептид, одиниця виміру nmol/l:  з','C-пептид, одиниця виміру nmol/l: по','C-пептід, Дата: дд-мм-рр: з','C-пептід, Дата: дд-мм-рр: по', 'AT-GAD: з','AT-GAD: по','AT-GAD дата: з','AT-GAD дата: по',
                         /*7.Б. Біоматеріал*/
                         'Сиворотка?','Плазма?','Кров на ДНК?','Кров на РНК?','Слина?','Біоптат кожи?','Примітки при заборі крові (зрив вакуумної пробки, тощо)',
                         /*8.А. Лікування*/
                         'Лікування цукрового діабету','Лікування діабету: інсулін (препарат, доза прийому, кратність)','Дата початку інсулінотерапії (дд- мм-рр) з','Дата початку інсулінотерапії (дд- мм-рр) по','Лікування діабету: таблетки','Лікування гіпертонії (препарат, доза прийому, кратність)',
-                        'Лікування гіперліпідемії','Хворієте (хворіли) ви онкозахворюваннями?','Вкажіть вид онкозахворювання',
-                        'Дата постановки діагнозу онкозахворювання з','Дата постановки діагнозу онкозахворювання по','Якщо так - лікування онкозахворювання (Препарати - назва препаратів, група)?',
-                       /* 9.А. Геніаологічне дерево*/
-                        'Геніаологічне дерево'
+                        'Лікування гіперліпідемії',
+                       /* 9.А. Генеалогічне дерево*/
+                        'Генеалогічне дерево'
 
                     );
 
@@ -786,10 +935,10 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane active" id="home">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>1.А. Загальні дані</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td><label>Прізвище </label></td>
-                                                <td><input class="form-control" type="text" name="fname"
+                                                <td><label class="lb1">Прізвище </label></td>
+                                                <td  style="width: 100%"><input class="form-control" type="text" name="fname"
                                                            placeholder="" value="<? echo $_POST['fname'];?>"></td>
                                                 <td></td>
                                             </tr>
@@ -842,9 +991,9 @@ if(isset($_SESSION['user'])){
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;flex-direction: row; justify-content: space-between;align-items: flex-end;">
+                                                <td>
                                                     <label>Стать</label></td>
-                                                <td><select name="sex" class="form-control" style="width: 80%;">
+                                                <td style="width: 100%;"><select name="sex" class="form-control" >
                                                         <option value="--"  <? if($_POST['sex']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Чоловіча"  <? if($_POST['sex']=='Чоловіча'){ echo "selected";}?>>Чоловіча</option>
                                                         <option value="Жіноча"    <? if($_POST['sex']=='Жіноча'){ echo "selected";}?>>Жіноча</option>
@@ -924,7 +1073,7 @@ if(isset($_SESSION['user'])){
                                                         <option value="Не працюю, відпустка по хворобі"  <? if($_POST['work']=='Не працюю, відпустка по хворобі'){ echo "selected";}?>>Не працюю,
                                                             відпустка по хворобі
                                                         </option>
-                                                        <option value="На пенції"  <? if($_POST['work']=='На пенції'){ echo "selected";}?>>На пенсії</option>
+                                                        <option value="На пенсії"  <? if($_POST['work']=='На пенсії'){ echo "selected";}?>>На пенсії</option>
                                                         <option value="Працюю, часткова зайнятість" <? if($_POST['work']=='Працюю, часткова зайнятість'){ echo "selected";}?>>Працюю, часткова
                                                             зайнятість
                                                         </option>
@@ -1001,8 +1150,8 @@ if(isset($_SESSION['user'])){
                                                             <input type="hidden" value="" name="vesR">
                                                             <td><input style='position: static;' type="radio"
                                                                        name="vesR" class="form-control"
-                                                                       value="Низька (при нарожденні я був(ла) худим(ой))"
-                                                                    <? if( $_POST['vesR']=='Низька (при нарожденні я був(ла) худим(ой))'){echo 'checked';}?>>
+                                                                       value="Мала (при народженні я був(ла) дуже маленький(а))"
+                                                                    <? if( $_POST['vesR']=='Мала (при народженні я був(ла) дуже маленький(а))'){echo 'checked';}?>>
                                                             </td>
                                                             <td><label>Низька (при нарожденні я був(ла)
                                                                     худим(ой))</label></td>
@@ -1025,6 +1174,10 @@ if(isset($_SESSION['user'])){
                                                             </td>
                                                             <td><label>Я був (була) при народженні великим
                                                                     малюком</label></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input style='position: static;' type="radio" name="vesR" class="form-control" value="був одним з близнюків" <? if( $_POST['vesR']=='був одним з близнюків'){echo 'checked';}?>></td>
+                                                            <td><label>був одним з близнюків</label></td>
                                                         </tr>
                                                         <tr>
                                                             <td><input style='position: static;' type="radio"
@@ -1055,9 +1208,7 @@ if(isset($_SESSION['user'])){
                                                 </td>
                                                 <td></td>
                                             </tr>
-                                                </td>
-                                                <td></td>
-                                            </tr>
+
 
                                         </table>
                                     </fieldset>
@@ -1066,13 +1217,13 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane" id="profile">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>1.Б. Сімейний анамнез</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr style="background: #295b8e; color:white;">
                                                 <td colspan="3"><label>Батько:</label></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Прізвище</label></td>
-                                                <td><input class="form-control" type="text" name="fnameO"
+                                                <td><label class="lb1">Прізвище</label></td>
+                                                <td style="width: 100%"><input class="form-control" type="text" name="fnameO"
                                                            placeholder=""  value="<? echo $_POST['fnameO'];?>"></td>
                                             </tr>
                                             <tr>
@@ -1125,7 +1276,7 @@ if(isset($_SESSION['user'])){
                                                     <label>Дата народження</label></td>
                                                 <td>
                                                     з <input type="date" name="datBOtez0" id="datBOtez0" class="form-control" value="<? echo $_POST['datBOtez0'];?>" onchange="dat(this.value,this.id)">
-                                                    по <input type="date" name="datBOtez" id="datBOtez" class="form-control" value="<? echo $_POST['datBOtez'];?>">
+                                                    по <input type="date" name="datBOtez" id="datBOtez"  min="<?echo $_POST['datBOtez0'];?>" class="form-control" value="<? echo $_POST['datBOtez'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1147,7 +1298,7 @@ if(isset($_SESSION['user'])){
                                             <tr>
                                                 <td>
                                                     <label>Чи хворів на діабет?</label>
-                                                    <label class="hidd1" id="h2">Якщо так - яке було лікування у
+                                                    <label class="hidd" id="h2">Якщо так - яке було лікування у
                                                         батька?</label>
                                                 </td>
                                                 <td>
@@ -1236,8 +1387,8 @@ if(isset($_SESSION['user'])){
                                                 <td>
                                                     <label>Дата народження</label></td>
                                                 <td>
-                                                    з <input type="date" name="datBM0" class="form-control" value="<? echo $_POST['datBM'];?>">
-                                                    по <input type="date" name="datBM" class="form-control" value="<? echo $_POST['datBM'];?>">
+                                                    з <input type="date" name="datBM0" class="form-control" value="<? echo $_POST['datBM'];?>"  onchange="dat(this.value,this.id)">
+                                                    по <input type="date" name="datBM" min="<?echo $_POST['datBM0'];?>" class="form-control" value="<? echo $_POST['datBM'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1258,7 +1409,7 @@ if(isset($_SESSION['user'])){
                                             <tr>
                                                 <td>
                                                     <label>Чи хворіла на діабет?</label>
-                                                    <label class="hidd1" id="h8">Якщо так - яке було лікування у
+                                                    <label class="hidd" id="h8">Якщо так - яке було лікування у
                                                         матері?</label>
                                                 </td>
                                                 <td>
@@ -1331,74 +1482,114 @@ if(isset($_SESSION['user'])){
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="messages">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>1.В. Інформація по голодомору</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <h4>1.В. Інформація щодо голодомору</h4>
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Голодувала ваша сім'я в 1932-33, 1941-45
+                                                    <label class="lb1">Голодувала ваша сім'я в 1932-33, 1941-45
                                                         і / або 1946-47 роках:</label>
-                                                    <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
+                                                   <!-- <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
                                                         голодування сім`ї
-                                                    </label>
+                                                    </label>-->
                                                 </td>
-                                                <td>
+                                                <td style="width: 100%">
                                                     <select name="golodSem" class="form-control" onchange="ss6(this)">
                                                         <option value="--" <? if($_POST['golodSem']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['golodSem']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['golodSem']=='Так'){ echo "selected";}?>>Так</option>
                                                         <option value="Не знаю" <? if($_POST['golodSem']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
                                                     </select>
-                                                    <input type="text" id="h13" class="form-control hidd"
-                                                           name="periodGolod" placeholder="" value="<? echo $_POST['periodGolod'];?>">
+
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="mamGolod">
                                                 <td>
                                                     <label>Мати:</label></td>
                                                 <td>
-                                                    <select name="golodM" class="form-control">
-                                                        <option value="--" <? if($_POST['golodM']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodM']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodM']=='1941-45'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodM']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodM']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masM=explode(";",$_POST['golodM'])?>
+                                                    <table <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodM"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox" onchange="chch(this)" id="g1m" value="1932-33" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox" onchange="chch(this)" id="g2m" value="1941-45" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox" onchange="chch(this)" id="g3m" value="1946-47" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table>
+                                                    <input type="hidden" name="golodM" id="golodM" <? if(isset($_POST['golodM'])){
+                                                        echo "value='{$_POST['golodM']}'";
+                                                    };?>>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="papGolod">
                                                 <td>
                                                     <label>Батько:</label></td>
                                                 <td>
-                                                    <select name="golodO" class="form-control">
-                                                        <option value="--" <? if($_POST['golodO']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodO']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodO']=='1941-45'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodO']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodO']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masO=explode(";",$_POST['golodO'])?>
+                                                    <table <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodO"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g1o" value="1932-33" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g2o" value="1941-45" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g3o" value="1946-47" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table> <input type="hidden" name="golodO" id="golodO"
+                                                        <? if(isset($_POST['golodO'])){
+                                                            echo "value='{$_POST['golodO']}'";
+                                                        };?>>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="bratGolod">
                                                 <td>
                                                     <label>Рідні брати/сестри:</label></td>
                                                 <td>
 
-                                                    <select name="golodSister" class="form-control">
-                                                        <option value="--" <? if($_POST['golodSister']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodSister']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodSister']=='1941-45'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodSister']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodSister']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masS=explode(";",$_POST['golodSis'])?>
+                                                    <table <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodS"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g1s" value="1932-33" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g2s" value="1941-45" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g3s" value="1946-47" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table> <input type="hidden" name="golodSis" id="golodSis"
+                                                        <? if(isset($_POST['golodSis'])){
+                                                            echo "value='{$_POST['golodSis']}'";
+                                                        };?>>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Померли чи мати / батько / рідні брати
-                                                        або сестри з причин, пов`язаних з
+                                                    <label>Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з
                                                         голодом в 1932-33, 1941-45 і / або
                                                         1946-47 році:</label></td>
                                                 <td>
@@ -1415,9 +1606,8 @@ if(isset($_SESSION['user'])){
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Пережили ви період голоду в
-                                                        1932-33, 1941-45 і / або 1946-47 роках
-                                                        (Голодували ви?). Якщо так - вказати
+                                                    <label>Чи голодували Ви особисто у періоди голоду в
+                                                        1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати
                                                         період:</label></td>
                                                 <td>
                                                     <select name="death2" class="form-control">
@@ -1438,10 +1628,10 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane" id="settings">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.А. Антропометричні дані</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td><label>Вага (кг)</label></td>
-                                                <td>
+                                                <td><label class="lb1">Вага (кг)</label></td>
+                                                <td style="width: 100%">
 
                                                     з <input class="form-control" type="text" name="ves0" placeholder=""  value="<? echo $_POST['ves0'];?>">
 
@@ -1458,7 +1648,7 @@ if(isset($_SESSION['user'])){
                                                            placeholder="" value="<? echo $_POST['rost'];?>"></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Об`єм талії (см)</label></td>
+                                                <td><label>Окружність талії (см)</label></td>
                                                 <td>з <input class="form-control" type="text" name="tal0" placeholder="" value="<? echo $_POST['tal0'];?>">
                                                     по <input class="form-control" type="text" name="tal" placeholder="" value="<? echo $_POST['tal'];?>">
 
@@ -1512,22 +1702,22 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane" id="zhitt">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.Б. Спосіб життя</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
 
                                             <tr>
-                                                <td><label>Ви палите?</label></td>
-                                                <td>
-                                                    <select class="form-control" name="smouk">
+                                                <td><label class="lb1">Ви палите?</label></td>
+                                                <td style="width: 100%">
+                                                    <select class="form-control" name="smouk" onchange="showPal(this.value)">
                                                         <option value="--" <? if($_POST['smouk']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['smouk']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['smouk']=='Так'){ echo "selected";}?>>Так</option>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['smouk']!='Так'){echo 'class="showPal"';}?> id="chastoPal">
                                                 <td><label>Якщо курите, як часто?</label></td>
                                                 <td>
-                                                    <select class="form-control" name="smoukTime">
+                                                    <select class="form-control" name="smoukTime" id="smoukTime">
                                                         <option value="--" <? if($_POST['smoukTime']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Кожен день" <? if($_POST['smoukTime']=='Кожен день'){ echo "selected";}?>>Кожен день</option>
                                                         <option value="Кілька днів на тиждень" <? if($_POST['smoukTime']=='Кілька днів на тиждень'){ echo "selected";}?>>Кілька днів на тиждень
@@ -1535,13 +1725,13 @@ if(isset($_SESSION['user'])){
                                                         <option value="Дуже рідко" <? if($_POST['smoukTime']=='Дуже рідко'){ echo "selected";}?>>Дуже рідко</option>
                                                     </select></td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['smouk']!='Так'){echo 'class="showPal"';}?> id="kolPal">
                                                 <td><label>Кількість викурених сигарет за
                                                         1 день</label></td>
                                                 <td>з<input class="form-control" type="text" name="smokeKol0"
-                                                           placeholder="" value="<? echo $_POST['smokeKol0'];?>">
+                                                           placeholder="" value="<? echo $_POST['smokeKol0'];?>" id="smoukkol">
                                                     по<input class="form-control" type="text" name="smokeKol"
-                                                           placeholder="" value="<? echo $_POST['smokeKol'];?>">
+                                                           placeholder="" value="<? echo $_POST['smokeKol'];?>" id="smoukkol1">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -1571,15 +1761,15 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane" id="hist">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.В. Історія хвороби:</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Тип діабету:</label>
+                                                    <label class="lb1">Тип діабету:</label>
 
                                                 </td>
-                                                <td>
-                                                    <select name="typeDiab" class="form-control">
-                                                        <option value="--"  <? if($_POST['typeDiab']=='--'){ echo "selected";}?>>--</option>
+                                                <td style="width: 100%">
+                                                    <select name="typeDiab" class="form-control" onchange="showDiab(this.value)">
+                                                        <option value=""  <? if($_POST['typeDiab']==''){ echo "selected";}?>>--</option>
                                                         <option value="ЦД 1 типу" <? if($_POST['typeDiab']=='ЦД 1 типу'){ echo "selected";}?>>ЦД 1 типу</option>
                                                         <option value="ЦД 2 типу" <? if($_POST['typeDiab']=='ЦД 2 типу'){ echo "selected";}?>>ЦД 2 типу</option>
                                                         <option value="Латентний аутоімунний (LADA)" <? if($_POST['typeDiab']=='Латентний аутоімунний (LADA)'){ echo "selected";}?>>Латентний
@@ -1595,29 +1785,29 @@ if(isset($_SESSION['user'])){
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['typeDiab']=='--' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabRik">
                                                 <td>
                                                     <label>Рік постановки діагнозу:</label>
                                                 </td>
                                                 <td>
-                                                    з<input type="text" name="yearD0" class="form-control" value="<? echo $_POST['yearD0'];?>">
-                                                    по<input type="text" name="yearD" class="form-control" value="<? echo $_POST['yearD'];?>">
+                                                    з<input type="text" name="yearD0" class="form-control" value="<? echo $_POST['yearD0'];?>" id="yearD">
+                                                    по<input type="text" name="yearD" class="form-control" value="<? echo $_POST['yearD'];?>" id="yearD1">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['typeDiab']=='' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabVik">
                                                 <td>
                                                     <label>Вік дебюту діабету (років):</label></td>
                                                 <td>
-                                                    з<input type="text" name="vekD0" class="form-control" value="<? echo $_POST['vekD0'];?>">
-                                                    по<input type="text" name="vekD" class="form-control" value="<? echo $_POST['vekD'];?>">
+                                                    з<input type="text" name="vekD0" class="form-control" value="<? echo $_POST['vekD0'];?>" id="vekD">
+                                                    по<input type="text" name="vekD" class="form-control" value="<? echo $_POST['vekD'];?>" id="vekD1">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['typeDiab']=='' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabkol">
                                                 <td>
                                                     <label>Тривалість діабету (років):</label></td>
                                                 <td>
-                                                    з<input type="text" name="longD0" class="form-control" value="<? echo $_POST['longD0'];?>">
-                                                    по<input type="text" name="longD" class="form-control" value="<? echo $_POST['longD'];?>">
+                                                    з<input type="text" name="longD0" class="form-control" value="<? echo $_POST['longD0'];?>" id="longD">
+                                                    по<input type="text" name="longD" class="form-control" value="<? echo $_POST['longD'];?>" id="longD1">
                                                 </td>
                                             </tr>
 
@@ -1627,13 +1817,13 @@ if(isset($_SESSION['user'])){
                                 <div role="tabpanel" class="tab-pane" id="bol">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.Г. Хвороби, що супруводжують:</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Інфекційні:</label>
+                                                    <label class="lb1">Інфекційні:</label>
 
                                                 </td>
-                                                <td colspan="2">
+                                                <td colspan="2" style="width: 100%">
                                                     <textarea name="inf" class="form-control" ><? echo $_POST['inf'];?></textarea>
 
                                                 </td>
@@ -1688,16 +1878,67 @@ if(isset($_SESSION['user'])){
 
                                                 </td>
                                             </tr>
+                                           <tr>
+                                               <td><label class="lb1">ЧИ хворієте Ви на онкологічні захворювання?</label>
+                                               </td>
+                                               <td>
+                                                   <select name="Onko" class="form-control" onchange="onko(this.value)">
+                                                       <option value="--" <? if($_POST['Onko']=='--'){ echo "selected";}?>>--</option>
+                                                       <option value="Ні" <? if($_POST['Onko']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                       <option value="Так" <? if($_POST['Onko']=='Так'){ echo "selected";}?>>Так</option>
+
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                           <tr <? if($_POST['Onko']!='Так'){echo 'class="onkoshow"';}?> id="vidOnkoz">
+                                               <td>
+                                                   <label class="lb1">Вкажіть вид онкозахворювання</label></td>
+                                               <td>
+                                                   <input type="text" name="VidOnko" id="vidOnko" class="form-control" value="<? echo $_POST['VidOnko'];?>">
+                                               </td>
+                                           </tr>
+                                           <tr <? if($_POST['Onko']!='Так'){echo 'class="onkoshow"';}?> id="datOnko">
+                                               <td>
+                                                   <label class="lb1">Дата постановки діагнозу
+                                                       онкозахворювання</label></td>
+                                               <td>
+                                                   з<input type="date" name="dateOnko0" id="dateOnko" class="form-control" value="<? echo $_POST['dateOnko0'];?>">
+                                                   по<input type="date" name="dateOnko" id="dateOnko1" class="form-control" value="<? echo $_POST['dateOnko'];?>">
+                                               </td>
+                                           </tr>
+                                           <tr <? if($_POST['Onko']!='Так'){echo 'class="onkoshow"';}?> id="likOnko">
+                                               <td><label class="lb1">Якщо так - лікування онкозахворювання
+                                                       (Препарати - назва препаратів,
+                                                       група)?</label>
+
+                                               </td>
+                                               <td>
+                                                   <select name="OnkoLek" class="form-control" id="onkoLek">
+                                                       <option value="--" <? if($_POST['OnkoLek']=='--'){ echo "selected";}?>>--</option>
+                                                       <option value="Ні" <? if($_POST['OnkoLek']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                       <option value="Хіміотерапія" <? if($_POST['OnkoLek']=='Хіміотерапія'){ echo "selected";}?>>Хіміотерапія</option>
+                                                       <option value="Імунотерапія" <? if($_POST['OnkoLek']=='Імунотерапія'){ echo "selected";}?>>Імунотерапія</option>
+                                                       <option value="Гормональна терапія" <? if($_POST['OnkoLek']=='Гормональна терапія'){ echo "selected";}?>>Гормональна терапія</option>
+                                                       <option value="Комбінована (хіміо + тергетная терапія)" <? if($_POST['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){ echo "selected";}?>>
+                                                           Комбінована (хіміо + тергетная терапія)
+                                                       </option>
+                                                       <option value="Таргетная терапія" <? if($_POST['OnkoLek']=='Таргетная терапія'){ echo "selected";}?>>Таргетная терапія</option>
+                                                       <option value="Хірургічне" <? if($_POST['OnkoLek']=='Хірургічне'){ echo "selected";}?>>Хірургічне</option>
+                                                       <option value="Інші" <? if($_POST['OnkoLek']=='Інші'){ echo "selected";}?>>Інші</option>
+                                                   </select>
+                                               </td>
+
+                                           </tr>
                                         </table>
                                     </fieldset>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="ser">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>3.А. Обстеження серцево-судинної системи</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label>Чи був у вас інфаркт?</label></td>
-                                                <td>
+                                                <td><label class="lb1">Чи був у вас інфаркт?</label></td>
+                                                <td style="width: 100%;">
                                                     <select name="infarkt" class="form-control"
                                                             onchange="addIn(this.value)">
                                                         <option value="--"  <? if($_POST['infarkt']=='--'){ echo "selected";}?>>--</option>
@@ -1721,7 +1962,7 @@ echo "</select>
 
  
   </span>";
-                                                  ?>
+                                      if($_POST['kolinf']>0) {           ?>
 
 
                                                     <table id="ttt" width="400px">
@@ -1734,11 +1975,11 @@ echo "</select>
                                                             $nom0='datInf0';
 
                                                             ?>
-                                                            <tr id="rowDat<?echo $i;?>"><td><label id="datInfL<?echo $i;?>">Рік інфаркту з</label></td>
-                                                                <td><input type="text" name="datInf<? echo $i;?>" value='<? echo $_POST[$nom];?>' id="datInf<?echo $i;?>"
-                                                                           class="form-control"></td>
-                                                                <td><label id="datInfL0<?echo $i;?>">Рік інфаркту по</label></td>
-                                                                <td><input type="text" name="datInf0<? echo $i;?>" value='<? echo $_POST[$nom0];?>' id="datInf0<?echo $i;?>"
+                                                            <tr id="rowDat<?echo $i;?>"><td><label id="datInfL<?echo $i;?>">Рік інфаркту з</label>
+                                                                <input type="text" name="datInf<? echo $i;?>" value='<? echo $_POST[$nom];?>' id="datInf<?echo $i;?>"
+                                                                       class="form-control"></td></tr><tr id="rowDatk<?echo $i;?>">
+                                                            <td><label id="datInfL0<?echo $i;?>">Рік інфаркту по</label>
+                                                                <input type="text" name="datInf0<? echo $i;?>" value='<? echo $_POST[$nom0];?>' id="datInf0<?echo $i;?>"
                                                                            class="form-control"></td>
                                                             </tr>
 
@@ -1747,6 +1988,13 @@ echo "</select>
 
 
                                                 <?}
+                                                    else{
+
+                                                            ?>
+                                                            <table id="ttt" width="400px"><tbody></tbody></table><?
+
+
+                                                    }}
                                                 else{
                                                     ?>
                                                     <span id='ki' style='display: flex;'>
@@ -1773,6 +2021,7 @@ echo "</select>
 
                                                     <?php
                                                     if( $_POST['insult']=='Так'){
+
                                                     echo "<span id='kiIns' style='display: flex;'>
 <label id='kolinsL'>Введіть кількість інсультів</label></span>
 <span id='kiIns2' style='display: flex;'>
@@ -1784,8 +2033,8 @@ echo "</select>
                                                     <?
 echo "</select>
 
- </span>";
-                                                    ?>
+ </span>";  if($_POST['kolins']>0){
+                                                 ?>
                                                     <table id="tttIns" width="400px">
                                                         <?
                                                         $inf=explode(';',$_POST['datIns']);
@@ -1794,10 +2043,10 @@ echo "</select>
                                                             $nom='datIns';
                                                             $nom0='datIns0';
                                                             ?>
-                                                            <tr id="rowDatIns<?echo $i;?>"><td><label id="datInsL<?echo $i;?>">Рік інсульту з</label></td>
-                                                                <td><input type="text" name="datIns<? echo $i;?>" value='<? echo $_POST[$nom];?>' id="datIns<?echo $i;?>" class="form-control"></td>
-                                                                <td><label id="datInsL0<?echo $i;?>">Рік інсульту по</label></td>
-                                                                <td><input type="text" name="datIns0<? echo $i;?>" value='<? echo $_POST[$nom0];?>' id="datIns0<?echo $i;?>" class="form-control"></td>
+                                                            <tr id="rowDatIns<?echo $i;?>"><td><label id="datInsL<?echo $i;?>">Рік інсульту з</label>
+                                                             <input type="text" name="datIns<? echo $i;?>" value='<? echo $_POST[$nom];?>' id="datIns<?echo $i;?>" class="form-control"></td>
+                                                            </tr><tr id="rowDatIns1<?echo $i;?>"><td><label id="datInsL0<?echo $i;?>">Рік інсульту по</label>
+                                                                <input type="text" name="datIns0<? echo $i;?>" value='<? echo $_POST[$nom0];?>' id="datIns0<?echo $i;?>" class="form-control"></td>
 
                                                             </tr>
 
@@ -1805,7 +2054,15 @@ echo "</select>
                                                     </table>
                                                 </td>
 
-                                                    <? } else{
+                                                    <?}else{
+     ?>
+                                                        <table id="tttIns" width="400px"><tbody></tbody></table>
+     <?
+
+                                                    }
+
+                                                    }
+                                                    else{
                                                     ?>
                                                     <span id='kiIns' style='display: flex;'>
                                                         </span>
@@ -1869,20 +2126,20 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="diab">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>4.А. Обстеження очей</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Дата обстеження очного
+                                                <td><label class="lb1">Дата обстеження очного
                                                         дна: дд-мм-рр</label>
 
                                                 </td>
-                                                <td>з<input type="date" class="form-control" name="glaz0" value="<? echo $_POST['glaz0'];?>">
+                                                <td style="width: 100%;">з<input type="date" class="form-control" name="glaz0" value="<? echo $_POST['glaz0'];?>">
                                                     по<input type="date" class="form-control" name="glaz" value="<? echo $_POST['glaz'];?>"></td>
 
                                             </tr>
                                             <tr>
-                                                <td style="display: flex; width: 500px;"><label class="lb1">Діабетична
+                                                <td><label class="lb1">Діабетична
                                                         ретинопатія?</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     <select name="diabDiab" class="form-control"
                                                             onchange="addDiab(this.value)">
                                                         <option value="--"  <? if($_POST['diabDiab']=='--'){ echo "selected";}?>>--</option>
@@ -1914,14 +2171,16 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Непролиферативная
+                                                <td><label class="lb1">Непроліферативна
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabNep" class="form-control"
                                                             onchange="addNep(this.value)">
                                                         <option value="--" <? if($_POST['diabNep']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['diabNep']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['diabNep']=='Так'){ echo "selected";}?>>Так</option>
+                                                        <option value="Так - легкого ступеню" <? if($_POST['diabNep']=='Так - легкого ступеню'){ echo "selected";}?>>Так - легкого ступеню</option>
+                                                        <option value="Так - середнього ступеню" <? if($_POST['diabNep']=='Так - середнього ступеню'){ echo "selected";}?>>Так - середнього ступеню</option>
+                                                        <option value="Так - важкого ступеню" <? if($_POST['diabNep']=='Так - важкого ступеню'){ echo "selected";}?>>Так - важкого ступеню</option>
                                                     </select>
                                                     <? if($_POST['diabNep']=='Так') {
                                                         ?>
@@ -1947,7 +2206,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Препроліфератівная
+                                                <td><label class="lb1">Препроліферативна
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabPrep" class="form-control"
@@ -1980,14 +2239,15 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Пролиферативная
+                                                <td><label class="lb1">Проліферативна
                                                         ретинопатія?</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     <select name="diabPrep2" class="form-control"
                                                             onchange="addPrep2(this.value)">
                                                         <option value="--" <? if($_POST['diabPrep2']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['diabPrep2']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['diabPrep2']=='Так'){ echo "selected";}?>>Так</option>
+                                                        <option value="Так - проліферативна діабетична ретинопатія з низьким ризиком" <? if($_POST['diabPrep2']=='Так - проліферативна діабетична ретинопатія з низьким ризиком'){ echo "selected";}?>>Так - проліферативна діабетична ретинопатія з низьким ризиком</option>
+                                                        <option value="Так - проліферативна діабетична ретинопатія з високим ризиком" <? if($_POST['diabPrep2']=='Так - проліферативна діабетична ретинопатія з високим ризиком'){ echo "selected";}?>>Так - проліферативна діабетична ретинопатія з високим ризиком</option>
                                                     </select>
 
                                                     <? if($_POST['diabPrep2']=='Так') {
@@ -2014,7 +2274,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Сліпота?</label></td>
+                                                <td><label class="lb1">Сліпота?</label></td>
                                                 <td>
                                                     <select name="Slep" class="form-control"
                                                             onchange="addSlep(this.value)">
@@ -2047,7 +2307,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Лазерне лікування?</label>
+                                                <td><label class="lb1">Лазерне лікування?</label>
                                                 </td>
                                                 <td>
                                                     <select name="Lazer" class="form-control"
@@ -2080,7 +2340,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Катаракта?</label></td>
+                                                <td><label class="lb1">Катаракта?</label></td>
                                                 <td>
                                                     <select name="Katar" class="form-control"
                                                             onchange="addKatar(this.value)">
@@ -2112,7 +2372,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Макулопатія?</label></td>
+                                                <td><label class="lb1">Макулопатія?</label></td>
                                                 <td>
                                                     <select name="Mal" class="form-control"
                                                             onchange="addMal(this.value)">
@@ -2145,7 +2405,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Глаукома?</label></td>
+                                                <td><label class="lb1">Глаукома?</label></td>
                                                 <td>
                                                     <select name="Glauk" class="form-control"
                                                             onchange="addGlauk(this.value)">
@@ -2199,7 +2459,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Дані OST:</label></td>
+                                                    <label>Дані OCT:</label></td>
                                                 <td>
                                                     <input type="file" style='background: transparent;' name="OST"
                                                            class="form-control" value="<? echo $_POST['OST'];?>">
@@ -2211,18 +2471,18 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="nefr">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>5.А. Обстеження нирок</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Дата обстеження нирок:
+                                                <td><label class="lb1">Дата обстеження нирок:
                                                         дд-мм-рр</label>
 
                                                 </td>
-                                                <td>з<input type="date" class="form-control" name="pochki0" value="<? echo $_POST['pochki0'];?>">
+                                                <td style="width: 100%">з<input type="date" class="form-control" name="pochki0" value="<? echo $_POST['pochki0'];?>">
                                                     по<input type="date" class="form-control" name="pochki" value="<? echo $_POST['pochki'];?>"></td>
 
                                             </tr>
                                             <tr>
-                                                <td style="display: flex; width: 500px;"><label class="lb1">Діабетична
+                                                <td><label class="lb1">Діабетична
                                                         нефропатія?</label></td>
                                                 <td>
                                                     <select name="diabNefro" class="form-control"
@@ -2255,7 +2515,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Хронічна ниркова
+                                                <td><label class="lb1">Хронічна ниркова
                                                         недостатність?</label></td>
                                                 <td>
                                                     <select name="diabPochNEd" class="form-control"
@@ -2289,8 +2549,8 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Хронічна ниркова
-                                                        недостатність - це заключна стадія?</label></td>
+                                                <td><label class="lb1">Хронічна ниркова
+                                                        недостатність заключна стадія?</label></td>
                                                 <td>
                                                     <select name="diabPochSt" class="form-control"
                                                             onchange="addPochSt(this.value)">
@@ -2320,7 +2580,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Діаліз?</label></td>
+                                                <td><label class="lb1">Діаліз?</label></td>
                                                 <td>
                                                     <select name="diabDializ" class="form-control"
                                                             onchange="addDializ(this.value)">
@@ -2353,7 +2613,7 @@ echo "</select>
                                             </tr>
 
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Поточні методи лікування:
+                                                <td><label class="lb1">Поточні методи лікування:
                                                         ліки (назви та група):</label>
 
                                                 </td>
@@ -2384,10 +2644,8 @@ echo "</select>
                                         <h4>6.А. Полінейроангіопатія</h4>
                                         <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td><label class="lb1">Дата обстеження: дд-мм-рр</label>
-
-                                                </td>
-                                                <td>з<input type="date" class="form-control" name="datPoli0" value="<? echo $_POST['datPoli0'];?>">
+                                                <td><label class="lb1">Дата обстеження: дд-мм-рр</label></td>
+                                                <td style="width: 100%">з<input type="date" class="form-control" name="datPoli0" value="<? echo $_POST['datPoli0'];?>">
                                                      по<input type="date" class="form-control" name="datPoli" value="<? echo $_POST['datPoli'];?>"></td>
 
                                             </tr>
@@ -2491,7 +2749,7 @@ echo "</select>
                                             <tr>
                                                 <td><label class="lb1">Чи є біль в обох ногах?</label></td>
                                                 <td>
-                                                    <select name="Bol" class="form-control">
+                                                    <select name="Bol" class="form-control" onchange="bolNoga(this.value)">
                                                         <option value="--" <? if($_POST['Bol']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні, болю немає" <? if($_POST['Bol']=='Ні, болю немає'){ echo "selected";}?>>Ні, болю немає</option>
                                                         <option value="Ні, біль з одного боку" <? if($_POST['Bol']=='Ні, біль з одного боку'){ echo "selected";}?>>Ні, біль з одного боку
@@ -2500,12 +2758,12 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolStopa">
                                                 <td>
                                                     <label class="lb1">Якщо біль в обох стопах, як вона
                                                         проявляється?</label></td>
                                                 <td>
-                                                    <select name="Boltwo" class="form-control">
+                                                    <select name="Boltwo" class="form-control" id="Boltwo">
                                                         <option value="--" <? if($_POST['Boltwo']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Спонтанна" <? if($_POST['Boltwo']=='Спонтанна'){ echo "selected";}?>>Спонтанна</option>
                                                         <option value="Постійна" <? if($_POST['Boltwo']=='Постійна'){ echo "selected";}?>>Постійна</option>
@@ -2514,11 +2772,11 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolIntens">
                                                 <td><label class="lb1">Яка інтенсивність болю (шкала від 1 до
                                                         5)?</label></td>
                                                 <td>
-                                                    <select name="BolInten" class="form-control">
+                                                    <select name="BolInten" class="form-control" id="BolInten">
                                                         <option value="--" <? if($_POST['BolInten']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="1" <? if($_POST['BolInten']=='1'){ echo "selected";}?>>1</option>
                                                         <option value="2" <? if($_POST['BolInten']=='2'){ echo "selected";}?>>2</option>
@@ -2529,10 +2787,10 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolProjav">
                                                 <td><label class="lb1">Як проявляється біль?</label></td>
                                                 <td>
-                                                    <select name="Bolkak" class="form-control">
+                                                    <select name="Bolkak" class="form-control" id="Bolkak">
                                                         <option value="--" <? if($_POST['Bolkak']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Печіння" <? if($_POST['Bolkak']=='Печіння'){ echo "selected";}?>>Печіння</option>
                                                         <option value="Викручування" <? if($_POST['Bolkak']=='Викручування'){ echo "selected";}?>>Викручування</option>
@@ -2549,7 +2807,7 @@ echo "</select>
                                                 <td>
                                                     <label class="lb1">Прийом препаратів?</label></td>
                                                 <td>
-                                                    <select name="Preparat" class="form-control">
+                                                    <select name="Preparat" class="form-control" onchange="preparat(this.value)">
                                                         <option value="--" <? if($_POST['Preparat']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Preparat']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['Preparat']=='Так'){ echo "selected";}?>>Так</option>
@@ -2558,10 +2816,10 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Preparat']!='Так'){echo 'class="showPrep"';}?> id="whatPrep">
                                                 <td><label class="lb1">Якщо так, розписати які препарати?</label></td>
                                                 <td>
-                                                    <select name="PreparatKakie" class="form-control">
+                                                    <select name="PreparatKakie" class="form-control" id="PreparatKakie">
                                                         <option value="--" <? if($_POST['PreparatKakie']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Антиконвульсанти (прегабалін, габапентин)"
                                                             <? if($_POST['PreparatKakie']=='"Антиконвульсанти (прегабалін, габапентин)'){ echo "selected";}?>>
@@ -2590,20 +2848,19 @@ echo "</select>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="stop">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>6.Б. Обстеження стопи</label>
-                                            <div id="tab-content10"
-                                        </h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <h4>6.Б. Обстеження стопи</h4>
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label>Дата обстеження стопи: дд-мм-рр?</label></td>
-                                                <td>
+                                                <td><label class="lb1">Дата обстеження стопи: дд-мм-рр?</label></td>
+                                                <td style="width: 100%;">
                                                     з<input type="date" name="datStopObsl" class="form-control" value="<? echo $_POST['datStopObsl'];?>">
                                                     по<input type="date" name="datStopObsl0" class="form-control" value="<? echo $_POST['datStopObsl0'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Зниження температури?</label></td>
+                                                    <label class="lb1">Зниження температури?</label>
+                                                </td>
                                                 <td>
                                                     <select name="SnizhT" class="form-control">
                                                         <option value="--" <? if($_POST['SnizhT']=='--'){ echo "selected";}?>>--</option>
@@ -2614,7 +2871,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Порушення тактильної чутливості?</label></td>
+                                                    <label class="lb1">Порушення тактильної чутливості?</label></td>
                                                 <td>
                                                     <select name="Chyvs" class="form-control">
                                                         <option value="--" <? if($_POST['Chyvs']=='--'){ echo "selected";}?>>--</option>
@@ -2624,7 +2881,9 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Порушення вібраційної чутливості?</label></td>
+                                                <td>
+                                                    <label class="lb1">Порушення вібраційної чутливості?</label>
+                                                </td>
                                                 <td>
                                                     <select name="NarVibr" class="form-control">
                                                         <option value="--" <? if($_POST['NarVibr']=='--'){ echo "selected";}?>>--</option>
@@ -2634,7 +2893,9 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Зниження / відсутність рефлексів?</label></td>
+                                                <td>
+                                                    <label class="lb1">Зниження / відсутність рефлексів?</label>
+                                                </td>
                                                 <td>
                                                     <select name="Reflex" class="form-control">
                                                         <option value="--" <? if($_POST['Reflex']=='--'){ echo "selected";}?>>--</option>
@@ -2643,7 +2904,9 @@ echo "</select>
                                                     </select></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Наявність виразок?</label></td>
+                                                <td>
+                                                    <label class="lb1">Наявність виразок?</label>
+                                                </td>
                                                 <td>
                                                     <select name="Jazv" class="form-control">
                                                         <option value="--" <? if($_POST['Jazv']=='--'){ echo "selected";}?>>--</option>
@@ -2653,7 +2916,9 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Нагноєння виразок?</label></td>
+                                                <td>
+                                                    <label class="lb1">Нагноєння виразок?</label>
+                                                </td>
                                                 <td>
                                                     <select name="GnojJazv" class="form-control">
                                                         <option value="--" <? if($_POST['GnojJazv']=='--'){ echo "selected";}?>>--</option>
@@ -2663,7 +2928,9 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Пульс на стопі?</label></td>
+                                                <td>
+                                                    <label class="lb1">Пульс на стопі?</label>
+                                                </td>
                                                 <td>
                                                     <select name="PylsStopa" class="form-control">
                                                         <option value="--" <? if($_POST['PylsStopa']=='--'){ echo "selected";}?>>--</option>
@@ -2672,7 +2939,7 @@ echo "</select>
                                                     </select></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Шунтування / ангіопластика?</label></td>
+                                                <td><label class="lb1">Шунтування / ангіопластика?</label></td>
                                                 <td>
                                                     <select name="Shynt" class="form-control">
                                                         <option value="--" <? if($_POST['Shynt']=='--'){ echo "selected";}?>>--</option>
@@ -2682,7 +2949,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Перемежовуються кульгавість?</label></td>
+                                                <td><label class="lb1">Синдром переміжної кульгавості?</label></td>
                                                 <td>
                                                     <select name="Hrom" class="form-control">
                                                         <option value="--" <? if($_POST['Hrom']=='--'){ echo "selected";}?>>--</option>
@@ -2692,7 +2959,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Ампутація?</label></td>
+                                                <td><label class="lb1">Ампутація?</label></td>
                                                 <td>
                                                     <select name="Ampyt" class="form-control"
                                                             onchange="addAmput(this.value)">
@@ -2745,10 +3012,11 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="lab">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>7.А. Лабораторні дослідження</h4>
-                                        <table class='mainT' id="forTab1" style="width: 100%;">
+
+                                        <table class='mainT' id="forTab1" style="width: 80%;">
                                             <tr>
                                                 <td><label class="lb1">Дата обстеження: дд-мм-рр</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     з<input type="date" class="form-control" name="datLab0" value="<? echo $_POST['datLab0'];?>">
                                                     по<input type="date" class="form-control" name="datLab" value="<? echo $_POST['datLab'];?>">
                                                 </td>
@@ -2769,9 +3037,9 @@ echo "</select>
                                                     <label class="lb1">О котрій годині був останній прийом їжі
                                                         (напередодні ввечері)?</label></td>
                                                 <td>
-                                                    з<input name="Pisha0" type="text" class="form-control"
+                                                    з<input name="Pisha0" type="time" class="form-control"
                                                            placeholder="" value="<? echo $_POST['Pisha0'];?>">
-                                                    по<input name="Pisha" type="text" class="form-control"
+                                                    по<input name="Pisha" type="time" class="form-control"
                                                                                                                      placeholder="" value="<? echo $_POST['Pisha'];?>">
 
                                                 </td>
@@ -2784,7 +3052,7 @@ echo "</select>
                                             <tr>
 
                                                 <td>
-                                                    <label class="lb1">Показник, nmol / l</label></td>
+                                                    <label class="lb1">Показник, ммоль/л</label></td>
                                                 <td>
                                                     з<input type="text" name="nmol0" class="form-control" value="<? echo $_POST['nmol0'];?>">
                                                     по<input type="text" name="nmol" class="form-control" value="<? echo $_POST['nmol'];?>">
@@ -2799,7 +3067,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr style="background: #295b8e;">
-                                                <td><label class="lb1" style="color:white;">Глікозилювання гемоглобін?</label></td>
+                                                <td><label class="lb1" style="color:white;">Глікований гемоглобін?</label></td>
                                                 <td></td>
 
                                             </tr>
@@ -2813,7 +3081,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label class="lb1">Глікозилювання гемоглобін pmol/pmol</label></td>
+                                                    <label class="lb1">Глікований гемоглобін pmol/pmol</label></td>
                                                 <td>
                                                     з<input type="text" name="gemogl0" class="form-control" value="<? echo $_POST['gemogl0'];?>">
                                                     по<input type="text" name="gemogl" class="form-control" value="<? echo $_POST['gemogl'];?>">
@@ -2973,27 +3241,27 @@ echo "</select>
                                                 <td>
                                                     <label class="lb1">Протеїнурія</label></td>
                                                 <td>
-                                                    <select name="Protein" class="form-control">
+                                                    <select name="Protein" class="form-control" onchange="protein(this.value)">
                                                         <option value="--" <? if($_POST['Protein']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Protein']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['Protein']=='Так'){ echo "selected";}?>>Так</option>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Protein']!='Так'){echo 'class="showProt"';}?> id="prote">
                                                 <td>
                                                     <label class="lb1">Останній вимір, мг / сут</label></td>
                                                 <td>
-                                                    з<input type="text" name="posIzm0" class="form-control" value="<? echo $_POST['posIzm0'];?>">
-                                                    по<input type="text" name="posIzm" class="form-control" value="<? echo $_POST['posIzm'];?>">
+                                                    з<input type="text" name="posIzm0" id="posIzm" class="form-control" value="<? echo $_POST['posIzm0'];?>">
+                                                    по<input type="text" name="posIzm" id="posIzm1" class="form-control" value="<? echo $_POST['posIzm'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Protein']!='Так'){echo 'class="showProt"';}?> id="datprote">
                                                 <td>
                                                     <label class="lb1">Дата, дд-мм-рр</label></td>
                                                 <td>
-                                                    з<input type="date" name="datProtein0" class="form-control" value="<? echo $_POST['datProtein0'];?>">
-                                                    по<input type="date" name="datProtein" class="form-control" value="<? echo $_POST['datProtein'];?>">
+                                                    з<input type="date" name="datProtein0" id="datProtein" class="form-control" value="<? echo $_POST['datProtein0'];?>">
+                                                    по<input type="date" name="datProtein" id="datProtein1" class="form-control" value="<? echo $_POST['datProtein'];?>">
 
                                                 </td>
                                             </tr>
@@ -3018,12 +3286,15 @@ echo "</select>
                                                     </select>
                                                     <? if($_POST['Mikroalmb']=='Так') {
                                                         ?>
-                                                        <span id="kiMikro1"><label id="kakMikro">Якщо так – показник, мг/л</label></span>
+                                                        <span id="kiMikro1"><label id="kakMikro">Якщо так – показник, мг/л з</label></span>
 
 
-                                                        <span id="kiMikro3"><input id="kakMikro1" name="kakMikro1" class="form-control" value='<? echo $_POST['kakMikro1'];?>'>
+                                                        <span id="kiMikro3"><input id="kakMikro1" name="kakMikro1" class="form-control" value='<? echo $_POST['kakMikro1'];?>'></span>
 
-                                                       </span>
+                                                        <span id="kiMikro10"><label id="kakMikro0">Якщо так – показник, мг/л по</label></span>
+                                                        <span id="kiMikro30"><input id="kakMikro10" name="kakMikro10" class="form-control" value='<? echo $_POST['kakMikro10'];?>'></span>
+
+
 
                                                         <span id="kiMikro"><label id="datMikroL">Дата з</label></span>
 
@@ -3036,7 +3307,10 @@ echo "</select>
                                                     }else{
                                                         ?>
                                                         <span id="kiMikro1"></span>
+
                                                         <span id="kiMikro3"></span>
+                                                            <span id="kiMikro10"></span>
+                                                            <span id="kiMikro30"></span>
                                                         <span id="kiMikro"></span>
                                                         <span id="kiMikro2"></span>
                                                         <span id="kiMikro0"></span>
@@ -3123,7 +3397,7 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none;">
                                                 <td>
 
                                                     <label class="lb1">C-пептид, показник:</label></td>
@@ -3132,7 +3406,7 @@ echo "</select>
                                                     по<input type="text" name="Peptid" class="form-control" value="<? echo $_POST['Peptid'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none;">
                                                 <td>
                                                     <label class="lb1">C-пептид, одиниця виміру:</label></td>
                                                 <td>
@@ -3142,7 +3416,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label class="lb1">pmol/l</label></td>
+                                                    <label class="lb1">C-пептид, одиниця виміру нг/мл:</label></td>
                                                 <td>
                                                     з<input type="text" name="PeptidPmol0" class="form-control" value="<? echo $_POST['PeptidPmol0'];?>">
                                                     по<input type="text" name="PeptidPmol" class="form-control" value="<? echo $_POST['PeptidPmol'];?>">
@@ -3153,7 +3427,7 @@ echo "</select>
                                             <tr>
                                                 <td>
 
-                                                    <label class="lb1">nmol/l:</label></td>
+                                                    <label class="lb1">C-пептид, одиниця виміру nmol/l:</label></td>
                                                 <td>
                                                     з<input type="text" name="PeptidNmol0" class="form-control" value="<? echo $_POST['PeptidNmol0'];?>">
                                                     по<input type="text" name="PeptidNmol" class="form-control" value="<? echo $_POST['PeptidNmol'];?>">
@@ -3163,8 +3437,24 @@ echo "</select>
                                                 <td>
                                                     <label class="lb1">C-пептід, Дата: дд-мм-рр:</label></td>
                                                 <td>
-                                                    з<input type="date" name="S_Pep0" class="form-control" value="<? echo $_POST['S_Pep0'];?>">
-                                                    по<input type="date" name="S_Pep" class="form-control" value="<? echo $_POST['S_Pep'];?>">
+                                                     з<input type="date" name="S_Pep0" class="form-control" value="<? echo $_POST['S_Pep0'];?>">
+                                                     по<input type="date" name="S_Pep" class="form-control" value="<? echo $_POST['S_Pep'];?>">
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="lb1">AT-GAD:</label></td><td>
+                                                      з<input type="text" name="atGad0" class="form-control" value="<? echo $_POST['atGad0'];?>">
+                                                      по<input type="text" name="atGad" class="form-control" value="<? echo $_POST['atGad'];?>">
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="lb1">AT-GAD дата:</label></td><td>
+                                                     з<input type="date" name="atGaddat0" class="form-control" value="<? echo $_POST['atGaddat0'];?>">
+                                                     по<input type="date" name="atGaddat" class="form-control" value="<? echo $_POST['atGaddat'];?>">
                                                 </td>
 
                                             </tr>
@@ -3176,11 +3466,11 @@ echo "</select>
                                         <h4>7.Б. Біоматеріал</label>
                                             <div id="tab-content12"
                                         </h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Сиворотка?</label></td>
-                                                <td>
+                                                    <label class="lb1">Сиворотка?</label></td>
+                                                <td style="width: 100%;">
                                                     <select name="Sivor" class="form-control">
                                                         <option value="--" <? if($_POST['Sivor']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Sivor']=='Ні'){ echo "selected";}?>>Ні</option>
@@ -3259,11 +3549,11 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="lik">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>8.А. Лікування</h4>
-                                        <table class='mainT' id="forTab2" style="width: 100%;">
+                                        <table class='mainT' id="forTab2" style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Лікування цукрового
+                                                <td><label class="lb1">Лікування цукрового
                                                         діабету</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     <select name="LechDIabet" class="form-control">
                                                         <option value="--" <? if($_POST['LechDIabet']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Не проводиться" <? if($_POST['LechDIabet']=='Не проводиться'){ echo "selected";}?>>Не проводиться</option>
@@ -3279,10 +3569,10 @@ echo "</select>
                                                     <label class="lb1">Лікування діабету: інсулін (препарат, доза
                                                         прийому, кратність)</label></td>
                                                 <td>
-                                                    <select name="LechInsul" class="form-control">
+                                                    <select name="LechInsul" class="form-control" onchange="showIns(this.value)">
                                                         <option value="--" <? if($_POST['LechInsul']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Базисная инсулинотерапия" <? if($_POST['LechInsul']=='Базисная инсулинотерапия'){ echo "selected";}?>>Базисна
-                                                            інсулінотерапії
+                                                        <option value="Ні" <? if($_POST['LechInsul']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                        <option value="Базисна інсулінотерапія" <? if($_POST['LechInsul']=='Базисна інсулінотерапія'){ echo "selected";}?>>Базисна інсулінотерапія
                                                         </option>
                                                         <option value="Помпова інсулінотерапія" <? if($_POST['LechInsul']=='Помпова інсулінотерапія'){ echo "selected";}?>>Помпова
                                                             інсулінотерапія
@@ -3292,13 +3582,13 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['LechInsul']=='--' or $_POST['LechInsul']=='Ні'){echo 'class="showIns"';}?> id="insyl">
                                                 <td>
                                                     <label class="lb1">Дата початку інсулінотерапії (дд- мм-рр)</label>
                                                 </td>
                                                 <td>
-                                                    з<input type="date" name="datLechDiab0" class="form-control" value="<? echo $_POST['datLechDiab0'];?>">
-                                                    по<input type="date" name="datLechDiab" class="form-control" value="<? echo $_POST['datLechDiab'];?>">
+                                                    з<input type="date" name="datLechDiab0" id="datLechDiab0" class="form-control" value="<? echo $_POST['datLechDiab0'];?>">
+                                                    по<input type="date" name="datLechDiab"  id="datLechDiab" class="form-control" value="<? echo $_POST['datLechDiab'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -3351,67 +3641,18 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><label class="lb1">Хворієте (хворіли) ви онкозахворюваннями?</label>
-                                                </td>
-                                                <td>
-                                                    <select name="Onko" class="form-control">
-                                                        <option value="--" <? if($_POST['Onko']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Ні" <? if($_POST['Onko']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['Onko']=='Так'){ echo "selected";}?>>Так</option>
 
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="lb1">Вкажіть вид онкозахворювання</label></td>
-                                                <td>
-                                                    <input type="text" name="VidOnko" class="form-control" value="<? echo $_POST['VidOnko'];?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="lb1">Дата постановки діагнозу
-                                                        онкозахворювання</label></td>
-                                                <td>
-                                                    з<input type="date" name="dateOnko0" class="form-control" value="<? echo $_POST['dateOnko0'];?>">
-                                                    по<input type="date" name="dateOnko" class="form-control" value="<? echo $_POST['dateOnko'];?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><label class="lb1">Якщо так - лікування онкозахворювання
-                                                        (Препарати - назва препаратів,
-                                                        група)?</label>
-
-                                                </td>
-                                                <td>
-                                                    <select name="OnkoLek" class="form-control">
-                                                        <option value="--" <? if($_POST['OnkoLek']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Ні" <? if($_POST['OnkoLek']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Хіміотерапія" <? if($_POST['OnkoLek']=='Хіміотерапія'){ echo "selected";}?>>Хіміотерапія</option>
-                                                        <option value="Імунотерапія" <? if($_POST['OnkoLek']=='Імунотерапія'){ echo "selected";}?>>Імунотерапія</option>
-                                                        <option value="Гормональна терапія" <? if($_POST['OnkoLek']=='Гормональна терапія'){ echo "selected";}?>>Гормональна терапія</option>
-                                                        <option value="Комбінована (хіміо + тергетная терапія)" <? if($_POST['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){ echo "selected";}?>>
-                                                            Комбінована (хіміо + тергетная терапія)
-                                                        </option>
-                                                        <option value="Таргетная терапія" <? if($_POST['OnkoLek']=='Таргетная терапія'){ echo "selected";}?>>Таргетная терапія</option>
-                                                        <option value="Хірургічне" <? if($_POST['OnkoLek']=='Хірургічне'){ echo "selected";}?>>Хірургічне</option>
-                                                        <option value="Інші" <? if($_POST['OnkoLek']=='Інші'){ echo "selected";}?>>Інші</option>
-                                                    </select>
-                                                </td>
-
-                                            </tr>
                                         </table>
                                     </fieldset>
 
                                     </div>
                                 <div role="tabpanel" class="tab-pane" id="gen">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>9.А. Геніаологічне дерево</h4>
-                                        <table class='mainT' id="forTab2" style="width: 100%;">
+                                        <h4>9.А. Генеалогічне дерево</h4>
+                                        <table class='mainT' id="forTab2" style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Геніаологічне дерево</label></td><td>
+                                                <td><label class="lb1">Генеалогічне дерево</label></td>
+                                                <td style="width: 100%;">
                                                     <select name="gen" class="form-control">
                                                         <option value="--"  <? if($_POST['gen']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Так" <? if($_POST['gen']=='Так'){ echo "selected";}?>>Так</option>
@@ -3450,32 +3691,202 @@ echo "</select>
                         <div class="popup">
                             <h2>Параметри пошуку</h2>
                             <p><?
+                               // echo "no".$_POST['OnkoLek'];
+
+                                /*var_dump($_POST);
+                                echo "jhjkhjkhk";
+                                var_dump($masName);*/
+$masZag=[
+        "1. Опитування пацієнта"/*0*/, "А. Загальні дані"/*1*/,"Б. Сімейний анамнез"/*2*/, "В. Інформація щодо голодомору"/*3*/,
+        "2. Огляд пацієнта"/*4*/, "А. Антропометричні дані"/*5*/,"Б. Спосіб життя"/*6*/,"В. Історія хвороби"/*7*/,
+    "Г. Супутні захворювання"/*8*/,
+        "3.Статус ССС"/*9*/, "А. Обстеження серцево-судинної системи"/*10*/,
+        "4.Діабетична ретинопатія"/*11*/,"А. Обстеження очей"/*12*/,
+        "5.Нефропатія"/*13*/,"А. Обстеження нирок"/*14*/,
+        "6.Полінейроангіопатія"/*15*/,"А. Полінейроангіопатія"/*16*/,"Б. Обстеження стопи"/*17*/,
+        "7.Лабораторні дослідження"/*18*/,"А. Лабораторні дослідження"/*19*/,"Б. Біоматеріал"/*20*/,
+        "8.Лікування"/*21*/,"А. Лікування"/*22*/,
+        "9.Генеалогічне дерево"/*23*/,"А. Генеалогічне дерево"/*24*/];
 
                                 echo "<table class='table'>";
                                 $i=0;
-                              foreach ($_POST as $item){
+                                $ch=0;
+                                $ch1=0;
+                                $ch2=0;
+                                $ch3=0;
+                                $ch4=0;
+                                $ch5=0;
+                                $ch6=0;
+                                $ch7=0;
+                                $ch8=0;
+                                $ch9=0;
+                                $ch10=0;
+                                $ch11=0;
+                                $ch12=0;
+                                $ch13=0;
+                                $ch14=0;
+                                $ch15=0;
+                                $ch16=0;
+                                $ch17=0;
+                                $ch18=0;
+                                $ch19=0;
+                    /*         foreach($_POST as $key=>$item):
+                             echo "'{$key}',";
+                             endforeach;*/
+                           $x=-1;$y=48;$z=18;
+                           $razd='';
+                           $podrazd='';
+                            foreach ($_POST as $key=>$item){
+
                                   if(!empty($item) and $item!='--' and $item!='Сформувати пошуковий запит' and $item!='Уточнити пошуковий запит' and $item!='') {
-                                      if($masName[$i]=='Роки інфарктів'){
-                                          echo "<tr><td>{$masName[$i]}</td><td>{$item[0]};{$item[1]};{$item[2]}</td></tr>";
+                                    if(!empty($item)) {
+                                      /*   if($i>$x and $i<$y)
+                                         {
+                                             if($ch16==0){
+                                                 echo "<tr  id='tr222'><td colspan='2' >{$masZag[0]}</td></tr>" ;
+                                                 $ch16=1;
+                                             }
 
-                                      }
-                                      elseif($masName[$i]=='Роки інсультів'){
-                                          echo "<tr><td>{$masName[$i]}</td><td>{$item[0]};{$item[1]};{$item[2]}</td></tr>";
+                                             if ($i > $x and $i < $z and $ch == 0) {
+                                                 echo "<tr  id='tr2222' ><td colspan='2'>{$masZag[1]}</td></tr>" ;
+                                                 $ch = 1;
+                                             } elseif ($i > $z-1 and $i < $z+24 and $ch1 == 0) {
+                                                 echo "<tr id='tr2222'> <td colspan='2'>{$masZag[2]}</td></tr>";
+                                                 $ch1 = 1;
+                                             } elseif ($i > $z+23 and $i < $z+30 and $ch2 == 0) {
+                                                 echo "<tr id='tr2222'><td colspan='2'>{$masZag[3]}</td></tr>";
+                                                 $ch2 = 1;
+                                             }
+                                         }
+                                         elseif($i>$x+48 and $i<$y+41)
+                                         {
+                                             if($ch17==0){
+                                             echo "<tr id='tr222'><td colspan='2'>{$masZag[4]}</td></tr>";
+                                              $ch17=1;
+                                             }
+                                         if($i>$x+48 and $i<66 and $ch3==0){
 
-                                      }
-                                      else{
-                                          echo "<tr><td>{$masName[$i]}</td><td>{$item}</td></tr>";
-                                      }
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[5]}</td></tr>";
+                                            $ch3=1;
+                                         }
+                                         elseif($i>65 and $i<71 and $ch4==0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[6]}</td></tr>";
+                                            $ch4=1;
+                                            }
+                                            elseif($i>70 and $i<78 and $ch5==0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[7]}</td></tr>";
+                                            $ch5=1;
+                                            }
+                                         elseif($i>77 and $i<89 and $ch6==0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[8]}</td></tr>";
+                                            $ch6=1;
+                                            }
+                                        }
+
+                                        elseif($i>88 and $i<95 and $ch7==0){
+                                            echo "<tr id='tr222'><td colspan='2'>{$masZag[9]}</td></tr>";
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[10]}</td></tr>";
+                                            $ch7=1;
+                                        }
+                                        elseif($i>94 and $i<108 and $ch8==0){
+                                            echo "<tr id='tr222'><td colspan='2'>{$masZag[11]}</td></tr>";
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[12]}</td></tr>";
+                                            $ch8=1;
+                                        }
+                                        elseif($i>107 and $i<116 and $ch9==0){
+                                            echo "<tr id='tr222'><td colspan='2'>{$masZag[13]}</td></tr>";
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[14]}</td></tr>";
+                                            $ch9=1;
+                                        }
+                                         elseif($i>115 and $i<135) {
+                                             if($ch18==0){
+                                             echo "<tr id='tr222'><td colspan='2'>{$masZag[15]}</td></tr>";
+                                             $ch18=1;}
+                                             if
+                                             ($i > 115 and $i < 127 and $ch10 == 0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[16]}</td></tr>";
+                                            $ch10 = 1;
+                                        }
+                                        elseif($i > 126 and $i < 135 and $ch11 == 0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[17]}</td></tr>";
+                                            $ch11 = 1;
+                                        }
+                                        }
+                                        elseif($i>134 and $i<227)
+                                        {
+                                            if($ch19==0){echo "<tr id='tr222'><td colspan='2'>{$masZag[18]}</td></tr>";
+                                            $ch19=1;}
+                                            if
+                                            ($i > 134 and $i < 220 and $ch12 == 0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[19]}</td></tr>";
+                                            $ch12 = 1;
+                                        }
+                                        elseif($i > 219  and $i < 227 and $ch13 == 0){
+
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[20]}</td></tr>";
+                                            $ch13 = 1;
+                                        }
+                                        }
+                                        elseif($i>226 and $i<234 and $ch14==0){
+                                            echo "<tr id='tr222'><td colspan='2'>{$masZag[21]}</td></tr>";
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[22]}</td></tr>";
+                                            $ch14=1;
+                                        }
+                                        elseif($i>233 and $i<235 and $ch15==0){
+                                            echo "<tr id='tr222'><td colspan='2'>{$masZag[23]}</td></tr>";
+                                            echo "<tr id='tr2222'><td colspan='2'>{$masZag[24]}</td></tr>";
+                                            $ch15=1;
+                                        }*/
+                                    foreach($rozd as $item1):
+
+                                        if($item1['name']==$key and $razd!=$item1['razdel']){
+                                            echo "<tr  id='tr222'><td colspan='2' >{$item1['razdel']}</td></tr>" ;
+                                          $ch=1;
+                                          $razd=$item1['razdel'];
+                                        }
+                                        if($item1['name']==$key and $podrazd!=$item1['podr']){
+                                            echo "<tr  id='tr2222'><td colspan='2' >{$item1['podr']}</td></tr>" ;
+                                            $ch=1;
+                                            $podrazd=$item1['podr'];
+                                        }
+                                        endforeach;
+                                        $opt=[
+                                            PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
+                                            PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
+                                        ];
+
+                                        $dbh=new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc","uh1108308_dlc","NPyuW3gnhxQT",$opt
+                                        );
+$stt="Select * from const2 where name='{$key}'";
+$tmp=$dbh->query($stt);
+$row=$tmp->fetch();
+                                        if ($row['question'] == 'Роки інфарктів') {
+                                            echo "<tr><td>{$row['question']}</td><td>{$item[0]};{$item[1]};{$item[2]}</td></tr>";
+
+                                        } elseif ($row['question'] == 'Роки інсультів') {
+                                            echo "<tr><td>{$row['question']}</td><td>{$item[0]};{$item[1]};{$item[2]}</td></tr>";
+
+                                        } else {
+
+                                            echo "<tr><td>{$row['question']}</td><td>{$item}</td></tr>";
+                                        }
+                                    }
 
                                   }
-                            $i++;
+                                  $i++;
                               }
                               echo "</table>";
                                 ?>
 
                             </p>
                             <div class="controls">
-                                <form method="post" action="<?=Url::getAction('programm','findR1')?>" id="form3">
+                                <form method="post" action="<?=Url::getAction('programm2','findT1')?>" id="form3">
                                     <?php
                                     foreach($_POST as $key=>$item):
                                     echo " <input type='hidden' value='{$item}' name='{$key}'>";
@@ -3511,10 +3922,10 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane active" id="home">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>1.А. Загальні дані</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td><label>Прізвище </label></td>
-                                                <td><input class="form-control" type="text" name="fname"
+                                                <td><label class="lb1">Прізвище </label></td>
+                                                <td  style="width: 100%"><input class="form-control" type="text" name="fname"
                                                            placeholder="" value="<? echo $_POST['fname'];?>"></td>
                                                 <td></td>
                                             </tr>
@@ -3551,14 +3962,171 @@ echo "</select>
 
                                                     </div>
                                                     <link href="../../css/1.css" rel="stylesheet">
+                                                   
+                                                    <div id="myModal1" class="modal fade">
+                                                        <style>
+                                                            #wd{
+                                                                width:1200px;
+                                                                margin: 0 auto;
+                                                            }
+                                                            #modalFind tr td{
+                                                                padding: 0;
+                                                            }
+                                                            #modalFind tr td .l{
+                                                                font-size: 11px;
+                                                            }
+                                                        </style>
+                                                        <div class="modal-dialog1" id="wd">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header" style="display: flex; justify-content: space-around;">
+                                                                    <h4 class="modal-title">Пошук анкети</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
+                                                                </div>
+                                                                <div class="modal-body" >
+                                                                    <!---------------------------------------------------------------------------->
+
+
+                                                                    <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
+                                                                        <table id='modalFind' style="margin: 5px;">
+                                                                            <tr>
+                                                                                <td><span class="l">Прізвище</span></td>
+                                                                                <td><input type="text" name="fname1" id="fname" class="m1"></td>
+                                                                                <td><span class="l">Рік народження</span></td>
+                                                                                <td><input placeholder="" type="text" onchange="year(this.value)" id="year1" name="year11" class="m2"> - <input
+                                                                                            placeholder="" type="text" id="year2" name="year21" class="m2"></td>
+                                                                                <td><span class="l">№ картки</span></td>
+                                                                                <td><input type="text" name="nom11" id="nom1" placeholder="" class="m2"> - <input
+                                                                                            placeholder="" type="text" name="nom21" id="nom2" class="m2"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span class="l">Ім`я</span></td>
+                                                                                <td><input type="text" name="name1" id="name" class="m1"></td>
+                                                                                <td><span class="l">Стать</span></td>
+                                                                                <td><select name="sex1" class="m4" id="sex">
+                                                                                        <option value="--" >--</option>
+                                                                                        <option value="Чоловіча">Чоловіча</option>
+                                                                                        <option value="Жіноча">Жіноча</option>
+                                                                                    </select></td>
+                                                                                <td><span class="l">Дата модифікації</span></td>
+                                                                                <td><input type="date" name="date_izm1" id="date_izm" class="m4"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span class="l">По батькові</span></td>
+                                                                                <td><input type="text" name="sname1" id="sname" class="m1"></td>
+                                                                                <td><span class="l">Тип діабету</span></td>
+                                                                                <td><select name="typeDiab1" class="m4" id="typeDiab">
+                                                                                        <option value="" >--</option>
+                                                                                        <option value="СД 1 типа">СД 1 типа</option>
+                                                                                        <option value="СД 2 типа">СД 2 типа</option>
+                                                                                        <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
+                                                                                            (LADA)
+                                                                                        </option>
+                                                                                        <option value="MODY-диабет">MODY-диабет</option>
+                                                                                        <option value="Панкреатогенный">Панкреатогенный
+                                                                                        </option>
+                                                                                        <option value="Другие">Другие
+                                                                                        </option>
+                                                                                    </select></td>
+                                                                                <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <label class="container12">
+                                                                                        <input type="checkbox" checked="checked" id="moi" name="moi1" value="1">
+                                                                                        <span class="checkmark"></span>
+                                                                                    </label></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span class="l">Насел.пункт</span></td>
+                                                                                <td><input type="text" placeholder="" id="city" name="city1" class="m1">
+                                                                                </td>
+                                                                                <td colspan="4">
+                                                                                    <div style="display: flex;align-items: center;"><span
+                                                                                                style="color:#0056b3;">*</span>
+                                                                                        <span class="l" style="width: 700px;"> - Якщо ця опція "ввімкнена" в результатах пошуку будуть вибиратися лише
+                закріплені за Вами картки</span></div>
+                                                                                </td>
+                                                                            <tr>
+                                                                                <td colspan="6" style="border-bottom: 1px solid lightgrey"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button  onclick="rest()" class="btn btn-default log_button btn-mr"
+                                                                                             type="reset" title="Скинути пошук">
+                                                                                        <i class="fas fa-times"></i>
+
+                                                                                        Скинути пошук
+                                                                                    </button>
+                                                                                    <button _ngcontent-c8="" class="btn btn-default log_button btn-mr"
+                                                                                            type="button" onclick="findModal()">
+                                                                                        <i class="fas fa-search"></i>
+                                                                                        Знайти
+                                                                                    </button>
+                                                                                </td>
+                                                                                <td colspan="4"></td>
+                                                                            </tr>
+                                                                        </table>
+
+
+                                                                    </form>
+                                                                    <div id="rezFind">
+
+                                                                    </div>
+
+                                                                    <script>
+                                                                        function findModal() {
+                                                                            var moi=document.getElementById('moi').value;
+                                                                            var fname=document.getElementById('fname').value;
+                                                                            var sname=document.getElementById('sname').value;
+                                                                            var name=document.getElementById('name').value;
+                                                                            var nom1=document.getElementById('nom1').value;
+                                                                            var nom2=document.getElementById('nom2').value;
+                                                                            var year1=document.getElementById('year1').value;
+                                                                            var year2=document.getElementById('year2').value;
+                                                                            var city=document.getElementById('city').value;
+                                                                            var sex=document.getElementById('sex').value;
+
+                                                                            var typeDiab=document.getElementById('typeDiab').value;
+                                                                            var date_izm=document.getElementById('date_izm').value;
+                                                                            $.ajax({
+                                                                                type: "POST",
+                                                                                url: "<?=Url::local('ajax8');?>",
+                                                                                data: {moi: moi,fname:fname, sname:sname, name:name,nom1:nom1,nom2:nom2,year1:year1,year2:year2,city:city,sex:sex,typeDiab:typeDiab,date_izm:date_izm},
+                                                                                success: function (data) {
+
+
+                                                                                    $("#rezFind").html(data)
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                        function save1(id) {
+                                                                            var zn=id.slice(1);
+
+                                                                            document.getElementById('h1').value=zn;
+                                                                            document.getElementById('zakr').click();
+                                                                        }
+
+                                                                    </script>
+
+
+                                                                    <!------------------------------------------>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" id='zakr' data-dismiss="modal">Закрити</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;flex-direction: row; justify-content: space-between;align-items: flex-end;">
+                                                <td >
                                                     <label>Стать</label></td>
-                                                <td><select name="sex" class="form-control" style="width: 80%;">
+                                                <td style="width: 100%;"><select name="sex" class="form-control" >
                                                         <option value="--"  <? if($_POST['sex']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Чоловіча"  <? if($_POST['sex']=='Чоловіча'){ echo "selected";}?>>Чоловіча</option>
                                                         <option value="Жіноча"    <? if($_POST['sex']=='Жіноча'){ echo "selected";}?>>Жіноча</option>
@@ -3638,7 +4206,7 @@ echo "</select>
                                                         <option value="Не працюю, відпустка по хворобі"  <? if($_POST['work']=='Не працюю, відпустка по хворобі'){ echo "selected";}?>>Не працюю,
                                                             відпустка по хворобі
                                                         </option>
-                                                        <option value="На пенції"  <? if($_POST['work']=='На пенції'){ echo "selected";}?>>На пенсії</option>
+                                                        <option value="На пенсії"  <? if($_POST['work']=='На пенсії'){ echo "selected";}?>>На пенсії</option>
                                                         <option value="Працюю, часткова зайнятість" <? if($_POST['work']=='Працюю, часткова зайнятість'){ echo "selected";}?>>Працюю, часткова
                                                             зайнятість
                                                         </option>
@@ -3713,17 +4281,14 @@ echo "</select>
                                                             <input type="hidden" value="" name="vesR">
                                                             <td><input style='position: static;' type="radio"
                                                                        name="vesR" class="form-control"
-                                                                       value="Низька (при нарожденні я був(ла) худим(ой))"
-                                                                    <? if( $_POST['vesR']=='Низька (при нарожденні я був(ла) худим(ой))'){echo 'checked';}?>>
+                                                                       value="Мала (при народженні я був(ла) дуже маленький(а))"
+                                                                    <? if( $_POST['vesR']=='Мала (при народженні я був(ла) дуже маленький(а))'){echo 'checked';}?>>
                                                             </td>
                                                             <td><label>Низька (при нарожденні я був(ла)
                                                                     худим(ой))</label></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><input style='position: static;' type="radio"
-                                                                       name="vesR" class="form-control"
-                                                                       value="Нормальна"
-                                                                    <? if( $_POST['vesR']=='Нормальна'){echo 'checked';}?>></td>
+                                                            <td><input style='position: static;' type="radio" name="vesR" class="form-control" value="Нормальна" <? if( $_POST['vesR']=='Нормальна'){echo 'checked';}?>></td>
                                                             <td><label>Нормальна</label></td>
                                                         </tr>
                                                         <tr>
@@ -3734,6 +4299,10 @@ echo "</select>
                                                             </td>
                                                             <td><label>Я був (була) при народженні великим
                                                                     малюком</label></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input style='position: static;' type="radio" name="vesR" class="form-control" value="був одним з близнюків" <? if( $_POST['vesR']=='був одним з близнюків'){echo 'checked';}?>></td>
+                                                            <td><label>був одним з близнюків</label></td>
                                                         </tr>
                                                         <tr>
                                                             <td><input style='position: static;' type="radio"
@@ -3764,9 +4333,7 @@ echo "</select>
                                                 </td>
                                                 <td></td>
                                             </tr>
-                                                </td>
-                                                <td></td>
-                                            </tr>
+
 
                                         </table>
                                     </fieldset>
@@ -3775,13 +4342,13 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="profile">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>1.Б. Сімейний анамнез</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <table class='mainT' style="width: 80%;">
                                             <tr style="background: #295b8e; color:white;">
-                                                <td colspan="3"><label>Батько:</label></td>
+                                                <td colspan="3"><label >Батько:</label></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Прізвище</label></td>
-                                                <td><input class="form-control" type="text" name="fnameO"
+                                                <td><label class="lb1">Прізвище</label></td>
+                                                <td style="width: 100%"><input class="form-control" type="text" name="fnameO"
                                                            placeholder=""  value="<? echo $_POST['fnameO'];?>"></td>
                                             </tr>
                                             <tr>
@@ -3823,7 +4390,7 @@ echo "</select>
                                                     <label>Дата народження</label></td>
                                                 <td>
                                                    з <input type="date" name="datBOtez0" id="datBOtez0" class="form-control" value="<? echo $_POST['datBOtez0'];?>" onchange="dat(this.value,this.id)">
-                                                   по <input type="date" name="datBOtez" id="datBOtez" class="form-control" value="<? echo $_POST['datBOtez'];?>">
+                                                   по <input type="date" name="datBOtez" id="datBOtez" min="<?echo $_POST['datBOtez0'];?>" class="form-control" value="<? echo $_POST['datBOtez'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -3845,7 +4412,7 @@ echo "</select>
                                             <tr>
                                                 <td>
                                                     <label>Чи хворів на діабет?</label>
-                                                    <label class="hidd1" id="h2">Якщо так - яке було лікування у
+                                                    <label class="hidd" id="h2">Якщо так - яке було лікування у
                                                         батька?</label>
                                                 </td>
                                                 <td>
@@ -3916,8 +4483,8 @@ echo "</select>
                                                 <td>
                                                     <label>Дата народження</label></td>
                                                 <td>
-                                                    з<input type="date" name="datBM0" class="form-control" value="<? echo $_POST['datBM0'];?>">
-                                                    по <input type="date" name="datBM" class="form-control" value="<? echo $_POST['datBM'];?>">
+                                                    з<input type="date" name="datBM0" class="form-control" value="<? echo $_POST['datBM0'];?>"  onchange="dat(this.value,this.id)">
+                                                    по <input type="date" name="datBM" min="<?echo $_POST['datBM0'];?>" class="form-control" value="<? echo $_POST['datBM'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -3938,7 +4505,7 @@ echo "</select>
                                             <tr>
                                                 <td>
                                                     <label>Чи хворіла на діабет?</label>
-                                                    <label class="hidd1" id="h8">Якщо так - яке було лікування у
+                                                    <label class="hidd" id="h8">Якщо так - яке було лікування у
                                                         матері?</label>
                                                 </td>
                                                 <td>
@@ -3966,7 +4533,7 @@ echo "</select>
                                                 <td>
                                                     <label>Чи хворіли на діабет рідні
                                                         брати сестри?</label>
-                                                    <label class="hidd1" id="h10">Якщо так – яке було лікування у
+                                                    <label class="hidd" id="h10">Якщо так – яке було лікування у
                                                         братів/сестер?</label>
                                                 </td>
                                                 <td>
@@ -3995,82 +4562,113 @@ echo "</select>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="messages">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>1.В. Інформація по голодомору</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <h4>1.В. Інформація щодо голодомору</h4>
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Голодувала ваша сім'я в 1932-33, 1941-45
+                                                    <label class="lb1">Голодувала ваша сім'я в 1932-33, 1941-45
                                                         і / або 1946-47 роках:</label>
-                                                    <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
+                                                    <!--<label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
                                                         голодування сім`ї
-                                                    </label>
+                                                    </label>-->
                                                 </td>
-                                                <td>
+                                                <td style="width: 100%">
                                                     <select name="golodSem" class="form-control" onchange="ss6(this)">
                                                         <option value="--" <? if($_POST['golodSem']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['golodSem']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['golodSem']=='Так'){ echo "selected";}?>>Так</option>
                                                         <option value="Не знаю" <? if($_POST['golodSem']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
                                                     </select>
-                                                    <input type="text" id="h13"
 
-                                                        <?
-                                                        if($_POST['golodSem']=='Так'){
-
-                                                            echo "style='display:block;'";
-                                                        }
-
-                                                        ?>
-                                                           class="form-control hidd"
-                                                           name="periodGolod" placeholder=""  value="<? echo $_POST['periodGolod'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="mamGolod">
                                                 <td>
                                                     <label>Мати:</label></td>
                                                 <td>
-                                                    <select name="golodM" class="form-control">
-                                                        <option value="--" <? if($_POST['golodM']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodM']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodM']=='1941-45'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodM']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodM']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masM=explode(";",$_POST['golodM'])?>
+                                                    <table <?if($_POST['golodM']!='Так'){ echo "class='showGolod'";}?> id="tabGolodM"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox"  onchange="chch(this)" id="g1m" value="1932-33" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox"  id="g2m"  onchange="chch(this)" value="1941-45" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox"  id="g3m"  onchange="chch(this)" value="1946-47" class="form-control"
+                                                                    <? foreach($masM as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table>  <input type="hidden" name="golodM" id="golodM"
+                                                        <? if(isset($_POST['golodM'])){
+                                                            echo "value='{$_POST['golodM']}'";
+                                                        };?>>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="papGolod">
                                                 <td>
                                                     <label>Батько:</label></td>
                                                 <td>
-                                                    <select name="golodO" class="form-control">
-                                                        <option value="--" <? if($_POST['golodO']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodO']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodO']=='1941-45'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodO']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodO']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masO=explode(";",$_POST['golodO'])?>
+                                                    <table <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodO"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g1o" value="1932-33" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g2o" value="1941-45" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox" onchange="chch1(this)" id="g3o" value="1946-47" class="form-control"
+                                                                    <? foreach($masO as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table><input type="hidden" name="golodO" id="golodO"
+                                                        <? if(isset($_POST['golodO'])){
+                                                            echo "value='{$_POST['golodO']}'";
+                                                        };?>>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="bratGolod">
                                                 <td>
                                                     <label>Рідні брати/сестри:</label></td>
                                                 <td>
-                                                    <select name="golodSister" class="form-control">
-                                                        <option value="--" <? if($_POST['golodSister']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="1932-33" <? if($_POST['golodSister']=='1932-33'){ echo "selected";}?>>1932-33</option>
-                                                        <option value="1941-45" <? if($_POST['golodSister']=='1941-45"'){ echo "selected";}?>>1941-45</option>
-                                                        <option value="1946-47" <? if($_POST['golodSister']=='1946-47'){ echo "selected";}?>>1946-47</option>
-
-                                                        <option value="Не знаю" <? if($_POST['golodSister']=='Не знаю'){ echo "selected";}?>>Не знаю</option>
-                                                    </select>
+                                                    <? $masS=explode(";",$_POST['golodSis'])?>
+                                                    <table <?if($_POST['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodS"><tr><td><label> - 1932-33</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g1s" value="1932-33" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1932-33'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1941-45</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g2s" value="1941-45" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1941-45'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr>
+                                                        <tr><td><label> - 1946-47</label>
+                                                                <input type="checkbox" onchange="chch2(this)" id="g3s" value="1946-47" class="form-control"
+                                                                    <? foreach($masS as $int):
+                                                                        if($int=='1946-47'){echo 'checked';}
+                                                                    endforeach;?>>
+                                                            </td></tr></table><input type="hidden" name="golodSis" id="golodSis"
+                                                        <? if(isset($_POST['golodSis'])){
+                                                            echo "value='{$_POST['golodSis']}'";
+                                                        };?>>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Померли чи мати / батько / рідні брати
-                                                        або сестри з причин, пов`язаних з
+                                                    <label>Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з
                                                         голодом в 1932-33, 1941-45 і / або
                                                         1946-47 році:</label></td>
                                                 <td>
@@ -4087,9 +4685,8 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Пережили ви період голоду в
-                                                        1932-33, 1941-45 і / або 1946-47 роках
-                                                        (Голодували ви?). Якщо так - вказати
+                                                    <label>Чи голодували Ви особисто у періоди голоду в
+                                                        1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати
                                                         період:</label></td>
                                                 <td>
                                                     <select name="death2" class="form-control">
@@ -4110,10 +4707,10 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="settings">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.А. Антропометричні дані</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td><label>Вага (кг)</label></td>
-                                                <td>
+                                                <td><label class="lb1">Вага (кг)</label></td>
+                                                <td style="width: 100%">
                                                     з <input class="form-control" type="text" name="ves0" placeholder=""  value="<? echo $_POST['ves0'];?>">
 
                                                     по <input class="form-control" type="text" name="ves" placeholder=""  value="<? echo $_POST['ves'];?>">
@@ -4128,7 +4725,7 @@ echo "</select>
                                                            placeholder="" value="<? echo $_POST['rost'];?>"></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Об`єм талії (см)</label></td>
+                                                <td><label>Окружність талії (см)</label></td>
                                                 <td>з <input class="form-control" type="text" name="tal0" placeholder="" value="<? echo $_POST['tal0'];?>">
                                                     по <input class="form-control" type="text" name="tal" placeholder="" value="<? echo $_POST['tal'];?>">
                                                 </td>
@@ -4179,22 +4776,22 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="zhitt">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.Б. Спосіб життя</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
 
                                             <tr>
-                                                <td><label>Ви палите?</label></td>
-                                                <td>
-                                                    <select class="form-control" name="smouk">
+                                                <td><label class="lb1">Ви палите?</label></td>
+                                                <td style="width: 100%">
+                                                    <select class="form-control" name="smouk" onchange="showPal(this.value)">
                                                         <option value="--" <? if($_POST['smouk']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['smouk']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['smouk']=='Так'){ echo "selected";}?>>Так</option>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['smouk']!='Так'){echo 'class="showPal"';}?> id="chastoPal" >
                                                 <td><label>Якщо курите, як часто?</label></td>
                                                 <td>
-                                                    <select class="form-control" name="smoukTime">
+                                                    <select class="form-control" name="smoukTime" id="smoukTime">
                                                         <option value="--" <? if($_POST['smoukTime']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Кожен день" <? if($_POST['smoukTime']=='Кожен день'){ echo "selected";}?>>Кожен день</option>
                                                         <option value="Кілька днів на тиждень" <? if($_POST['smoukTime']=='Кілька днів на тиждень'){ echo "selected";}?>>Кілька днів на тиждень
@@ -4202,13 +4799,13 @@ echo "</select>
                                                         <option value="Дуже рідко" <? if($_POST['smoukTime']=='Дуже рідко'){ echo "selected";}?>>Дуже рідко</option>
                                                     </select></td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['smouk']!='Так'){echo 'class="showPal"';}?> id="kolPal">
                                                 <td><label>Кількість викурених сигарет за
                                                         1 день</label></td>
                                                 <td>з<input class="form-control" type="text" name="smokeKol0"
-                                                            placeholder="" value="<? echo $_POST['smokeKol0'];?>">
+                                                            placeholder="" value="<? echo $_POST['smokeKol0'];?>" id="smoukkol">
                                                     по<input class="form-control" type="text" name="smokeKol"
-                                                             placeholder="" value="<? echo $_POST['smokeKol'];?>"></td>
+                                                             placeholder="" value="<? echo $_POST['smokeKol'];?>" id="smoukkol1"></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -4237,15 +4834,15 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="hist">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.В. Історія хвороби:</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Тип діабету:</label>
+                                                    <label class="lb1">Тип діабету:</label>
 
                                                 </td>
-                                                <td>
-                                                    <select name="typeDiab" class="form-control">
-                                                        <option value="--"  <? if($_POST['typeDiab']=='--'){ echo "selected";}?>>--</option>
+                                                <td style="width: 100%">
+                                                    <select name="typeDiab" class="form-control" onchange="showDiab(this.value)">
+                                                        <option value=""  <? if($_POST['typeDiab']==''){ echo "selected";}?>>--</option>
                                                         <option value="ЦД 1 типу" <? if($_POST['typeDiab']=='ЦД 1 типу'){ echo "selected";}?>>ЦД 1 типу</option>
                                                         <option value="ЦД 2 типу" <? if($_POST['typeDiab']=='ЦД 2 типу'){ echo "selected";}?>>ЦД 2 типу</option>
                                                         <option value="Латентний аутоімунний (LADA)" <? if($_POST['typeDiab']=='Латентний аутоімунний (LADA)'){ echo "selected";}?>>Латентний
@@ -4261,29 +4858,29 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="showDiabet" id="showDiabRik">
                                                 <td>
                                                     <label>Рік постановки діагнозу:</label>
                                                 </td>
                                                 <td>
-                                                    з<input type="text" name="yearD0" class="form-control" value="<? echo $_POST['yearD0'];?>">
-                                                    по<input type="text" name="yearD" class="form-control" value="<? echo $_POST['yearD'];?>">
+                                                    з<input type="text" name="yearD0" class="form-control" value="<? echo $_POST['yearD0'];?>" id="yearD">
+                                                    по<input type="text" name="yearD" class="form-control" value="<? echo $_POST['yearD'];?>" id="yearD1">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="showDiabet" id="showDiabVik">
                                                 <td>
                                                     <label>Вік дебюту діабету (років):</label></td>
                                                 <td>
-                                                    з<input type="text" name="vekD0" class="form-control" value="<? echo $_POST['vekD0'];?>">
-                                                    по<input type="text" name="vekD" class="form-control" value="<? echo $_POST['vekD'];?>">
+                                                    з<input type="text" name="vekD0" class="form-control" value="<? echo $_POST['vekD0'];?>" id="vekD">
+                                                    по<input type="text" name="vekD" class="form-control" value="<? echo $_POST['vekD'];?>" id="vekD1">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="showDiabet" id="showDiabkol">
                                                 <td>
                                                     <label>Тривалість діабету (років):</label></td>
                                                 <td>
-                                                    з<input type="text" name="longD0" class="form-control" value="<? echo $_POST['longD0'];?>">
-                                                    по<input type="text" name="longD" class="form-control" value="<? echo $_POST['longD'];?>">
+                                                    з<input type="text" name="longD0" class="form-control" value="<? echo $_POST['longD0'];?>" id="longD">
+                                                    по<input type="text" name="longD" class="form-control" value="<? echo $_POST['longD'];?>" id="longD1">
                                                 </td>
                                             </tr>
 
@@ -4293,13 +4890,13 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="bol">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>2.Г. Хвороби, що супруводжують:</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Інфекційні:</label>
+                                                    <label class="lb1">Інфекційні:</label>
 
                                                 </td>
-                                                <td colspan="2">
+                                                <td colspan="2" style="width: 100%">
                                                     <textarea name="inf" class="form-control"  value="<? echo $_POST['inf'];?>"></textarea>
 
                                                 </td>
@@ -4354,16 +4951,67 @@ echo "</select>
 
                                                 </td>
                                             </tr>
+                                           <tr>
+                                               <td><label class="lb1">ЧИ хворієте Ви на онкологічні захворювання?</label>
+                                               </td>
+                                               <td>
+                                                   <select name="Onko" class="form-control" onchange="onko(this.value)">
+                                                       <option value="--" <? if($_POST['Onko']=='--'){ echo "selected";}?>>--</option>
+                                                       <option value="Ні" <? if($_POST['Onko']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                       <option value="Так" <? if($_POST['Onko']=='Так'){ echo "selected";}?>>Так</option>
+
+                                                   </select>
+                                               </td>
+                                           </tr>
+                                           <tr <? if($_POST['Onko']!='Так'){echo 'class="onkoshow"';}?> id="vidOnkoz">
+                                               <td>
+                                                   <label class="lb1">Вкажіть вид онкозахворювання</label></td>
+                                               <td>
+                                                   <input type="text" name="VidOnko" id="vidOnko" class="form-control" value="<? echo $_POST['VidOnko'];?>">
+                                               </td>
+                                           </tr>
+                                           <tr <? if($_POST['Onko']!='Так'){echo 'class="onkoshow"';}?> id="datOnko">
+                                               <td>
+                                                   <label class="lb1">Дата постановки діагнозу
+                                                       онкозахворювання</label></td>
+                                               <td>
+                                                   з<input type="date" name="dateOnko0" id="dateOnko"  class="form-control" value="<? echo $_POST['dateOnko0'];?>">
+                                                   по<input type="date" name="dateOnko" id="dateOnko1"  class="form-control" value="<? echo $_POST['dateOnko'];?>">
+                                               </td>
+                                           </tr>
+                                           <tr class="onkoshow" id="likOnko">
+                                               <td><label class="lb1">Якщо так - лікування онкозахворювання
+                                                       (Препарати - назва препаратів,
+                                                       група)?</label>
+
+                                               </td>
+                                               <td>
+                                                   <select name="OnkoLek" class="form-control" id="onkoLek">
+                                                       <option value="--" <? if($_POST['OnkoLek']=='--'){ echo "selected";}?>>--</option>
+                                                       <option value="Ні" <? if($_POST['OnkoLek']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                       <option value="Хіміотерапія" <? if($_POST['OnkoLek']=='Хіміотерапія'){ echo "selected";}?>>Хіміотерапія</option>
+                                                       <option value="Імунотерапія" <? if($_POST['OnkoLek']=='Імунотерапія'){ echo "selected";}?>>Імунотерапія</option>
+                                                       <option value="Гормональна терапія" <? if($_POST['OnkoLek']=='Гормональна терапія'){ echo "selected";}?>>Гормональна терапія</option>
+                                                       <option value="Комбінована (хіміо + тергетная терапія)" <? if($_POST['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){ echo "selected";}?>>
+                                                           Комбінована (хіміо + тергетная терапія)
+                                                       </option>
+                                                       <option value="Таргетная терапія" <? if($_POST['OnkoLek']=='Таргетная терапія'){ echo "selected";}?>>Таргетная терапія</option>
+                                                       <option value="Хірургічне" <? if($_POST['OnkoLek']=='Хірургічне'){ echo "selected";}?>>Хірургічне</option>
+                                                       <option value="Інші" <? if($_POST['OnkoLek']=='Інші'){ echo "selected";}?>>Інші</option>
+                                                   </select>
+                                               </td>
+
+                                           </tr>
                                         </table>
                                     </fieldset>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="ser">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>3.А. Обстеження серцево-судинної системи</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label>Чи був у вас інфаркт?</label></td>
-                                                <td>
+                                                <td><label class="lb1">Чи був у вас інфаркт?</label></td>
+                                                <td style="width: 100%">
                                                     <select name="infarkt" class="form-control"
                                                             onchange="addIn(this.value)">
                                                         <option value="--"  <? if($_POST['infarkt']=='--'){ echo "selected";}?>>--</option>
@@ -4433,18 +5081,18 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="diab">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>4.А. Обстеження очей</h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Дата обстеження очного
+                                                <td><label class="lb1">Дата обстеження очного
                                                         дна: дд-мм-рр</label>
 
                                                 </td>
-                                                <td>з<input type="date" class="form-control" name="glaz0" value="<? echo $_POST['glaz0'];?>">
+                                                <td style="width: 100%;">з<input type="date" class="form-control" name="glaz0" value="<? echo $_POST['glaz0'];?>">
                                                     по<input type="date" class="form-control" name="glaz" value="<? echo $_POST['glaz'];?>"></td>
 
                                             </tr>
                                             <tr>
-                                                <td style="display: flex; width: 500px;"><label class="lb1">Діабетична
+                                                <td><label class="lb1">Діабетична
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabDiab" class="form-control"
@@ -4462,14 +5110,16 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Непролиферативная
+                                                <td style="display: flex;"><label class="lb1">Непроліферативна
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabNep" class="form-control"
                                                             onchange="addNep(this.value)">
                                                         <option value="--" <? if($_POST['diabNep']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['diabNep']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['diabNep']=='Так'){ echo "selected";}?>>Так</option>
+                                                        <option value="Так - легкого ступеню" <? if($_POST['diabNep']=='Так - легкого ступеню'){ echo "selected";}?>>Так - легкого ступеню</option>
+                                                        <option value="Так - середнього ступеню" <? if($_POST['diabNep']=='Так - середнього ступеню'){ echo "selected";}?>>Так - середнього ступеню</option>
+                                                        <option value="Так - важкого ступеню" <? if($_POST['diabNep']=='Так - важкого ступеню'){ echo "selected";}?>>Так - важкого ступеню</option>
                                                     </select>
                                                     <span id="kiNep"></span>
 
@@ -4480,7 +5130,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Препроліфератівная
+                                                <td style="display: flex;"><label class="lb1">Препроліферативна
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabPrep" class="form-control"
@@ -4496,14 +5146,15 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Пролиферативная
+                                                <td style="display: flex;"><label class="lb1">Проліферативна
                                                         ретинопатія?</label></td>
                                                 <td>
                                                     <select name="diabPrep2" class="form-control"
                                                             onchange="addPrep2(this.value)">
                                                         <option value="--" <? if($_POST['diabPrep2']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['diabPrep2']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['diabPrep2']=='Так'){ echo "selected";}?>>Так</option>
+                                                        <option value="Так - проліферативна діабетична ретинопатія з низьким ризиком" <? if($_POST['diabPrep2']=='Так - проліферативна діабетична ретинопатія з низьким ризиком'){ echo "selected";}?>>Так - проліферативна діабетична ретинопатія з низьким ризиком</option>
+                                                        <option value="Так - проліферативна діабетична ретинопатія з високим ризиком" <? if($_POST['diabPrep2']=='Так - проліферативна діабетична ретинопатія з високим ризиком'){ echo "selected";}?>>Так - проліферативна діабетична ретинопатія з високим ризиком</option>
                                                     </select>
                                                     <span id="kiPrep12"></span>
                                                     <span id="kiPrep22"></span>
@@ -4610,7 +5261,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Дані OST:</label></td>
+                                                    <label>Дані OCT:</label></td>
                                                 <td>
                                                     <input type="file" style='background: transparent;' name="OST"
                                                            class="form-control" value="<? echo $_POST['OST'];?>">
@@ -4622,18 +5273,18 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="nefr">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>5.А. Обстеження нирок</h4>
-                                        <table class='mainT' style="width: 100%;">
-                                            <tr>
-                                                <td style="display: flex;"><label class="lb1">Дата обстеження нирок:
+                                        <table class='mainT' style="width: 80%;">
+                                            <tr >
+                                                <td ><label class="lb1">Дата обстеження нирок:
                                                         дд-мм-рр</label>
 
-                                                </td>
-                                                <td>з<input type="date" class="form-control" name="pochki0" value="<? echo $_POST['pochki0'];?>">
+                                                </td >
+                                                <td  style="width: 100%">з<input type="date" class="form-control" name="pochki0" value="<? echo $_POST['pochki0'];?>">
                                                     по<input type="date" class="form-control" name="pochki" value="<? echo $_POST['pochki'];?>"></td>
 
                                             </tr>
                                             <tr>
-                                                <td style="display: flex; width: 500px;"><label class="lb1">Діабетична
+                                                <td><label class="lb1">Діабетична
                                                         нефропатія?</label></td>
                                                 <td>
                                                     <select name="diabNefro" class="form-control"
@@ -4649,7 +5300,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Хронічна ниркова
+                                                <td><label class="lb1">Хронічна ниркова
                                                         недостатність?</label></td>
                                                 <td>
                                                     <select name="diabPochNEd" class="form-control"
@@ -4665,7 +5316,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Хронічна ниркова
+                                                <td><label class="lb1">Хронічна ниркова
                                                         недостатність - це заключна стадія?</label></td>
                                                 <td>
                                                     <select name="diabPochSt" class="form-control"
@@ -4681,7 +5332,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Діаліз?</label></td>
+                                                <td><label class="lb1">Діаліз?</label></td>
                                                 <td>
                                                     <select name="diabDializ" class="form-control"
                                                             onchange="addDializ(this.value)">
@@ -4697,7 +5348,7 @@ echo "</select>
                                             </tr>
 
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Поточні методи лікування:
+                                                <td><label class="lb1">Поточні методи лікування:
                                                         ліки (назви та група):</label>
 
                                                 </td>
@@ -4731,8 +5382,10 @@ echo "</select>
                                                 <td><label class="lb1">Дата обстеження: дд-мм-рр</label>
 
                                                 </td>
-                                                <td>з<input type="date" class="form-control" name="datPoli0" value="<? echo $_POST['datPoli0'];?>">
-                                                    по<input type="date" class="form-control" name="datPoli" value="<? echo $_POST['datPoli'];?>"></td>
+                                                <td style="width: 100%">
+                                                    з<input type="date" class="form-control" name="datPoli0" value="<? echo $_POST['datPoli0'];?>">
+                                                    по<input type="date" class="form-control" name="datPoli" value="<? echo $_POST['datPoli'];?>">
+                                                </td>
 
                                             </tr>
                                             <tr>
@@ -4792,7 +5445,7 @@ echo "</select>
                                             <tr>
                                                 <td><label class="lb1">Чи є біль в обох ногах?</label></td>
                                                 <td>
-                                                    <select name="Bol" class="form-control">
+                                                    <select name="Bol" class="form-control"  onchange="bolNoga(this.value)">
                                                         <option value="--" <? if($_POST['Bol']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні, болю немає" <? if($_POST['Bol']=='Ні, болю немає'){ echo "selected";}?>>Ні, болю немає</option>
                                                         <option value="Ні, біль з одного боку" <? if($_POST['Bol']=='Ні, біль з одного боку'){ echo "selected";}?>>Ні, біль з одного боку
@@ -4801,12 +5454,12 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolStopa">
                                                 <td>
                                                     <label class="lb1">Якщо біль в обох стопах, як вона
                                                         проявляється?</label></td>
                                                 <td>
-                                                    <select name="Boltwo" class="form-control">
+                                                    <select name="Boltwo" class="form-control" id="Boltwo">
                                                         <option value="--" <? if($_POST['Boltwo']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Спонтанна" <? if($_POST['Boltwo']=='Спонтанна'){ echo "selected";}?>>Спонтанна</option>
                                                         <option value="Постійна" <? if($_POST['Boltwo']=='Постійна'){ echo "selected";}?>>Постійна</option>
@@ -4815,11 +5468,11 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolIntens">
                                                 <td><label class="lb1">Яка інтенсивність болю (шкала від 1 до
                                                         5)?</label></td>
                                                 <td>
-                                                    <select name="BolInten" class="form-control">
+                                                    <select name="BolInten" class="form-control" id="BolInten">
                                                         <option value="--" <? if($_POST['BolInten']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="1" <? if($_POST['BolInten']=='1'){ echo "selected";}?>>1</option>
                                                         <option value="2" <? if($_POST['BolInten']=='2'){ echo "selected";}?>>2</option>
@@ -4830,10 +5483,10 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolProjav">
                                                 <td><label class="lb1">Як проявляється біль?</label></td>
                                                 <td>
-                                                    <select name="Bolkak" class="form-control">
+                                                    <select name="Bolkak" class="form-control" id="Bolkak">
                                                         <option value="--" <? if($_POST['Bolkak']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Печіння" <? if($_POST['Bolkak']=='Печіння'){ echo "selected";}?>>Печіння</option>
                                                         <option value="Викручування" <? if($_POST['Bolkak']=='Викручування'){ echo "selected";}?>>Викручування</option>
@@ -4850,7 +5503,7 @@ echo "</select>
                                                 <td>
                                                     <label class="lb1">Прийом препаратів?</label></td>
                                                 <td>
-                                                    <select name="Preparat" class="form-control">
+                                                    <select name="Preparat" class="form-control" onchange="preparat(this.value)">
                                                         <option value="--" <? if($_POST['Preparat']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Preparat']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['Preparat']=='Так'){ echo "selected";}?>>Так</option>
@@ -4859,10 +5512,10 @@ echo "</select>
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Preparat']!='Так'){echo 'class="showPrep"';}?> id="whatPrep">
                                                 <td><label class="lb1">Якщо так, розписати які препарати?</label></td>
                                                 <td>
-                                                    <select name="PreparatKakie" class="form-control">
+                                                    <select name="PreparatKakie" class="form-control" id="PreparatKakie">
                                                         <option value="--" <? if($_POST['PreparatKakie']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Антиконвульсанти (прегабалін, габапентин)"
                                                             <? if($_POST['PreparatKakie']=='"Антиконвульсанти (прегабалін, габапентин)'){ echo "selected";}?>>
@@ -4891,20 +5544,18 @@ echo "</select>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="stop">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>6.Б. Обстеження стопи</label>
-                                            <div id="tab-content10"
-                                        </h4>
-                                        <table class='mainT' style="width: 100%;">
+                                        <h4>6.Б. Обстеження стопи</h4>
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label>Дата обстеження стопи: дд-мм-рр?</label></td>
-                                                <td>
+                                                <td><label class="lb1">Дата обстеження стопи: дд-мм-рр?</label></td>
+                                                <td style="width: 100%;">
                                                     з<input type="date" name="datStopObsl" class="form-control" value="<? echo $_POST['datStopObsl'];?>">
                                                     по<input type="date" name="datStopObsl0" class="form-control" value="<? echo $_POST['datStopObsl0'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Зниження температури?</label></td>
+                                                    <label class="lb1">Зниження температури?</label></td>
                                                 <td>
                                                     <select name="SnizhT" class="form-control">
                                                         <option value="--" <? if($_POST['SnizhT']=='--'){ echo "selected";}?>>--</option>
@@ -4915,7 +5566,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label>Порушення тактильної чутливості?</label></td>
+                                                    <label class="lb1">Порушення тактильної чутливості?</label></td>
                                                 <td>
                                                     <select name="Chyvs" class="form-control">
                                                         <option value="--" <? if($_POST['Chyvs']=='--'){ echo "selected";}?>>--</option>
@@ -4925,7 +5576,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Порушення вібраційної чутливості?</label></td>
+                                                <td><label class="lb1">Порушення вібраційної чутливості?</label></td>
                                                 <td>
                                                     <select name="NarVibr" class="form-control">
                                                         <option value="--" <? if($_POST['NarVibr']=='--'){ echo "selected";}?>>--</option>
@@ -4935,7 +5586,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Зниження / відсутність рефлексів?</label></td>
+                                                <td><label class="lb1">Зниження / відсутність рефлексів?</label></td>
                                                 <td>
                                                     <select name="Reflex" class="form-control">
                                                         <option value="--" <? if($_POST['Reflex']=='--'){ echo "selected";}?>>--</option>
@@ -4944,7 +5595,7 @@ echo "</select>
                                                     </select></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Наявність виразок?</label></td>
+                                                <td><label class="lb1">Наявність виразок?</label></td>
                                                 <td>
                                                     <select name="Jazv" class="form-control">
                                                         <option value="--" <? if($_POST['Jazv']=='--'){ echo "selected";}?>>--</option>
@@ -4954,7 +5605,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Нагноєння виразок?</label></td>
+                                                <td><label class="lb1">Нагноєння виразок?</label></td>
                                                 <td>
                                                     <select name="GnojJazv" class="form-control">
                                                         <option value="--" <? if($_POST['GnojJazv']=='--'){ echo "selected";}?>>--</option>
@@ -4964,7 +5615,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Пульс на стопі?</label></td>
+                                                <td><label class="lb1">Пульс на стопі?</label></td>
                                                 <td>
                                                     <select name="PylsStopa" class="form-control">
                                                         <option value="--" <? if($_POST['PylsStopa']=='--'){ echo "selected";}?>>--</option>
@@ -4973,7 +5624,7 @@ echo "</select>
                                                     </select></td>
                                             </tr>
                                             <tr>
-                                                <td><label>Шунтування / ангіопластика?</label></td>
+                                                <td><label class="lb1">Шунтування / ангіопластика?</label></td>
                                                 <td>
                                                     <select name="Shynt" class="form-control">
                                                         <option value="--" <? if($_POST['Shynt']=='--'){ echo "selected";}?>>--</option>
@@ -4983,7 +5634,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Перемежовуються кульгавість?</label></td>
+                                                <td><label class="lb1">Синдром переміжної кульгавості?</label></td>
                                                 <td>
                                                     <select name="Hrom" class="form-control">
                                                         <option value="--" <? if($_POST['Hrom']=='--'){ echo "selected";}?>>--</option>
@@ -4993,7 +5644,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label>Ампутація?</label></td>
+                                                <td><label class="lb1">Ампутація?</label></td>
                                                 <td>
                                                     <select name="Ampyt" class="form-control"
                                                             onchange="addAmput(this.value)">
@@ -5020,10 +5671,10 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="lab">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>7.А. Лабораторні дослідження</h4>
-                                        <table class='mainT' id="forTab1" style="width: 100%;">
+                                        <table class='mainT' id="forTab1" style="width: 80%;">
                                             <tr>
                                                 <td><label class="lb1">Дата обстеження: дд-мм-рр</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     з<input type="date" class="form-control" name="datLab0" value="<? echo $_POST['datLab0'];?>">
                                                     по<input type="date" class="form-control" name="datLab" value="<? echo $_POST['datLab'];?>">
                                                 </td>
@@ -5044,9 +5695,9 @@ echo "</select>
                                                     <label class="lb1">О котрій годині був останній прийом їжі
                                                         (напередодні ввечері)?</label></td>
                                                 <td>
-                                                    з<input name="Pisha0" type="text" class="form-control"
+                                                    з<input name="Pisha0" type="time" class="form-control"
                                                             placeholder="" value="<? echo $_POST['Pisha0'];?>">
-                                                    по<input name="Pisha" type="text" class="form-control"
+                                                    по<input name="Pisha" type="time" class="form-control"
                                                              placeholder="" value="<? echo $_POST['Pisha'];?>">
                                                 </td>
                                             </tr>
@@ -5058,7 +5709,7 @@ echo "</select>
                                             <tr>
 
                                                 <td>
-                                                    <label class="lb1">Показник, nmol / l</label></td>
+                                                    <label class="lb1">Показник, ммоль/л</label></td>
                                                 <td>
                                                     з<input type="text" name="nmol0" class="form-control" value="<? echo $_POST['nmol0'];?>">
                                                     по<input type="text" name="nmol" class="form-control" value="<? echo $_POST['nmol'];?>">
@@ -5073,7 +5724,7 @@ echo "</select>
                                                 </td>
                                             </tr>
                                             <tr style="background: #295b8e;">
-                                                <td><label class="lb1" style="color:white;">Глікозилювання гемоглобін?</label></td>
+                                                <td><label class="lb1" style="color:white;">Глікований гемоглобін?</label></td>
                                                 <td></td>
 
                                             </tr>
@@ -5088,7 +5739,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label class="lb1">Глікозилювання гемоглобін pmol/pmol</label></td>
+                                                    <label class="lb1">Глікований гемоглобін pmol/pmol</label></td>
                                                 <td>
                                                     з<input type="text" name="gemogl0" class="form-control" value="<? echo $_POST['gemogl0'];?>">
                                                     по<input type="text" name="gemogl" class="form-control" value="<? echo $_POST['gemogl'];?>">
@@ -5247,27 +5898,27 @@ echo "</select>
                                                 <td>
                                                     <label class="lb1">Протеїнурія</label></td>
                                                 <td>
-                                                    <select name="Protein" class="form-control">
+                                                    <select name="Protein" class="form-control" onchange="protein(this.value)">
                                                         <option value="--" <? if($_POST['Protein']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Protein']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['Protein']=='Так'){ echo "selected";}?>>Так</option>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Protein']!='Так'){echo 'class="showProt"';}?> id="prote">
                                                 <td>
                                                     <label class="lb1">Останній вимір, мг / сут</label></td>
                                                 <td>
-                                                    з<input type="text" name="posIzm0" class="form-control" value="<? echo $_POST['posIzm0'];?>">
-                                                    по<input type="text" name="posIzm" class="form-control" value="<? echo $_POST['posIzm'];?>">
+                                                    з<input type="text" name="posIzm0" id="posIzm" class="form-control" value="<? echo $_POST['posIzm0'];?>">
+                                                    по<input type="text" name="posIzm" id="posIzm1" class="form-control" value="<? echo $_POST['posIzm'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr <? if($_POST['Protein']!='Так'){echo 'class="showProt"';}?> id="datprote">
                                                 <td>
                                                     <label class="lb1">Дата, дд-мм-рр</label></td>
                                                 <td>
-                                                    з<input type="date" name="datProtein0" class="form-control" value="<? echo $_POST['datProtein0'];?>">
-                                                    по<input type="date" name="datProtein" class="form-control" value="<? echo $_POST['datProtein'];?>">
+                                                    з<input type="date" name="datProtein0" id="datProtein" class="form-control" value="<? echo $_POST['datProtein0'];?>">
+                                                    по<input type="date" name="datProtein" id="datProtein1" class="form-control" value="<? echo $_POST['datProtein'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -5288,15 +5939,16 @@ echo "</select>
                                                         <option value="Ні" <? if($_POST['Mikroalmb']=='Ні'){ echo "selected";}?>>Ні</option>
                                                         <option value="Так" <? if($_POST['Mikroalmb']=='Так'){ echo "selected";}?>>Так</option>
                                                     </select>
+
+
                                                     <span id="kiMikro1"></span>
                                                     <span id="kiMikro3"></span>
-
-
+                                                    <span id="kiMikro10"></span>
+                                                    <span id="kiMikro30"></span>
                                                     <span id="kiMikro"></span>
                                                     <span id="kiMikro2"></span>
                                                     <span id="kiMikro0"></span>
                                                     <span id="kiMikro20"></span>
-
                                                 </td>
                                             </tr>
                                             <tr style="background: #295b8e;">
@@ -5368,7 +6020,7 @@ echo "</select>
                                                     по<input type="text" name="BelocS" class="form-control" value="<? echo $_POST['BelocS'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none;">
                                                 <td>
 
                                                     <label class="lb1">C-пептид, показник:</label></td>
@@ -5377,7 +6029,7 @@ echo "</select>
                                                     по<input type="text" name="Peptid" class="form-control" value="<? echo $_POST['Peptid'];?>">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr style="display: none;">
                                                 <td>
                                                     <label class="lb1">C-пептид, одиниця виміру:</label></td>
                                                 <td>
@@ -5387,7 +6039,7 @@ echo "</select>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <label class="lb1">pmol/l</label></td>
+                                                    <label class="lb1">C-пептид, одиниця виміру нг/мл:</label></td>
                                                 <td>
                                                     з<input type="text" name="PeptidPmol0" class="form-control" value="<? echo $_POST['PeptidPmol0'];?>">
                                                     по<input type="text" name="PeptidPmol" class="form-control" value="<? echo $_POST['PeptidPmol'];?>">
@@ -5397,7 +6049,7 @@ echo "</select>
                                             <tr>
                                                 <td>
 
-                                                    <label class="lb1">nmol/l:</label></td>
+                                                    <label class="lb1">C-пептид, одиниця виміру nmol/l:</label></td>
                                                 <td>
                                                     з<input type="text" name="PeptidNmol0" class="form-control" value="<? echo $_POST['PeptidNmol0'];?>">
                                                     по<input type="text" name="PeptidNmol" class="form-control" value="<? echo $_POST['PeptidNmol'];?>">
@@ -5412,6 +6064,22 @@ echo "</select>
                                                 </td>
 
                                             </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="lb1">AT-GAD:</label></td><td>
+                                                    з<input type="text" name="atGad0" class="form-control" value="<? echo $_POST['atGad0'];?>">
+                                                    по<input type="text" name="atGad" class="form-control" value="<? echo $_POST['atGad'];?>">
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="lb1">AT-GAD дата:</label></td><td>
+                                                    з<input type="date" name="atGaddat0" class="form-control" value="<? echo $_POST['atGaddat0'];?>">
+                                                    по<input type="date" name="atGaddat" class="form-control" value="<? echo $_POST['atGaddat'];?>">
+                                                </td>
+
+                                            </tr>
                                         </table>
                                     </fieldset>
                                 </div>
@@ -5420,11 +6088,11 @@ echo "</select>
                                         <h4>7.Б. Біоматеріал</label>
                                             <div id="tab-content12"
                                         </h4>
-                                        <table class='mainT' style="width: 100%;">
+                                       <table class='mainT' style="width: 80%;">
                                             <tr>
                                                 <td>
-                                                    <label>Сиворотка?</label></td>
-                                                <td>
+                                                    <label class="lb1">Сиворотка?</label></td>
+                                                <td style="width: 100%;">
                                                     <select name="Sivor" class="form-control">
                                                         <option value="--" <? if($_POST['Sivor']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Ні" <? if($_POST['Sivor']=='Ні'){ echo "selected";}?>>Ні</option>
@@ -5503,11 +6171,11 @@ echo "</select>
                                 <div role="tabpanel" class="tab-pane" id="lik">
                                     <fieldset style="margin-top: 30px;">
                                         <h4>8.А. Лікування</h4>
-                                        <table class='mainT' id="forTab2" style="width: 100%;">
+                                        <table class='mainT' id="forTab2" style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Лікування цукрового
+                                                <td><label class="lb1">Лікування цукрового
                                                         діабету</label></td>
-                                                <td>
+                                                <td style="width: 100%;">
                                                     <select name="LechDIabet" class="form-control">
                                                         <option value="--" <? if($_POST['LechDIabet']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Не проводиться" <? if($_POST['LechDIabet']=='Не проводиться'){ echo "selected";}?>>Не проводиться</option>
@@ -5523,10 +6191,10 @@ echo "</select>
                                                     <label class="lb1">Лікування діабету: інсулін (препарат, доза
                                                         прийому, кратність)</label></td>
                                                 <td>
-                                                    <select name="LechInsul" class="form-control">
+                                                    <select name="LechInsul" class="form-control" onchange="showIns(this.value)">
                                                         <option value="--" <? if($_POST['LechInsul']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Базисная инсулинотерапия" <? if($_POST['LechInsul']=='Базисная инсулинотерапия'){ echo "selected";}?>>Базисна
-                                                            інсулінотерапії
+                                                        <option value="Ні" <? if($_POST['LechInsul']=='Ні'){ echo "selected";}?>>Ні</option>
+                                                        <option value="Базисна інсулінотерапія" <? if($_POST['LechInsul']=='Базисна інсулінотерапія'){ echo "selected";}?>>Базисна інсулінотерапія
                                                         </option>
                                                         <option value="Помпова інсулінотерапія" <? if($_POST['LechInsul']=='Помпова інсулінотерапія'){ echo "selected";}?>>Помпова
                                                             інсулінотерапія
@@ -5536,13 +6204,13 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="showIns" id="insyl">
                                                 <td>
                                                     <label class="lb1">Дата початку інсулінотерапії (дд- мм-рр)</label>
                                                 </td>
                                                 <td>
-                                                    з<input type="date" name="datLechDiab0" class="form-control" value="<? echo $_POST['datLechDiab0'];?>">
-                                                    по<input type="date" name="datLechDiab" class="form-control" value="<? echo $_POST['datLechDiab'];?>">
+                                                    з<input type="date" name="datLechDiab0" id="datLechDiab0" class="form-control" value="<? echo $_POST['datLechDiab0'];?>">
+                                                    по<input type="date" name="datLechDiab" id="datLechDiab" class="form-control" value="<? echo $_POST['datLechDiab'];?>">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -5595,67 +6263,18 @@ echo "</select>
                                                     </select>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><label class="lb1">Хворієте (хворіли) ви онкозахворюваннями?</label>
-                                                </td>
-                                                <td>
-                                                    <select name="Onko" class="form-control">
-                                                        <option value="--" <? if($_POST['Onko']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Ні" <? if($_POST['Onko']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Так" <? if($_POST['Onko']=='Так'){ echo "selected";}?>>Так</option>
 
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="lb1">Вкажіть вид онкозахворювання</label></td>
-                                                <td>
-                                                    <input type="text" name="VidOnko" class="form-control" value="<? echo $_POST['VidOnko'];?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="lb1">Дата постановки діагнозу
-                                                        онкозахворювання</label></td>
-                                                <td>
-                                                    з<input type="date" name="dateOnko0" class="form-control" value="<? echo $_POST['dateOnko0'];?>">
-                                                    по<input type="date" name="dateOnko" class="form-control" value="<? echo $_POST['dateOnko'];?>">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><label class="lb1">Якщо так - лікування онкозахворювання
-                                                        (Препарати - назва препаратів,
-                                                        група)?</label>
-
-                                                </td>
-                                                <td>
-                                                    <select name="OnkoLek" class="form-control">
-                                                        <option value="--" <? if($_POST['OnkoLek']=='--'){ echo "selected";}?>>--</option>
-                                                        <option value="Ні" <? if($_POST['OnkoLek']=='Ні'){ echo "selected";}?>>Ні</option>
-                                                        <option value="Хіміотерапія" <? if($_POST['OnkoLek']=='Хіміотерапія'){ echo "selected";}?>>Хіміотерапія</option>
-                                                        <option value="Імунотерапія" <? if($_POST['OnkoLek']=='Імунотерапія'){ echo "selected";}?>>Імунотерапія</option>
-                                                        <option value="Гормональна терапія" <? if($_POST['OnkoLek']=='Гормональна терапія'){ echo "selected";}?>>Гормональна терапія</option>
-                                                        <option value="Комбінована (хіміо + тергетная терапія)" <? if($_POST['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){ echo "selected";}?>>
-                                                            Комбінована (хіміо + тергетная терапія)
-                                                        </option>
-                                                        <option value="Таргетная терапія" <? if($_POST['OnkoLek']=='Таргетная терапія'){ echo "selected";}?>>Таргетная терапія</option>
-                                                        <option value="Хірургічне" <? if($_POST['OnkoLek']=='Хірургічне'){ echo "selected";}?>>Хірургічне</option>
-                                                        <option value="Інші" <? if($_POST['OnkoLek']=='Інші'){ echo "selected";}?>>Інші</option>
-                                                    </select>
-                                                </td>
-
-                                            </tr>
                                         </table>
                                     </fieldset>
 
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="gen">
                                     <fieldset style="margin-top: 30px;">
-                                        <h4>9.А. Геніаологічне дерево</h4>
-                                        <table class='mainT' id="forTab2" style="width: 100%;">
+                                        <h4>9.А. Генеалогічне дерево</h4>
+                                        <table class='mainT' id="forTab2" style="width: 80%;">
                                             <tr>
-                                                <td style="display: flex;"><label class="lb1">Геніаологічне дерево</label></td><td>
+                                                <td><label class="lb1">Генеалогічне дерево</label></td>
+                                                <td style="width: 100%;">
                                                     <select name="gen" class="form-control">
                                                         <option value="--"  <? if($_POST['gen']=='--'){ echo "selected";}?>>--</option>
                                                         <option value="Так" <? if($_POST['gen']=='Так'){ echo "selected";}?>>Так</option>
@@ -5664,6 +6283,7 @@ echo "</select>
 
                                                     </select>
                                                 </td>
+
                                             </tr>
 
                                         </table>
@@ -5673,13 +6293,7 @@ echo "</select>
 
                         </div>
                         <br>
-                        <div class="controls">
-                            <a href="javascript:void(0)" class="btn btn-default prev" style="border: 1px solid darkblue;color:darkblue;"><
-                                Попередня</a>
-                            <a href="javascript:void(0)" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна
-                                ></a>
 
-                        </div>
                         <div class="controls">
                             <input type="submit" name="find" class="btn"
                                    style="border: 1px solid darkblue;color:darkblue;"
@@ -5687,6 +6301,14 @@ echo "</select>
 
                             <input type="reset" name="cancel" class="btn"
                                    style="border: 1px solid darkblue;color:darkblue;" value="Скинути пошук">
+                        </div>
+                        <br>
+                        <div class="controls">
+                            <a href="javascript:void(0)" class="btn btn-default prev" style="border: 1px solid darkblue;color:darkblue;"><
+                                Попередня</a>
+                            <a href="javascript:void(0)" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна
+                                ></a>
+
                         </div>
                     </form>
 
@@ -5749,12 +6371,17 @@ echo "</select>
 }else{
     echo "Ви не авторизовані в системі";
 }
+
 ?>
 <script>
+
     function addMikro(el) {
         if(el=='Ні' || el=='--') {
             var el3 = document.getElementById('kakMikro');
+
             var el4 = document.getElementById('kakMikro1');
+            var el9 = document.getElementById('kakMikro0');
+            var el8 = document.getElementById('kakMikro10');
 
             var el1 = document.getElementById('datMikroL');
             var el6 = document.getElementById('datMikro');
@@ -5762,6 +6389,8 @@ echo "</select>
 
 
             var el7 = document.getElementById('datMikro0');
+            el9.remove();
+            el8.remove();
             el7.remove();
             el1.remove();
             el3.remove();
@@ -5773,9 +6402,8 @@ echo "</select>
             var el11=document.getElementById("kiMikro1");
             var el22=document.getElementById("kiMikro3");
             var lab11 = document.createElement("label");
-
             var select=document.createElement("input");
-            lab11.innerText="Якщо так – показник, мг/л";
+            lab11.innerText="Якщо так – показник, мг/л з";
             lab11.id="kakMikro";
             select.name="kakMikro";
             select.id="kakMikro1";
@@ -5785,6 +6413,24 @@ echo "</select>
             el22.appendChild(select);
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
+
+            var el110=document.getElementById("kiMikro10");
+            var el220=document.getElementById("kiMikro30");
+            var lab110 = document.createElement("label");
+            var select0=document.createElement("input");
+            lab110.innerText="Якщо так – показник, мг/л по";
+            lab110.id="kakMikro0";
+            select0.name="kakMikro0";
+            select0.id="kakMikro10";
+            select0.name="kakMikro10";
+            select0.setAttribute("class", "form-control");
+            el110.appendChild(lab110);
+            el220.appendChild(select0);
+            var lab0 = document.createElement("label");
+            var inp10 = document.createElement('input');
+
+
+
             inp1.type = 'date';
             inp1.name = 'datMikro';
             inp1.id = 'datMikro';
@@ -5792,6 +6438,8 @@ echo "</select>
             inp1.setAttribute("width", "100px");
             lab.innerText='Дата з';
             lab.id='datMikroL';
+
+
             var sp=document.getElementById('kiMikro');
             var sp2=document.getElementById('kiMikro2');
             sp.appendChild(lab);
@@ -6700,75 +7348,112 @@ el22.appendChild(select);
             el1.remove();
 
                 var rowD='rowDatIns';
+            var rowD1='rowDatIns1';
                 var idD='datIns';
                 var idDL='datInsL';
                 var elD=document.getElementById(idD);
                 var elDL=document.getElementById(idDL);
                 var rowDat=document.getElementById(rowD);
+            var rowDat1=document.getElementById(rowD1);
                 elD.remove();
                 elDL.remove();
-                rowDat.remove();
+                rowDat.remove(); rowDat1.remove();
 
 
         }
 
     }
     function addPol1(kolIns) {
+if(kolIns==''){
+    var rowD = 'rowDatIns';
+    var rowD1 = 'rowDatIns1';
+    var idD = 'datIns';
+    var idDL = 'datInsL';
+    var idD0 = 'datIns0';
+    var idDL0 = 'datInsL0';
+    var elD = document.getElementById(idD);
+    var elDL = document.getElementById(idDL);
+    var elD0 = document.getElementById(idD0);
+    var elDL0 = document.getElementById(idDL0);
+    var rowDat = document.getElementById(rowD);
+    var rowDat1 = document.getElementById(rowD1);
+    if (elD) {
+        elD.remove();
+        elDL.remove();
+        rowDat.remove();
+    }
+    if (elD0) {
+        elD0.remove();
+        elDL0.remove();
+        rowDat1.remove();
+    }
+}else {
+    var rowD = 'rowDatIns';
+    var rowD1 = 'rowDatIns1';
+    var idD = 'datIns';
+    var idDL = 'datInsL';
+    var idD0 = 'datIns0';
+    var idDL0 = 'datInsL0';
+    var elD = document.getElementById(idD);
+    var elDL = document.getElementById(idDL);
+    var elD0 = document.getElementById(idD0);
+    var elDL0 = document.getElementById(idDL0);
+    var rowDat = document.getElementById(rowD);
+    var rowDat1 = document.getElementById(rowD1);
+    if (elD) {
+        elD.remove();
+        elDL.remove();
+        rowDat.remove();
+            }
+    if (elD0) {
+        elD0.remove();
+        elDL0.remove();
+        rowDat1.remove();
+    }
+    var tbody = document.getElementById('tttIns').getElementsByTagName("TBODY")[0];
+    var tab = document.getElementById('tttIns');
 
-            var rowD='rowDatIns';
-            var idD='datIns';
-            var idDL='datInsL';
-            var elD=document.getElementById(idD);
-            var elDL=document.getElementById(idDL);
-            var rowDat=document.getElementById(rowD);
-            if(elD) {
-                elD.remove();
-                elDL.remove();
-                rowDat.remove();
 
-        }
-        var tbody = document.getElementById('tttIns').getElementsByTagName("TBODY")[0];
-        var tab = document.getElementById('tttIns');
+    var td = document.createElement("td");
+    var tr1 = document.createElement("tr");
+    var row = document.createElement("tr");
+    var lab = document.createElement("label");
+    var inp1 = document.createElement('input');
+    row.id = 'rowDatIns';
+    tr1.id = 'rowDatIns1';
+    inp1.type = 'text';
+    inp1.name = 'datIns';
+    inp1.id = 'datIns';
+    inp1.setAttribute("class", "form-control");
 
-
-            var td = document.createElement("td");
-            var td1 = document.createElement("td");
-            var row = document.createElement("tr");
-            var lab = document.createElement("label");
-            var inp1 = document.createElement('input');
-            row.id='rowDatIns';
-            inp1.type = 'text';
-            inp1.name = 'datIns';
-            inp1.id='datIns';
-            inp1.setAttribute("class", "form-control");
-
-            lab.innerText='Рік інсульту з';
-            lab.id='datInsL';
-            td.appendChild(lab);
-            td1.appendChild(inp1);
-            row.appendChild(td);
-            row.appendChild(td1);
+    lab.innerText = 'Рік інсульту з';
+    lab.id = 'datInsL';
+    td.appendChild(lab);
+    td.appendChild(inp1);
+    row.appendChild(td);
+    //row.appendChild(td1);
 
 
-            var td0 = document.createElement("td");
-            var td10 = document.createElement("td");
+    var td0 = document.createElement("td");
+    var td10 = document.createElement("td");
 
-            var lab0 = document.createElement("label");
-            var inp10 = document.createElement('input');
+    var lab0 = document.createElement("label");
+    var inp10 = document.createElement('input');
 
-            inp10.type = 'text';
-            inp10.name = 'datIns0';
-            inp10.id='datIns0';
-            inp10.setAttribute("class", "form-control");
+    inp10.type = 'text';
+    inp10.name = 'datIns0';
+    inp10.id = 'datIns0';
+    inp10.setAttribute("class", "form-control");
 
-            lab0.innerText='Рік інсульту по';
-            lab0.id='datInsL0';
-            td0.appendChild(lab0);
-            td10.appendChild(inp10);
-            row.appendChild(td0);
-            row.appendChild(td10);
-            tbody.appendChild(row);
-
+    lab0.innerText = 'Рік інсульту по';
+    lab0.id = 'datInsL0';
+    td0.appendChild(lab0);
+    td0.appendChild(inp10);
+    tr1.appendChild(td0);
+    // row.appendChild(td10);
+    tbody.appendChild(row);
+    tbody.appendChild(tr1);
+}
     }
     function addIn(el) {
        if(el=='Так'){
@@ -6822,76 +7507,120 @@ lab.innerText='Введіть кількість інфарктів';
           el1.remove();
 
               var rowD='rowDat';
+           var rowDk='rowDatk';
               var idD='datInf';
               var idDL='datInfL';
               var elD=document.getElementById(idD);
               var elDL=document.getElementById(idDL);
               var rowDat=document.getElementById(rowD);
+           var rowDatk=document.getElementById(rowDk);
               elD.remove();
               elDL.remove();
               rowDat.remove();
+           rowDatk.remove();
 
 
        }
 
     }
     function addPol(kolInf) {
+if(kolInf==''){
+    var rowD = 'rowDat';
+    var rowDat = document.getElementById(rowD);
+    var idD = 'datInf';
+    var idDL = 'datInfL';
 
-            var rowD = 'rowDat' ;
-            var idD = 'datInf' ;
-            var idDL = 'datInfL';
-            var elD = document.getElementById(idD);
-            var elDL = document.getElementById(idDL);
-            var rowDat = document.getElementById(rowD);
-            if(elD){
-                elD.remove();
-                elDL.remove();
-                rowDat.remove();
+    var elD = document.getElementById(idD);
+    var elDL = document.getElementById(idDL);
 
+    if (elD) {
 
-        }
-        var tbody = document.getElementById('ttt').getElementsByTagName("TBODY")[0];
-        var tab = document.getElementById('ttt');
+        elD.remove();
+        elDL.remove();
+        rowDat.remove();
+    }
+    var rowDk = 'rowDatk';
+    var rowDatk = document.getElementById(rowDk);
+    var idD0 = 'datInf0';
+    var idDL0 = 'datInfL0';
+    var elD0 = document.getElementById(idD0);
+    var elDL0 = document.getElementById(idDL0);
+
+    if (elD0) {
+
+        elD0.remove();
+        elDL0.remove();
+        rowDatk.remove();
+    }
+
+}else {
+    var rowD = 'rowDat';
+    var rowDat = document.getElementById(rowD);
+    var idD = 'datInf';
+    var idDL = 'datInfL';
+
+    var elD = document.getElementById(idD);
+    var elDL = document.getElementById(idDL);
+
+    if (elD) {
+
+        elD.remove();
+        elDL.remove();
+        rowDat.remove();
+    }
+    var rowDk = 'rowDatk';
+    var rowDatk = document.getElementById(rowDk);
+    var idD0 = 'datInf0';
+    var idDL0 = 'datInfL0';
+    var elD0 = document.getElementById(idD0);
+    var elDL0 = document.getElementById(idDL0);
+
+    if (elD0) {
+
+        elD0.remove();
+        elDL0.remove();
+        rowDatk.remove();
+    }
+    var tbody = document.getElementById('ttt').getElementsByTagName("TBODY")[0];
+    var tab = document.getElementById('ttt');
 
 
     var td = document.createElement("td");
-    var td1 = document.createElement("td1");
+    var tr1 = document.createElement("tr");
     var row = document.createElement("tr");
     var lab = document.createElement("label");
     var inp1 = document.createElement('input');
-    row.id='rowDat';
+    row.id = 'rowDat';
+    tr1.id = 'rowDatk';
     inp1.type = 'text';
     inp1.name = 'datInf';
-    inp1.id='datInf';
+    inp1.id = 'datInf';
     inp1.setAttribute("class", "form-control");
 
-    lab.innerText='Рік інфаркту з';
-    lab.id='datInfL';
+    lab.innerText = 'Рік інфаркту з';
+    lab.id = 'datInfL';
     td.appendChild(lab);
-    td1.appendChild(inp1);
+    td.appendChild(inp1);
     row.appendChild(td);
-    row.appendChild(td1);
-
-
     var td0 = document.createElement("td");
     var td10 = document.createElement("td1");
 
     var lab0 = document.createElement("label");
     var inp10 = document.createElement('input');
-   // row0.id='rowDat0'+i;
     inp10.type = 'text';
     inp10.name = 'datInf0';
-    inp10.id='datInf0';
+    inp10.id = 'datInf0';
     inp10.setAttribute("class", "form-control");
 
-    lab0.innerText='Рік інфаркту по';
-    lab0.id='datInfL0';
+    lab0.innerText = 'Рік інфаркту по';
+    lab0.id = 'datInfL0';
     td0.appendChild(lab0);
-    td10.appendChild(inp10);
-    row.appendChild(td0);
-    row.appendChild(td10);
-    tbody.appendChild(row);
+    td0.appendChild(inp10);
+    tr1.appendChild(td0);
 
+    tbody.appendChild(row);
+    tbody.appendChild(tr1);
+}
     }
     function ss6(el) {
         if (el.value == 'Так') {

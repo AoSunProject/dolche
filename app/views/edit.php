@@ -2,6 +2,9 @@
       integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <title><? echo $karta[0]['fname'];?>  <? echo $karta[0]['name'];?> <? echo $karta[0]['sname'];?></title>
 <style>
+    .pop{
+        z-index: 999;
+    }
     @media (min-width: 576px)
         .modal-dialog {
             width: 900px;
@@ -129,7 +132,7 @@
 <style>
 table{
     width: 80%;
-    margin: 0 auto;
+   /* margin: 0 auto;*/
 }
 .menlab{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
@@ -240,7 +243,6 @@ padding: 7px;
     }
 </style>
 <link rel="stylesheet" href="../../js/bootstrap.css">
-
 <?php
 if(isset($_SESSION['user'])){
 
@@ -250,16 +252,52 @@ if(isset($_SESSION['user'])){
 <cb-breadcrumb _ngcontent-c1="" _nghost-c5="">
     <div _ngcontent-c5="">
         <p-breadcrumb _ngcontent-c5="" class="truncate">
-            <div class="ui-breadcrumb ui-widget ui-widget-header ui-helper-clearfix ui-corner-all">
-                <ul><!----><!----><!---->
+            <div class="ui-breadcrumb ui-widget ui-widget-header ui-helper-clearfix ui-corner-all" style="    display: flex;
+    justify-content: space-between;">
+                <ul style="padding: 0;margin: 0;"><!----><!----><!---->
                     <li role="menuitem" class="ng-star-inserted"><!----><a
                                 class="ui-menuitem-link ng-star-inserted" href=""
                                 id="empty"><!----><span class="ui-menuitem-text"></span></a><!----></li><!---->
                     <li class="ui-breadcrumb-chevron pi pi-chevron-right ng-star-inserted"></li><!---->
                     <li role="menuitem" class="ng-star-inserted"><!----><a
                                 class="ui-menuitem-link ng-star-inserted"
-                                id="login"><!----><span class="ui-menuitem-text">№ учасника: "<? echo $karta[0]['id'];?>" ПІБ: "<? echo $karta[0]['fname'];?>  <? echo $karta[0]['name'];?> <? echo $karta[0]['sname'];?>"</span></a><!----></li>
+                                id="login"><!---->
+
+                                <div id="np"><span class="ui-menuitem-text">Номер учасника: №
+                                <? echo $karta[0]['nomPac'];?>  ПІБ: <? echo $karta[0]['fname'];?>
+                                <? echo $karta[0]['name'];?>
+                                       <!--aosun 07.11.2020 добавил проверку на дату, что бы не вылетало крякозябр при смены формата даты-->
+                                        <? if($karta[0]['datV']==null or $karta[0]['datV']=='0000-00-00'){
+                                            echo $karta[0]['sname']."[ Візит № {$karta[0]['nomV']} від {$karta[0]['datV']} ]";
+                                        }
+                                        elseif($karta[0]['datV']!=null or $karta[0]['datV']!='0000-00-00')
+                                        {
+                                              echo $karta[0]['sname']."[ Візит № {$karta[0]['nomV']} від ".DateTime::createFromFormat('Y-m-d',($karta[0]['datV']))->format('d-m-Y')." ]";
+                                        }
+                                        ?>
+
+
+            </div>
+                                <div id="np1">  </div>
+                            </span></a><!----></li>
                     <!----><!----></ul>
+               <form method="post" action="<?=Url::local('newvizit')?>">
+                   <input type="hidden" name="id_k" id="id_kart" value="<? echo $karta[0]['id'];?>">
+                   <input type="hidden" name="nomPac" value="<? echo $karta[0]['nomPac'];?>">
+                  <? if($karta[0]['pomer']=='Так'){?>
+                   <input type="submit" class="btn  btn-sm" value="Новий візит"
+                          style="background: #2b5e93; color:white; width:100px;height: 30px;padding: 0; display: none">
+                   <?
+                   }
+                   else
+                       {
+                           ?>
+                           <input type="submit" class="btn  btn-sm" value="Новий візит"
+                                  style="background: #2b5e93; color:white; width:100px;height: 30px;padding: 0; ">
+                           <?
+                       }
+                   ?>
+               </form>
             </div>
         </p-breadcrumb>
     </div>
@@ -273,7 +311,8 @@ if(isset($_SESSION['user'])){
     #ul1{
         display: flex;
         flex-direction: column;
-        margin-top: 30px;
+        margin-top: 40px;
+        /*aosun 07.11.2020 добавил 10px отступа от верха. Так как заходит за край*/
     }
     .menlab{
 
@@ -301,12 +340,309 @@ if(isset($_SESSION['user'])){
                 <div _ngcontent-c2="" class="sidebar" id="sidebar">
 <script>
 
+    function validShow()
+    {
+        var tx='';
+        if($("#one11").hasClass('active') || ($("#one1").hasClass('active')))
+        {
+            if(document.getElementById('fn123').value!=''
+                && document.getElementById('nam123').value!=''
+                && document.getElementById('sname63').value!=''
+                && document.getElementById('ych123').value!=''
+                && document.getElementById('stat123').value!=''
+                && document.getElementById('datV').value!=''
+                && document.getElementById('bear123').value!=''
+                && document.getElementById('telep123').value!=''
+                && document.getElementById('status123').value!=''
+            )
+            {
+                if (
+                    document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+
+                if(document.getElementById('typeDiab12').value=='' || document.getElementById('yearD').value=='' || document.getElementById('vekD').value=='' || document.getElementById('longD').value=='')
+                {
+                    tx = tx+'Заповніть обов\'язкові поля в розділі 2В\n';
+
+                }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+
+            }
+        }
+        if($("#one13").hasClass('active'))
+        {
+            if(document.getElementById('golodsem123').value!='' && document.getElementById('death123').value!='' && document.getElementById('death234').value!='')
+            {
+                if(document.getElementById('fn123').value==''
+                    || document.getElementById('nam123').value==''
+                    || document.getElementById('sname63').value==''
+                    || document.getElementById('ych123').value==''
+                    || document.getElementById('stat123').value==''
+                    || document.getElementById('datV').value==''
+                    || document.getElementById('bear123').value==''
+                    || document.getElementById('telep123').value==''
+                    || document.getElementById('status123').value=='')
+                {
+                    tx=tx+'Заповніть обов\'язкові поля в розділі 1А\n';
+
+                }
+                if (document.getElementById('typeDiab12').value == '')
+                {
+
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 2В\n';
+
+                }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+
+            }
+        }
+        if($("#one23").hasClass('active'))
+        {
+            if(document.getElementById('typeDiab12').value!='' && document.getElementById('yearD').value!='' && document.getElementById('vekD').value!='' && document.getElementById('longD').value!='')
+            {
+                if(document.getElementById('fn123').value==''
+                    || document.getElementById('nam123').value==''
+                    || document.getElementById('sname63').value==''
+                    || document.getElementById('ych123').value==''
+                    || document.getElementById('stat123').value==''
+                    || document.getElementById('datV').value==''
+                    || document.getElementById('bear123').value==''
+                    || document.getElementById('telep123').value==''
+                    || document.getElementById('status123').value=='')
+                {
+                    tx = tx+'Заповніть обов\'язкові поля в розділі 1А\n';
+
+                }
+                if (
+                    document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+            }
+            if(document.getElementById('typeDiab12').value=='Не хворіє' && document.getElementById('yearD').value=='' && document.getElementById('vekD').value=='' && document.getElementById('longD').value=='')
+            {
+                if(document.getElementById('fn123').value==''
+                    || document.getElementById('nam123').value==''
+                    || document.getElementById('sname63').value==''
+                    || document.getElementById('ych123').value==''
+                    || document.getElementById('stat123').value==''
+                    || document.getElementById('datV').value==''
+                    || document.getElementById('bear123').value==''
+                    || document.getElementById('telep123').value==''
+                    || document.getElementById('status123').value=='')
+                {
+                    tx=tx+' Заповніть обов\'язкові поля в розділі 1А\n';
+
+                }
+                if (
+                    document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+            }
+        }
+        if(
+            ($("#one12").hasClass('active'))
+            || ($("#one2").hasClass('active'))
+            || ($("#one21").hasClass('active'))
+            || ($("#one22").hasClass('active'))
+            || ($("#one24").hasClass('active'))
+            || ($("#one3").hasClass('active'))
+            || ($("#one31").hasClass('active'))
+            || ($("#one4").hasClass('active'))
+            || ($("#one41").hasClass('active'))
+            || ($("#one5").hasClass('active'))
+            || ($("#one51").hasClass('active'))
+            || ($("#one6").hasClass('active'))
+            || ($("#one61").hasClass('active'))
+            || ($("#one62").hasClass('active'))
+            || ($("#one7").hasClass('active'))
+            || ($("#one71").hasClass('active'))
+            || ($("#one72").hasClass('active'))
+            || ($("#one8").hasClass('active'))
+            || ($("#one81").hasClass('active'))
+            || ($("#one9").hasClass('active'))
+            || ($("#one91").hasClass('active'))
+        )
+        {
+            if (
+                document.getElementById('fn123').value == ''
+                || document.getElementById('nam123').value == ''
+                || document.getElementById('sname63').value == ''
+                || document.getElementById('ych123').value == ''
+                || document.getElementById('stat123').value == ''
+                || document.getElementById('datV').value == ''
+                || document.getElementById('bear123').value == ''
+                || document.getElementById('telep123').value == ''
+                || document.getElementById('status123').value == ''
+                || document.getElementById('golodsem123').value == ''
+                || document.getElementById('death123').value == ''
+                || document.getElementById('death234').value == ''
+                || document.getElementById('typeDiab12').value == ''
+                || document.getElementById('yearD').value == ''
+                || document.getElementById('vekD').value == ''
+                || document.getElementById('longD').value == ''
+            )
+            {
+                if (document.getElementById('fn123').value == ''
+                    || document.getElementById('nam123').value == ''
+                    || document.getElementById('sname63').value == ''
+                    || document.getElementById('ych123').value == ''
+                    || document.getElementById('stat123').value == ''
+                    || document.getElementById('datV').value == ''
+                    || document.getElementById('bear123').value == ''
+                    || document.getElementById('telep123').value == ''
+                    || document.getElementById('status123').value == '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1А\n';
+
+                }
+                if (
+                    document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('typeDiab12').value == '')
+                {
+
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 2В\n';
+
+                }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+            }
+
+        }
+    }
+
     function hide11(id) {
+
         var s=id+1;
         if(document.getElementById(s).style.display=='none'){
             for(var i=1;i<5;i++){
                 var idz=id+i;
-                document.getElementById(idz).style.display='block';
+                              document.getElementById(idz).style.display='block';
             }
         }else{
             for(var i=1;i<5;i++){
@@ -316,17 +652,15 @@ if(isset($_SESSION['user'])){
         }
 
     }
-   /* function h3h() {
 
-        if(document.getElementById('myTab').style.display=='none'){
 
-                document.getElementById('myTab').style.display='block';
-            }
-        }else{
-        document.getElementById('myTab').style.display='none';
+   document.addEventListener('keydown', function(event) {
+        if (event.code == "Enter") {
+            validShow();
+            event.preventDefault();
+
         }
-
-    }*/
+    });
 </script>
                     <div role="tabpanel" id="myTab">
                         <!-- Nav tabs -->
@@ -335,7 +669,7 @@ if(isset($_SESSION['user'])){
                             <li role="presentation" id="one1" class="zag" onclick="hide11(this.id)"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 1. Опитування пацієнта</a></li>
                             <li role="presentation" class="active pod1" id="one11"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">А. Загальні дані</a></li>
                             <li role="presentation" class="pod1" id="one12"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Б. Сімейний анамнез</a></li>
-                            <li role="presentation" class="pod1" id="one13"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація по голодомору</a></li>
+                            <li role="presentation" class="pod1" id="one13"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація щодо голодомору</a></li>
                             <li role="presentation" id="one2" class="zag" onclick="hide11(this.id)"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 2. Огляд пацієнта</a></li>
                             <li role="presentation" class="pod1 hh" id="one21"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">А. Антропометричні дані</a></li>
                             <li role="presentation" class="pod1 hh" id="one22"><a href="#zhitt" aria-controls="zhitt" role="tab" data-toggle="tab">Б. Спосіб життя</a></li>
@@ -347,7 +681,7 @@ if(isset($_SESSION['user'])){
                                     Статус ССС</a></li>
                             <li role="presentation" class="pod1 hh" id="one31"><a href="#ser" aria-controls="ser" role="tab" data-toggle="tab">А. Обстеження серцево-судинної системи</a></li>
                             <li role="presentation" id="one4" class="zag" onclick="hide11(this.id)"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 4.
-                                    Діабетична ретінопатія</a></li>
+                                    Діабетична ретинопатія</a></li>
                             <li role="presentation" class="pod1 hh" id="one41"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab">А. Обстеження очей</a></li>
                             <li role="presentation" id="one5" class="zag" onclick="hide11(this.id)"><a href="#nefr" aria-controls="nefr" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 5.
                                     Нефропатія</a></li>
@@ -364,8 +698,8 @@ if(isset($_SESSION['user'])){
                                     Лікування</a></li>
                             <li role="presentation" class="pod1 hh" id="one81"><a href="#lik" aria-controls="lik" role="tab" data-toggle="tab">А. Лікування</a></li>
                             <li role="presentation" id="one9" class="zag" onclick="hide11(this.id)"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 9.
-                                    Геніаологічне дерево</a></li>
-                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Геніаологічне дерево</a></li>
+                                    Генеалогічне дерево</a></li>
+                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Генеалогічне дерево</a></li>
                         </ul>
 
 
@@ -404,13 +738,320 @@ if(isset($_SESSION['user'])){
                                                                       style="position:absolute;top:50%;left:50%"></i>
                     </div>
                 </p-blockui>
-                <form method="post" action="<?=Url::getAction('edit','save')?>">
-                <div _ngcontent-c9="" class="container">
+                <script type="text/javascript">
+                    <!--
+
+                    function chekvalid()
+                    {
+
+                            alert ( "Заповніть обов`язкові поля!" );
+
+
+                    }
+
+                    //-->
+                </script>
+                <form name="save_all" method="post" action="<?=Url::getAction('edit','save')?>">
+                    <?
+                    if($karta[0]['statysA']!='ВИКОНАНА')
+                    {
+
+                        $rt = 0;
+                        $statysA = 'СТВОРЕНО';
+                        foreach ($karta[0] as $item) {
+                            if (!empty($item) and $item!='--' and $item!='Ні' and $item!='Не знаю' and $item!='0000-00-00') {
+                           //     echo $item;
+                                $rt++;
+                            }
+                        }
+                     //   echo $rt;
+                          /* var_dump($karta[0]);*/
+                        /*Если добавляются обязательніе поля $rt увеличивай на количество добавленых полей там гдe $rt>13)*/
+                        if($karta[0]['typeDiab'] == 'Не хворіє' or $karta[0]['typeDiab'] == '')
+                        {
+                            if($karta[0]['golodSem'] == 'Ні' or $karta[0]['golodSem'] == '' or $karta[0]['golodSem'] == 'Не знаю')
+                            {
+                                if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                    and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                    and !empty($karta[0]['pomer'])
+                                    and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                    and !empty($karta[0]['work'])
+                                    and !empty($karta[0]['golodSem'])
+                                    and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                    and !empty($karta[0]['typeDiab'])
+                                    and $rt>17) {
+                                    $statysA = 'В РОБОТІ';
+                                }
+                            }
+                            elseif($karta[0]['golodSem'] != 'Ні' or $karta[0]['golodSem'] != '' or $karta[0]['golodSem'] != 'Не знаю')
+                            {
+                                if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                    and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                    and !empty($karta[0]['pomer'])
+                                    and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                    and !empty($karta[0]['work'])
+                                    and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                    and !empty($karta[0]['golodO']) and !empty($karta[0]['golodSister'])
+                                    and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                    and !empty($karta[0]['typeDiab'])
+                                    and $rt>20) {
+                                    $statysA = 'В РОБОТІ';
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['golodO'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem'])
+                                        and !empty($karta[0]['golodO']) and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem'])
+                                        and !empty($karta[0]['golodO'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+
+                            }
+
+                        }
+                        if($karta[0]['typeDiab'] != 'Не хворіє' or $karta[0]['typeDiab'] != '')
+                        {
+                            if($karta[0]['golodSem'] == 'Ні' or $karta[0]['golodSem'] == '' or $karta[0]['golodSem'] == 'Не знаю')
+                            {
+                                if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                    and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                    and !empty($karta[0]['pomer'])
+                                    and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                    and !empty($karta[0]['work'])
+                                    and !empty($karta[0]['golodSem'])
+                                    and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                    and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                    and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                    and $rt>20) {
+                                    $statysA = 'В РОБОТІ';
+                                }
+                            }
+                            if($karta[0]['golodSem'] != 'Ні' or $karta[0]['golodSem'] != '' or $karta[0]['golodSem'] != 'Не знаю')
+                            {
+                                if($karta[0]['golodM']!='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['golodO']) and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>24) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['golodO'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem'])
+                                        and !empty($karta[0]['golodO']) and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>23) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']!='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodM'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']!='' and $karta[0]['golodSister']=='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem'])
+                                        and !empty($karta[0]['golodO'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+                                elseif($karta[0]['golodM']=='' and $karta[0]['golodO']=='' and $karta[0]['golodSister']!='')
+                                {
+                                    if (!empty($karta[0]['datV']) and !empty($karta[0]['fname']) and !empty($karta[0]['name'])
+                                        and !empty($karta[0]['sname']) and !empty($karta[0]['datB']) and !empty($karta[0]['ychas'])
+                                        and !empty($karta[0]['pomer'])
+                                        and !empty($karta[0]['sex'])  and !empty($karta[0]['phone'])
+                                        and !empty($karta[0]['work'])
+                                        and !empty($karta[0]['golodSem']) and !empty($karta[0]['golodSister'])
+                                        and !empty($karta[0]['death1']) and !empty($karta[0]['death2'])
+                                        and !empty($karta[0]['typeDiab']) and !empty($karta[0]['yearD'])
+                                        and !empty($karta[0]['vekD']) and !empty($karta[0]['longD'])
+                                        and $rt>22) {
+                                        $statysA = 'В РОБОТІ';
+                                    }
+                                }
+
+
+                            }
+
+                        }
+                        if ($rt > 208) {
+                            $statysA = 'ВИКОНАНА';
+                        }
+                        if (trim($karta[0]['pomer']) == 'Так') {
+
+                            $statysA = 'ВИКОНАНА';
+
+                        }
+                    }
+                    else{
+                        $statysA = 'ВИКОНАНА';
+                    }
+
+                    ?>
+                    <div _ngcontent-c9="" id='forajax' class="container" >
+
+                    </div>
+                <div _ngcontent-c9="" id="dddd" class="container">
 
 
                         <!-- Tab panes -->
 
-                        <div class="tab-content">
+                        <div class="tab-content" id="mmm">
                             <div role="tabpanel" class="tab-pane active" id="home">
                                 <style>
                                     .red{
@@ -437,36 +1078,114 @@ if(isset($_SESSION['user'])){
                                     }
                                 </style>
                                 <fieldset style="margin-top: 30px;">
-                                    <h4>1.А. Загальні дані</h4>
+                                    <h4 style="left: 10px">1.А. Загальні дані</h4>
 
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%">
                                         <tr>
-                                            <td><label>Прізвище<span class="red">*</span></label></td><td>
+                                            <td><label class="lb1">№ візиту1</label></td>
+                                            <td style="width: 100%;">
+                                                <input type="hidden" name="nomPac" value="<? echo $karta[0]['nomPac'];?>">
+                                                <select name="nomV" class="form-control"
+                                                        onchange="showVizitAll(this.value,<? echo $karta[0]['nomPac'];?>)">
+<?
+foreach($vizit as $item):
+echo "<option";
+if($item['nomV']==$karta[0]['nomV']){
+   echo " selected ";
+}
+echo ">{$item['nomV']}</option>";
+
+endforeach;
+?>
+                                                </select>
+
+                                            </td>
+                                            <td></td></tr>
+                                        <tr>
+                                            <td><label class="lb1">Дата візиту <span class="red">*</span></label></td>
+                                            <td style="width: 100%;"><input  class="form-control" id="datV" type="date" name="datV"
+                                                                           <?
+                                                                           if($statysA=='ВИКОНАНА'){
+                                                                            echo "readonly";
+                                                                           }
+                                                                           ?>
+
+
+                                                                            value="<? echo $karta[0]['datV'];?>" placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Дата візиту )" oninput="setCustomValidity('')"></td>
+                                            <td></td></tr>
+                                        <tr>
+                                            <td><label class="lb1">Статус анкети </label></td>
+                                            <td style="width: 100%;">
+
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="statysA" value="<? echo $statysA; ?>" class="form-control" readonly>
+
+                                                </td>
+                                            <td></td></tr>
+                                        <tr>
+
+                                            <td><label class="lb1">Власник анкети</label></td>
+                                            <td style="width: 100%;"><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" type="text" name="vlasnik" value="<? echo $_SESSION['klinika'];?>" readonly></td>
+                                            <td></td></tr>
+                                        <tr>
+                                        <tr>
+                                            <td ><label class="lb1">Прізвище<span class="red">*</span></label></td>
+                                            <td style="width: 100%">
                                                 <input type="hidden" name="id" value="<? echo $karta[0]['id'];?>">
-                                                <input class="form-control" type="text" name="fname"
+                                                <input  class="form-control" id="fn123"  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Прізвище' )" oninput="setCustomValidity('')" id="fname" type="text" name="fname"
                                                                               <?php
                                                                               if($_SESSION['role']!=2){
                                                                                   echo "readonly";
                                                                               }
                                                                               ?>
-                                                                              value="<? echo $karta[0]['fname'];?>" placeholder=""></td>
-                                        </tr><tr>
-                                            <td><label>Ім'я<span class="red">*</span></label></td><td>
-                                                <input class="form-control" type="text" name="name"
+                                                                              value="<? echo $karta[0]['fname'];?>" placeholder="" >
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><label class="lb1">Ім'я<span class="red">*</span></label></td>
+                                            <td style="width: 100%">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="name" id='nam123' class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Ім\'я' )" oninput="setCustomValidity('')"
                                                     <?php
                                                     if($_SESSION['role']!=2){
                                                         echo "readonly";
                                                     }
                                                     ?>
-                                                                          placeholder="" value="<? echo $karta[0]['name'];?>"></td>
-                                        </tr><tr>
-                                            <td><label>По-батькові<span class="red">*</span></label></td><td><input class="form-control"
+                                                                          placeholder="" value="<? echo $karta[0]['name'];?>">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="lb1">По-батькові<span class="red">*</span></label></td>
+                                            <td style="width: 100%"><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly,disabled";
+                                                }
+                                                ?> class="form-control" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?>
                                                     <?php
                                                     if($_SESSION['role']!=2){
-                                                        echo "readonly";
+                                                        echo "readonly ";
                                                     }
                                                     ?>value="<? echo $karta[0]['sname'];?>"
-                                                                                 type="text" name="sname" placeholder=""></td>
+                                                                                 type="text" name="sname"  id="sname63" placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: По-батькові' )" oninput="setCustomValidity('')"></td>
                                         </tr>
                                         <style>
                                             .hhh{
@@ -498,18 +1217,26 @@ if(isset($_SESSION['user'])){
                                         </script>
                                         <tr>
                                             <td>
-                                                <label>Чи брали участь ви раніше в цьому дослідженні?</label>
+                                                <label>Чи брали участь ви раніше в цьому дослідженні?<span class="red">*</span></label>
                                                 <label class="hidd" id="h0">Якщо так, вкажіть ідентифікатор учасника <br> в минулому дослідженні (№ учасника)</label>
                                             </td>
-                                            <td style="display: flex;">
-                                               <select name="ychas" class="form-control" onchange="ss(this)">
-                                                   <option value="--" <? if( $karta[0]['ychas']=='--'){echo 'selected';}?>>--</option>
+                                            <td>
+                                               <select name="ychas" id="ych123" class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Участь у дослідженні' )" oninput="setCustomValidity('')" <?
+                                               if($statysA=='ВИКОНАНА'){
+                                                   echo "readonly, disabled";
+                                               }
+                                               ?> onchange="ss(this)">
+                                                   <option  value="" <? if( $karta[0]['ychas']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['ychas']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['ychas']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
                                                 <div style="display: flex;">
-                                                <input type="text" id='h1' class="form-control" name="nomIss" placeholder=""
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" id='h1' class="form-control" name="nomIss" placeholder=""
                                                        <?
                                                        if(empty($karta[0]['nomIss'])){
                                                            echo "class='hidd'";
@@ -548,7 +1275,7 @@ if(isset($_SESSION['user'])){
                                                                 <!---------------------------------------------------------------------------->
 
 
-                                                                <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                                <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                     <table id='modalFind' style="margin: 5px;">
                                                                         <tr>
                                                                             <td><span class="l">Прізвище</span></td>
@@ -577,16 +1304,16 @@ if(isset($_SESSION['user'])){
                                                                             <td><input type="text" name="sname1" id="sname" class="m1"></td>
                                                                             <td><span class="l">Тип діабету</span></td>
                                                                             <td><select name="typeDiab1" class="m4" id="typeDiab">
-                                                                                    <option value="--" >--</option>
-                                                                                    <option value="СД 1 типа">СД 1 типа</option>
-                                                                                    <option value="СД 2 типа">СД 2 типа</option>
-                                                                                    <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                        (LADA)
+                                                                                    <option value="">--</option>
+                                                                                    <option value="Не хворіє">Не хворіє</option>
+                                                                                    <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                    <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                    <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                        (LADA)</option>
+                                                                                    <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                    <option value="Панкреатогенний" >Панкреатогенний
                                                                                     </option>
-                                                                                    <option value="MODY-диабет">MODY-диабет</option>
-                                                                                    <option value="Панкреатогенный">Панкреатогенный
-                                                                                    </option>
-                                                                                    <option value="Другие">Другие
+                                                                                    <option value="Інший" >Інший
                                                                                     </option>
                                                                                 </select></td>
                                                                             <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -685,37 +1412,88 @@ if(isset($_SESSION['user'])){
 
                                             </td>
                                         </tr>
+                                       <!-- 1.А. Загальні дані продолжение-->
                                         <tr>
-                                            <td style="display: flex;flex-direction: row; justify-content: space-between;align-items: flex-end;">
-                                                <label>Стать</label></td><td>
-                                                <select name="sex" class="form-control" style="width: 80%;">
-                                                    <option value="--" <? if( $karta[0]['sex']=='--'){echo 'selected';}?>>--</option>
+                                            <td>
+                                                <label class="lb1">Стать<span class="red">*</span></label>
+                                            </td>
+                                            <td style="width: 100%">
+                                                <select name="sex" id="stat123" class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Стать' )" oninput="setCustomValidity('')"
+                                                    <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                ?>
+
+                                                >
+                                                    <option value="" <? if( $karta[0]['sex']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Чоловіча" <? if( $karta[0]['sex']=='Чоловіча'){echo 'selected';}?>>Чоловіча</option>
                                                     <option value="Жіноча" <? if( $karta[0]['sex']=='Жіноча'){echo 'selected';}?>>Жіноча</option>
 
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <label>Дата нарождения<span class="red">*</span></label>
 
                                             </td>
                                             <td>
                                                 <input type="date" <?php
-                                                if($_SESSION['role']!=2){
-                                                    echo "readonly";
+                                                if($_SESSION['role']!=2 or $statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
                                                 }
                                                 ?>
-                                                       value="<? echo $karta[0]['datB'];?>" name="datB" class="form-control">
+                                                       value="<? echo $karta[0]['datB'];?>" name="datB" id="bear123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Дата нарождения' )" oninput="setCustomValidity('')" class="form-control">
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <label>Помер</label></td>
+                                            <td style="width: 80%;"><select name="pomer" class="form-control" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> onchange="showDeth(this.value)">
+                                                    <option value="Ні" <? if( $karta[0]['pomer']=='Ні'){echo 'selected';}?>>Ні</option>
+                                                    <option value="Так" <? if( $karta[0]['pomer']=='Так'){echo 'selected';}?>>Так</option>
+
+                                                </select>
+
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr <? if($karta[0]['pomer']!='Так'){echo 'class="showDeth"';}?> id="chastoDeth" >
+                                            <td><label>Дата смерті</label></td><td>
+                                            <input type="date" name="datedeth" <?
+                                            if($statysA=='ВИКОНАНА'){
+                                                echo "readonly, disabled";
+                                            }
+                                            ?> value="<? echo $karta[0]['datdeth'];?>" id="datedeth" class="form-control">
+                                            </td>
+                                        </tr><tr <?
+                                        if($statysA=='ВИКОНАНА'){
+                                            echo "readonly, disabled";
+                                        }
+                                        ?> <? if($karta[0]['pomer']!='Так'){echo 'class="showDeth"';}?> id="sincD">
+                                            <td><label>Причина смерті</label></td>
+                                            <td><input class="form-control" type="text" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id="sincdeth" value="<? echo $karta[0]['sincdeth'];?>" name="sincdeth" placeholder=""></td>
                                         </tr>
                                     <tr>
                                         <td>
-                                            <label>Телефон</label>
+                                            <label>Телефон<span class="red">*</span></label>
 
                                         </td>
                                         <td>
-                                            <input type="text"
+                                            <input type="text" id="telep123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Телефон' )" oninput="setCustomValidity('')" <?
+                                            if($statysA=='ВИКОНАНА'){
+                                                echo "readonly, disabled";
+                                            }
+                                            ?>
                                                    value="<? echo $karta[0]['phone'];?>" name="phone" class="form-control">
                                         </td>
                                         </tr>
@@ -725,7 +1503,11 @@ if(isset($_SESSION['user'])){
 
                                             </td>
                                             <td>
-                                                <input type="email"
+                                                <input type="email" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?>
                                                        value="<? echo $karta[0]['email'];?>" name="email" class="form-control">
                                             </td>
                                         </tr>
@@ -735,7 +1517,11 @@ if(isset($_SESSION['user'])){
 
                                             </td>
                                             <td>
-                                                <input type="text" name="city" value="<? echo $karta[0]['city'];?>" class="form-control" placeholder="">
+                                                <input type="text" name="city" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> value="<? echo $karta[0]['city'];?>" class="form-control" placeholder="">
                                             </td>
                                         </tr>
                                         <tr>
@@ -744,17 +1530,25 @@ if(isset($_SESSION['user'])){
 
                                             </td>
                                             <td>
-                                                <input type="text" name="rajon" value="<? echo $karta[0]['rajon'];?>" class="form-control" placeholder="">
+                                                <input type="text" name="rajon" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> value="<? echo $karta[0]['rajon'];?>" class="form-control" placeholder="">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
-                                                <label>Статус роботи</label>
+                                                <label>Статус роботи<span class="red">*</span></label>
 
                                             </td>
                                             <td style="display: flex;">
-                                                <select name="work" class="form-control" >
-                                                    <option value="--"  <? if( $karta[0]['work']=='--'){echo 'selected';}?>>--</option>
+                                                <select name="work" id="status123" class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Статус роботи' )" oninput="setCustomValidity('')" <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> >
+                                                    <option value=""  <? if( $karta[0]['work']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Не працюю, безробітний(а)" <? if( $karta[0]['work']=='Не працюю, безробітний(а)'){echo 'selected';}?>>Не працюю, безробітний(а)</option>
                                                     <option value="Не працюю, інвалідність"  <? if( $karta[0]['work']=='Не працюю, інвалідність'){echo 'selected';}?>>Не працюю, інвалідність</option>
                                                     <option value="Не працюю, відпустка по хворобі"  <? if( $karta[0]['work']=='Не працюю, відпустка по хворобі'){echo 'selected';}?>>Не працюю, відпустка по хворобі</option>
@@ -768,7 +1562,7 @@ if(isset($_SESSION['user'])){
                                                 if($item['nameStol']=='work' and $b1=='no'){
                                                     $b1='yes';
                                                 ?>
-                                                <a id="b1" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                <a id="b1" style='position: relative; display:none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                   <div id="m1" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -799,18 +1593,38 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Інформація про нарождення:</label>
+                                                <label>Інформація про нарождення:<span class="red">*</span></label>
 
                                             </td>
                                             <td style="display: flex;">
-                                                <table><tr>
-                                                        <td><input  style='position: static;' type="radio" <? if( $karta[0]['bearn']=='Народився(лась) вчасно'){echo 'checked';}?> name="bearn" class="form-control" value="Народився(лась) вчасно"></td>
+                                                <table ><tr>
+                                                        <td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> style='position: static;' type="radio" <? if( $karta[0]['bearn']=='Народився(лась) вчасно'){echo 'checked';}?> name="bearn" class="form-control" value="Народився(лась) вчасно"></td>
                                                         <td><label>Народився(лась) вчасно</label></td></tr>
-                                                    <tr><td><input  style='position: static;' type="radio" <? if( $karta[0]['bearn']=='Народився(лась) передчасно'){echo 'checked';}?> name="bearn" class="form-control" value="Народився(лась) передчасно"></td>
+                                                    <tr><td><input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?>  style='position: static;' type="radio" <? if( $karta[0]['bearn']=='Народився(лась) передчасно'){echo 'checked';}?> name="bearn" class="form-control" value="Народився(лась) передчасно"></td>
                                                         <td><label>Народився(лась) передчасно</label></td></tr>
-                                                    <tr><td><input  style='position: static;' type="radio" name="bearn" class="form-control" <? if( $karta[0]['bearn']=='Народився в _____ тижнів (вказати)'){echo 'checked';}?> value="Народився в _____ тижнів (вказати)"></td>
-                                                        <td><div style="display: flex;flex-direction: row;"><label>Народився в   </label> <input type="text" value="<? echo $karta[0]['week'];?>" style='width: 60px;margin-left: 4px;margin-right: 4px;' name="week" class="form-control"><label>   тижнів (вказати)</label></div></td></tr>
-                                                    <tr><td><input   style='position: static;' type="radio" name="bearn" class="form-control" value="Не знаю" <? if( $karta[0]['bearn']=='Не знаю'){echo 'checked';}?> ></td><td><label>Не знаю</label></td></tr>
+                                                    <tr><td><input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?>  style='position: static;' type="radio" name="bearn" class="form-control" <? if( $karta[0]['bearn']=='Народився в _____ тижнів (вказати)'){echo 'checked';}?> value="Народився в _____ тижнів (вказати)"></td>
+                                                        <td><div style="display: flex;flex-direction: row;"><label>Народився в   </label> <input <?
+                                                                if($statysA=='ВИКОНАНА'){
+                                                                    echo "readonly, disabled";
+                                                                }
+                                                                ?> type="text" value="<? echo $karta[0]['week'];?>" style='width: 60px;margin-left: 4px;margin-right: 4px;' name="week" class="form-control"><label>   тижнів (вказати)</label></div></td></tr>
+                                                    <tr><td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?>  style='position: static;' type="radio" name="bearn" class="form-control" value="Не знаю" <? if( $karta[0]['bearn']=='Не знаю'){echo 'checked';}?> ></td><td><label>Не знаю</label></td></tr>
                                                 </table>
                                                 <?php
                                                 $b='no';
@@ -819,7 +1633,7 @@ endforeach;
                                                     if($item['nameStol']=='bearn' and $b=='no'){
                                                         $b='yes';
                                                         ?>
-                                                        <a id="b2" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b2" style='position: relative; display: none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m2" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -849,18 +1663,40 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Вага при народженні:</label>
+                                                <label>Вага при народженні:<span class="red">*</span></label>
 
                                             </td>
                                             <td>
                                                 <table><tr>
-                                                        <td><input style='position: static;' type="radio" name="vesR" <? if( $karta[0]['vesR']=='Низька (при нарожденні я був(ла) худим(ой))'){echo 'checked';}?> class="form-control" value="Низька (при нарожденні я був(ла) худим(ой))"></td>
-                                                        <td><label>Низька (при нарожденні я був(ла) худим(ой))</label></td></tr>
-                                                    <tr><td><input  style='position: static;' type="radio" <? if( $karta[0]['vesR']=='Нормальна'){echo 'checked';}?> name="vesR" class="form-control" value="Нормальна"></td>
+                                                        <td><input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> style='position: static;' type="radio" name="vesR" <? if( $karta[0]['vesR']=='Мала (при народженні я був(ла) дуже маленький(а))'){echo 'checked';}?> class="form-control" value="Мала (при народженні я був(ла) дуже маленький(а))"></td>
+                                                        <td><label>Мала (при народженні я був(ла) дуже маленький(а))</label></td></tr>
+                                                    <tr><td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> style='position: static;' type="radio" <? if( $karta[0]['vesR']=='Нормальна'){echo 'checked';}?> name="vesR" class="form-control" value="Нормальна"></td>
                                                         <td><label>Нормальна</label></td></tr>
-                                                    <tr><td><input  style='position: static;' type="radio" <? if( $karta[0]['vesR']=='Я був (була) при народженні великим малюком'){echo 'checked';}?> name="vesR" class="form-control" value="Я був (була) при народженні великим малюком"></td>
+                                                    <tr><td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> style='position: static;' type="radio" <? if( $karta[0]['vesR']=='Я був (була) при народженні великим малюком'){echo 'checked';}?> name="vesR" class="form-control" value="Я був (була) при народженні великим малюком"></td>
                                                         <td><label>Я був (була) при народженні великим малюком</label></td></tr>
-                                                    <tr><td><input   style='position: static;' type="radio" name="vesR" <? if( $karta[0]['vesR']=='Не знаю'){echo 'checked';}?> class="form-control" value="Не знаю"></td><td><label>Не знаю</label></td></tr>
+                                                    <tr><td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> style='position: static;' type="radio" <? if( $karta[0]['vesR']=='був одним з близнюків'){echo 'checked';}?> name="vesR" class="form-control" value="був одним з близнюків"></td>
+                                                        <td><label>був одним з близнюків</label></td></tr>
+                                                    <tr><td><input  <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?>  style='position: static;' type="radio" name="vesR" <? if( $karta[0]['vesR']=='Не знаю'){echo 'checked';}?> class="form-control" value="Не знаю"></td><td><label>Не знаю</label></td></tr>
                                                 </table></td>
                                         </tr>
                                         <tr>
@@ -869,7 +1705,12 @@ endforeach;
 
                                             </td>
                                             <td>
-                                                <input type="text" name="vagaPN" value="<? echo $karta[0]['vagaPN'];?>" class="form-control" placeholder="">
+                                                <input  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="vagaPN" value="<? echo $karta[0]['vagaPN'];?>" class="form-control" placeholder="" onkeypress="if(isNaN(this.value+String.fromCharCode(event.keyCode))){
+                                                    document.getElementById('v').style.display='block'; return false;}"><label style="display: none;" id="v">dddddd</label>
 
                                             </td>
                                         </tr>
@@ -881,12 +1722,32 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="profile">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>1.Б. Сімейний анамнез</h4>
-                                    <table class='mainT'>
-                                        <tr style="background: #295b8e; color:white;"><td colspan="2"><label>Батько:</label></td></tr>
+                                    <table class='mainT' style="width: 80%">
+                                        <tr style="background: #295b8e; color:white;">
+                                            <td colspan="2">
+                                                <label class="lb1">Батько:</label>
+                                            </td>
+                                        </tr>
                                         <tr>
-                                            <td><label>Прізвище</label></td><td><input class="form-control" value="<? echo $karta[0]['fnameO'];?>" type="text" name="fnameO" placeholder=""></td></tr>
-                                        <tr><td><label>Ім'я</label></td><td><input class="form-control" type="text" value="<? echo $karta[0]['nameO'];?>" name="nameO" placeholder=""></td></tr>
-                                            <tr><td><label>По-батькові</label></td><td><input class="form-control" type="text" value="<? echo $karta[0]['snameO'];?>" name="snameO" placeholder=""></td>
+                                            <td><label class="lb1">Прізвище</label></td>
+                                            <td style="width: 100%">
+                                                <input  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" value="<? echo $karta[0]['fnameO'];?>" type="text" name="fnameO" placeholder="">
+                                            </td>
+                                        </tr>
+                                        <tr><td><label>Ім'я</label></td><td><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" type="text" value="<? echo $karta[0]['nameO'];?>" name="nameO" placeholder=""></td></tr>
+                                            <tr><td><label>По-батькові</label></td><td><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" type="text" value="<? echo $karta[0]['snameO'];?>" name="snameO" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -896,14 +1757,22 @@ endforeach;
                                                     (№ учасника)</label>
                                             </td>
                                             <td>
-                                                <select name="ychasOtez" class="form-control" onchange="ss2(this)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="ychasOtez" class="form-control" onchange="ss2(this)">
                                                     <option value="--" <? if( $karta[0]['ychasOtez']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['ychasOtez']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['ychasOtez']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
                                                 <div style="display: flex;">
-                                                <input type="text" id="h5"
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" id="h5"
                                                     <?
                                                     if(empty($karta[0]['nomIssO'])){
 
@@ -942,7 +1811,7 @@ endforeach;
                                                                 <!---------------------------------------------------------------------------->
 
 
-                                                                <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                                <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                     <table id='modalFind' style="margin: 5px;">
                                                                         <tr>
                                                                             <td><span class="l">Прізвище</span></td>
@@ -959,7 +1828,7 @@ endforeach;
                                                                             <td><input type="text" name="name2" id="name2" class="m1"></td>
                                                                             <td><span class="l">Стать</span></td>
                                                                             <td><select name="sex2" class="m4" id="sex2">
-                                                                                    <option value="--" >--</option>
+                                                                                    <option value="" >--</option>
                                                                                     <option value="Чоловіча">Чоловіча</option>
                                                                                     <option value="Жіноча">Жіноча</option>
                                                                                 </select></td>
@@ -970,17 +1839,17 @@ endforeach;
                                                                             <td><span class="l">По батькові</span></td>
                                                                             <td><input type="text" name="sname2" id="sname2" class="m1"></td>
                                                                             <td><span class="l">Тип діабету</span></td>
-                                                                            <td><select name="typeDiab2" class="m4" id="typeDiab2">
-                                                                                    <option value="--" >--</option>
-                                                                                    <option value="СД 1 типа">СД 1 типа</option>
-                                                                                    <option value="СД 2 типа">СД 2 типа</option>
-                                                                                    <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                        (LADA)
+                                                                            <td><select name="typeDiab2" class="m4" id="typeDiab2" >
+                                                                                    <option value="">--</option>
+                                                                                    <option value="Не хворіє">Не хворіє</option>
+                                                                                    <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                    <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                    <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                        (LADA)</option>
+                                                                                    <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                    <option value="Панкреатогенний" >Панкреатогенний
                                                                                     </option>
-                                                                                    <option value="MODY-диабет">MODY-диабет</option>
-                                                                                    <option value="Панкреатогенный">Панкреатогенный
-                                                                                    </option>
-                                                                                    <option value="Другие">Другие
+                                                                                    <option value="Інший" >Інший
                                                                                     </option>
                                                                                 </select></td>
                                                                             <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -1080,34 +1949,58 @@ endforeach;
                                         <tr>
 
                                             <td>
-                                                <label>Дата народження<span class="red">*</span></label></td><td>
-                                                <input type="date" name="datBOtez" value="<? echo $karta[0]['datBOtez'];?>" class="form-control">
+                                                <label>Дата народження</label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datBOtez" value="<? echo $karta[0]['datBOtez'];?>" class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label>Місце народження: область</label></td><td>
-                                                <input type="text" name="oblOtez" class="form-control" value="<? echo $karta[0]['oblOtez'];?>" placeholder="">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="oblOtez" class="form-control" value="<? echo $karta[0]['oblOtez'];?>" placeholder="">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <label>Місце народження: місто</label></td><td>
-                                                <input type="text" name="cityOtez" class="form-control" value="<? echo $karta[0]['cityOtez'];?>" placeholder="">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="cityOtez" class="form-control" value="<? echo $karta[0]['cityOtez'];?>" placeholder="">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <label>Чи хворів на діабет?</label>
-                                                <label class="hidd1" id="h2">Якщо так - яке було лікування у батька?</label>
+                                                <label <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="hidd1" id="h2">Якщо так - яке було лікування у батька?</label>
                                             </td>
                                             <td>
-                                                <select name="lechOtez" class="form-control" onchange="ss1(this)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="lechOtez" class="form-control" onchange="ss1(this)">
                                                     <option value="--" <? if( $karta[0]['lechOtez']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['lechOtez']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['lechOtez']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
-                                                <select id="h3"  name="lechOtezKak"  class=" form-control hidd"
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id="h3"  name="lechOtezKak"  class=" form-control hidd"
                                                     <?
                                                     if($karta[0]['lechOtez']=='Так'){
 
@@ -1128,9 +2021,21 @@ endforeach;
                                         </tr>
                                         <tr style="background: #295b8e;color:white;"><td colspan="2"><label>Мати:</label></td></tr>
                                         <tr>
-                                            <td><label>Прізвище</label></td><td><input class="form-control" value="<? echo $karta[0]['fnameM'];?>" type="text" name="fnameM" placeholder=""></td></tr>
-                                        <tr><td><label>Ім'я</label></td><td><input class="form-control" type="text" value="<? echo $karta[0]['nameM'];?>" name="nameM" placeholder=""></td></tr>
-                                            <tr><td><label>По-батькові</label></td><td><input class="form-control" type="text" name="snameM" value="<? echo $karta[0]['snameM'];?>" placeholder=""></td>
+                                            <td><label>Прізвище</label></td><td><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" value="<? echo $karta[0]['fnameM'];?>" type="text" name="fnameM" placeholder=""></td></tr>
+                                        <tr><td><label>Ім'я</label></td><td><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" type="text" value="<? echo $karta[0]['nameM'];?>" name="nameM" placeholder=""></td></tr>
+                                            <tr><td><label>По-батькові</label></td><td><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" type="text" name="snameM" value="<? echo $karta[0]['snameM'];?>" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -1141,14 +2046,22 @@ endforeach;
                                                     (№ учасника)</label>
                                             </td>
                                             <td>
-                                                <select name="ychasM" class="form-control" onchange="ss3(this)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="ychasM" class="form-control" onchange="ss3(this)">
                                                     <option value="--" <? if( $karta[0]['ychasM']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['ychasM']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['ychasM']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
                                                 <div style="display: flex;">
-                                                <input type="text" id="h7"
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" id="h7"
                                                     <?
                                                     if(empty($karta[0]['nomIssM'])){
 
@@ -1187,7 +2100,7 @@ endforeach;
                                                                 <!---------------------------------------------------------------------------->
 
 
-                                                                <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                                <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                     <table id='modalFind' style="margin: 5px;">
                                                                         <tr>
                                                                             <td><span class="l">Прізвище</span></td>
@@ -1216,16 +2129,16 @@ endforeach;
                                                                             <td><input type="text" name="sname3" id="sname3" class="m1"></td>
                                                                             <td><span class="l">Тип діабету</span></td>
                                                                             <td><select name="typeDiab3" class="m4" id="typeDiab3">
-                                                                                    <option value="--" >--</option>
-                                                                                    <option value="СД 1 типа">СД 1 типа</option>
-                                                                                    <option value="СД 2 типа">СД 2 типа</option>
-                                                                                    <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                        (LADA)
+                                                                                    <option value="">--</option>
+                                                                                    <option value="Не хворіє">Не хворіє</option>
+                                                                                    <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                    <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                    <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                        (LADA)</option>
+                                                                                    <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                    <option value="Панкреатогенний" >Панкреатогенний
                                                                                     </option>
-                                                                                    <option value="MODY-диабет">MODY-диабет</option>
-                                                                                    <option value="Панкреатогенный">Панкреатогенный
-                                                                                    </option>
-                                                                                    <option value="Другие">Другие
+                                                                                    <option value="Інший" >Інший
                                                                                     </option>
                                                                                 </select></td>
                                                                             <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -1329,17 +2242,29 @@ endforeach;
 
                                             <td>
                                                 <label>Дата народження</label></td><td>
-                                                <input type="date" name="datBM" value="<? echo $karta[0]['datBM'];?>" class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datBM" value="<? echo $karta[0]['datBM'];?>" class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label>Місце народження: область</label></td><td>
-                                                <input type="text" name="oblM" class="form-control" value="<? echo $karta[0]['oblM'];?>" placeholder="">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="oblM" class="form-control" value="<? echo $karta[0]['oblM'];?>" placeholder="">
                                             </td>
                                         </tr>
                                             <td>
                                                 <label>Місце народження: місто</label></td><td>
-                                                <input type="text" name="cityM" class="form-control" value="<? echo $karta[0]['cityM'];?>" placeholder="">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="cityM" class="form-control" value="<? echo $karta[0]['cityM'];?>" placeholder="">
                                             </td>
                                         </tr>
                                         <tr>
@@ -1348,13 +2273,21 @@ endforeach;
                                                 <label class="hidd1" id="h8">Якщо так - яке було лікування у матері?</label>
                                             </td>
                                             <td>
-                                                <select name="lechM" class="form-control" onchange="ss4(this)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="lechM" class="form-control" onchange="ss4(this)">
                                                     <option value="--" <? if( $karta[0]['lechM']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['lechM']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['lechM']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
-                                                <select id="h9"  name="lechMKak"  class=" form-control hidd"
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id="h9"  name="lechMKak"  class=" form-control hidd"
 
                                                     <?
                                                     if($karta[0]['lechM']=='Так'){
@@ -1378,16 +2311,24 @@ endforeach;
                                                 <label>Чи хворіли на діабет рідні
                                                     брати сестри?</label>
                                                 <label class="hidd1" id="h10">Якщо так – яке було лікування у
-                                                    братыв/сестер?</label>
+                                                    братів/сестер?</label>
                                             </td>
                                             <td>
-                                                <select name="lechBS" class="form-control" onchange="ss5(this)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="lechBS" class="form-control" onchange="ss5(this)">
                                                     <option value="--" <? if( $karta[0]['lechBS']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['lechBS']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['lechBS']=='Так'){echo 'selected';}?>>Так</option>
 
                                                 </select>
-                                                <select id="h11"  name="lechBSKak"  class=" form-control hidd"
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id="h11"  name="lechBSKak"  class=" form-control hidd"
                                                     <?
                                                     if($karta[0]['lechBS']=='Так'){
 
@@ -1410,79 +2351,152 @@ endforeach;
                             </div>
                             <div role="tabpanel" class="tab-pane" id="messages">
                                 <fieldset style="margin-top: 30px;">
-                                    <h4>1.С. Інформація по голодомору</h4>
-                                    <table class='mainT'>
+                                    <h4>1.В. Інформація щодо голодомору</h4>
+                                    <table class='mainT' style="width: 80%">
                                         <tr>
                                             <td>
-                                                <label>Голодувала ваша сім'я в 1932-33, 1941-45
-                                                    і / або 1946-47 роках:</label>
-                                                <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
+                                                <label class="lb1">Голодувала ваша сім'я в 1932-33, 1941-45
+                                                    і / або 1946-47 роках:<span class="red">*</span></label>
+                                               <!-- <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
                                                     голодування сім`ї
-                                                </label>
+                                                </label>-->
                                             </td>
-                                            <td>
-                                                <select name="golodSem" class="form-control" onchange="ss6(this)">
+                                            <td style="width: 100%">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="golodSem" id="golodsem123" class="form-control" onchange="ss6(this)" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Голодувала ваша сім\'я в 1932-33, 1941-45 і  або 1946-47 роках:' )" oninput="setCustomValidity('')">
+                                                    <option value="" <? if( $karta[0]['golodSem']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['golodSem']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['golodSem']=='Так'){echo 'selected';}?>>Так</option>
                                                     <option value="Не знаю" <? if( $karta[0]['golodSem']=='Не знаю'){echo 'selected';}?>>Не знаю</option>
                                                 </select>
-                                                <input type="text" id="h13"
-                                                    <?
-                                                    if($karta[0]['golodSem']=='Так'){
 
-                                                        echo "style='display:block;'";
-                                                    }
-
-                                                    ?>
-                                                       class="form-control hidd"  value="<? echo $karta[0]['periodGolod'];?>" name="periodGolod" placeholder="">
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="mamGolod">
                                             <td>
                                                 <label>Мати:</label></td><td>
-                                                <select name="golodM" class="form-control">
-                                                    <option value="" <? if( $karta[0]['golodM']==''){echo 'selected';}?>></option>
-                                                    <option value="1932-33" <? if( $karta[0]['golodM']=='1932-33'){echo 'selected';}?>>1932-33</option>
-                                                    <option value="1941-45" <? if( $karta[0]['golodM']=='1941-45'){echo 'selected';}?>>1941-45</option>
-                                                    <option value="1946-47" <? if( $karta[0]['golodM']=='1946-47'){echo 'selected';}?>>1946-47</option>
+                                                <? $masM=explode(";",$karta[0]['golodM'])?>
+                                                <table <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodM"><tr><td><label> - 1932-33</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g1m" id="g1m" onchange="ss677()" oninput="setCustomValidity('')" value="1932-33" class="form-control"
+                                                            <? foreach($masM as $int):
+                                                                if($int=='1932-33'){echo 'checked';}
+                                                            endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g2m" id="g2m" onchange="ss677()" oninput="setCustomValidity('')" value="1941-45" class="form-control"
+                                                                <? foreach($masM as $int):
+                                                                    if($int=='1941-45'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g3m" id="g3m" onchange="ss677()" oninput="setCustomValidity('')" value="1946-47" class="form-control"
+                                                                <? foreach($masM as $int):
+                                                                    if($int=='1946-47'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr></table>
 
-                                                    <option value="Не знаю" <? if( $karta[0]['golodM']=='Не знаю'){echo 'selected';}?>>Не знаю</option>
-                                                </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="papGolod">
                                             <td>
                                                 <label>Батько:</label></td><td>
-                                                <select name="golodO" class="form-control">
-                                                    <option value="" <? if( $karta[0]['golodO']==''){echo 'selected';}?>></option>
-                                                    <option value="1932-33" <? if( $karta[0]['golodO']=='1932-33'){echo 'selected';}?>>1932-33</option>
-                                                    <option value="1941-45" <? if( $karta[0]['golodO']=='1941-45'){echo 'selected';}?>>1941-45</option>
-                                                    <option value="1946-47" <? if( $karta[0]['golodO']=='1946-47'){echo 'selected';}?>>1946-47</option>
+                                                <? $masO=explode(";",$karta[0]['golodO'])?>
+                                                <table <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodO"><tr><td><label> - 1932-33</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g1o" id="g1o" value="1932-33" onchange="ss688()" oninput="setCustomValidity('')" class="form-control"
+                                                                <? foreach($masO as $int):
+                                                                    if($int=='1932-33'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g2o" id="g2o" value="1941-45" onchange="ss688()" oninput="setCustomValidity('')" class="form-control"
+                                                                <? foreach($masO as $int):
+                                                                    if($int=='1941-45'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g3o" id="g3o" value="1946-47" onchange="ss688()" oninput="setCustomValidity('')" class="form-control"
+                                                                <? foreach($masO as $int):
+                                                                    if($int=='1946-47'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr></table>
 
-                                                    <option value="Не знаю" >Не знаю</option>
-                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="bratGolod">
+                                            <td>
+                                                <label>Рідні брати/сестри:</label></td><td>
+                                                <? $masS=explode(";",$karta[0]['golodSister'])?>
+                                                <table <?if($karta[0]['golodSem']!='Так'){ echo "class='showGolod'";}?> id="tabGolodS"><tr><td><label> - 1932-33</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g1s" id="g1s" onchange="ss699()" oninput="setCustomValidity('')" value="1932-33" class="form-control"
+                                                                <? foreach($masS as $int):
+                                                                    if($int=='1932-33'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g2s" id="g2s" value="1941-45" onchange="ss699()" oninput="setCustomValidity('')" class="form-control"
+                                                                <? foreach($masS as $int):
+                                                                    if($int=='1941-45'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="checkbox" name="g3s" id="g3s" value="1946-47" onchange="ss699()" oninput="setCustomValidity('')" class="form-control"
+                                                                <? foreach($masS as $int):
+                                                                    if($int=='1946-47'){echo 'checked';}
+                                                                endforeach;?>>
+                                                        </td></tr></table>
+
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Родные брати/сестри:</label></td><td>
-                                                <select name="golodSister" class="form-control">
-                                                    <option value="" <? if( $karta[0]['golodSister']==''){echo 'selected';}?>></option>
-                                                    <option value="1932-33" <? if( $karta[0]['golodSister']=='1932-33'){echo 'selected';}?>>1932-33</option>
-                                                    <option value="1941-45" <? if( $karta[0]['golodSister']=='1941-45'){echo 'selected';}?>>1941-45</option>
-                                                    <option value="1946-47"  <? if( $karta[0]['golodSister']=='1946-47'){echo 'selected';}?>>1946-47</option>
-
-                                                    <option value="Не знаю" <? if( $karta[0]['golodSister']=='Не знаю'){echo 'selected';}?>>Не знаю</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Померли чи мати / батько / рідні брати
-                                                    або сестри з причин, пов`язаних з
+                                                <label>Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з
                                                     голодом в 1932-33, 1941-45 і / або
-                                                    1946-47 році:</label></td>
+                                                    1946-47 році:<span class="red">*</span></label></td>
                                             <td>
-                                                <select name="death1" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="death1" id="death123" class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з голодом в 1932-33, 1941-45 і або 1946-47 році:' )" oninput="setCustomValidity('')">
+                                                    <option value="" <? if( $karta[0]['death1']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['death1']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так-1932-33" <? if( $karta[0]['death1']=='Так-1932-33'){echo 'selected';}?>>Так-1932-33</option>
                                                     <option value="Так-1941-45" <? if( $karta[0]['death1']=='Так-1941-45'){echo 'selected';}?>>Так-1941-45</option>
@@ -1493,11 +2507,15 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td>
-                                                <label>Пережили ви період голоду в
-                                                    1932-33, 1941-45 і / або 1946-47 роках
-                                                    (Голодували ви?). Якщо так - вказати
-                                                    період:</label></td><td>
-                                                <select name="death2" class="form-control">
+                                                <label>Чи голодували Ви особисто у періоди голоду в
+                                                    1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати
+                                                    період:<span class="red"> *</span></label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="death2" id="death234" class="form-control" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Чи голодували Ви особисто у періоди голоду в 1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати період:')" oninput="setCustomValidity('')">
+                                                    <option value="" <? if( $karta[0]['death2']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['death2']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так-1932-33" <? if( $karta[0]['death2']=='Так-1932-33'){echo 'selected';}?>>Так-1932-33</option>
                                                     <option value="Так-1941-45" <? if( $karta[0]['death2']=='Так-1941-45'){echo 'selected';}?>>Так-1941-45</option>
@@ -1514,10 +2532,18 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="settings">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.А. Антропометричні дані</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%">
                                         <tr>
-                                            <td><label>Вага (кг)</label>
-                                            </td><td><div style="display: flex;"><input class="form-control" value="<? echo $karta[0]['ves'];?>" type="text" name="ves" placeholder="">
+                                            <td>
+
+                                                <label class="lb1">Вага (кг)</label>
+                                            </td>
+                                            <td style="width: 100%">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" value="<? echo $karta[0]['ves'];?>" type="text" name="ves" placeholder="">
                                                 <?php
                                                 $b3='no';
                                            
@@ -1526,7 +2552,7 @@ endforeach;
                                                     if($item['nameStol']=='ves' and $b3=='no'){
                                                         $b3='yes';
                                                         ?>
-                                                        <a id="b3" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b3" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m3" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1556,7 +2582,11 @@ endforeach;
 
                                             </td>
                                         </tr><tr>
-                                            <td><label>Зріст (см)</label></td><td><div style="display: flex;"><input class="form-control" value="<? echo $karta[0]['rost'];?>" type="text" name="rost" placeholder="">
+                                            <td><label>Зріст (см)</label></td><td><div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" value="<? echo $karta[0]['rost'];?>" type="text" name="rost" placeholder="">
                                                 <?php
                                                 $b4='no';
 
@@ -1565,7 +2595,7 @@ endforeach;
                                                     if($item['nameStol']=='rost' and $b4=='no'){
                                                         $b4='yes';
                                                         ?>
-                                                        <a id="b4" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b4" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m4" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1596,8 +2626,12 @@ endforeach;
 
                                             </td>
                                         </tr><tr>
-                                            <td><label>Об`єм талії (см)</label></td><td>
-                                                <div style="display: flex;"><input class="form-control" value="<? echo $karta[0]['tal'];?>" type="text" name="tal" placeholder="">
+                                            <td><label>Окружність талії (см)</label></td><td>
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" value="<? echo $karta[0]['tal'];?>" type="text" name="tal" placeholder="">
                                                 <?php
                                                 $b5='no';
 
@@ -1606,13 +2640,13 @@ endforeach;
                                                     if($item['nameStol']=='tal' and $b5=='no'){
                                                         $b5='yes';
                                                         ?>
-                                                        <a id="b5" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b5" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m5" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
                                                           echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
 
-                                                                <span class="n"> <? echo "Об`єм талії (см):";?>
+                                                                <span class="n"> <? echo "Окружність талії (см):";?>
                                                                     <?
                                                                     $u=1;
                                                                     echo "<table class='table table-bordered'>";
@@ -1637,7 +2671,11 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td><label>Окружність стегон (см)</label></td><td>
-                                                <div style="display: flex;"><input class="form-control" value="<? echo $karta[0]['bed'];?>" type="text" name="bed" placeholder="">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" value="<? echo $karta[0]['bed'];?>" type="text" name="bed" placeholder="">
                                                 <?php
                                                 $b6='no';
 
@@ -1646,7 +2684,7 @@ endforeach;
                                                     if($item['nameStol']=='bed' and $b6=='no'){
                                                         $b6='yes';
                                                         ?>
-                                                        <a id="b6" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b6" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m6" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1679,7 +2717,11 @@ endforeach;
                                         </tr><tr>
                                             <td><label>Індекс маси тіла (кг/м 2 )</label></td><td>
 
-                                                <div style="display: flex;"><input class="form-control" value="<? echo $karta[0]['index'];?>"type="text" name="index" >
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" value="<? echo $karta[0]['index'];?>"type="text" name="index" >
                                                 <?php
                                                 $b7='no';
 
@@ -1688,8 +2730,8 @@ endforeach;
                                                     if($item['nameStol']=='index' and $b7=='no'){
                                                         $b7='yes';
                                                         ?>
-                                                        <a id="b6" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
-                                                            <div id="m6" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
+                                                        <a id="b7" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                            <div id="m7" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
                                                           echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
@@ -1719,14 +2761,91 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td><label>Систолічний артеріальний тиск (сидячи) 0`</label></td><td>
-                                            <input type="text" name="art" class="form-control" value="<? echo $karta[0]['art'];?>">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="text" name="art" class="form-control" value="<? echo $karta[0]['art'];?>">
+                                                    <?php
+                                                    $b71='no';
+
+                                                    foreach($hist as $key=>$item):
+
+                                                        if($item['nameStol']=='art' and $b71=='no'){
+                                                            $b71='yes';
+                                                            ?>
+                                                            <a id="b71" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                                <div id="m71" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
+
+                                                      <span style="font-size: 9px;font-weight: bold;"><?
+                                                          echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
+
+                                                                    <span class="n"> <? echo "Систолічний артеріальний тиск (сидячи) 0`";?>
+                                                                        <?
+                                                                        $u=1;
+                                                                        echo "<table class='table table-bordered'>";
+                                                                        foreach($hist as $key=>$item):
+
+                                                                            if($item['nameStol']=='art'){
+                                                                                echo "<tr><td>{$u}</td><td> {$item['val']}</td><td> {$item['date_izm']}</td>";
+                                                                                $u++;
+                                                                            }
+
+                                                                        endforeach;
+                                                                        echo "</table>";
+                                                                        ?></span>
+                                                                </div>  </a>
+                                                            <?php
+                                                        }
+
+                                                    endforeach;
+                                                    ?>
+                                                </div>
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label>Систолічний артеріальний тиск (сидячи) 10`</label></td><td>
-                                                <input type="text" name="systisk" class="form-control" value="<? echo $karta[0]['systisk'];?>">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="text" name="systisk" class="form-control" value="<? echo $karta[0]['systisk'];?>">
+                                                    <?php
+                                                    $b72='no';
 
+                                                    foreach($hist as $key=>$item):
+
+                                                        if($item['nameStol']=='systisk' and $b72=='no'){
+                                                            $b72='yes';
+                                                            ?>
+                                                            <a id="b72" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                                <div id="m72" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
+
+                                                      <span style="font-size: 9px;font-weight: bold;"><?
+                                                          echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
+
+                                                                    <span class="n"> <? echo "Систолічний артеріальний тиск (сидячи) 10`";?>
+                                                                        <?
+                                                                        $u=1;
+                                                                        echo "<table class='table table-bordered'>";
+                                                                        foreach($hist as $key=>$item):
+
+                                                                            if($item['nameStol']=='systisk'){
+                                                                                echo "<tr><td>{$u}</td><td> {$item['val']}</td><td> {$item['date_izm']}</td>";
+                                                                                $u++;
+                                                                            }
+
+                                                                        endforeach;
+                                                                        echo "</table>";
+                                                                        ?></span>
+                                                                </div>  </a>
+                                                            <?php
+                                                        }
+
+                                                    endforeach;
+                                                    ?>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -1734,14 +2853,92 @@ endforeach;
                                         <tr>
 
                                             <td><label>Діастолічний артеріальний тиск (сидячи) 0`</label></td><td>
-                                                <input type="text" name="art1" class="form-control" value="<? echo $karta[0]['art1'];?>">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="text" name="art1" class="form-control" value="<? echo $karta[0]['art1'];?>">
+                                                    <?php
+                                                    $b73='no';
+
+                                                    foreach($hist as $key=>$item):
+
+                                                        if($item['nameStol']=='art1' and $b73=='no'){
+                                                            $b73='yes';
+                                                            ?>
+                                                            <a id="b73" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                                <div id="m73" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
+
+                                                      <span style="font-size: 9px;font-weight: bold;"><?
+                                                          echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
+
+                                                                    <span class="n"> <? echo "Діастолічний артеріальний тиск (сидячи) 0`";?>
+                                                                        <?
+                                                                        $u=1;
+                                                                        echo "<table class='table table-bordered'>";
+                                                                        foreach($hist as $key=>$item):
+
+                                                                            if($item['nameStol']=='art1'){
+                                                                                echo "<tr><td>{$u}</td><td> {$item['val']}</td><td> {$item['date_izm']}</td>";
+                                                                                $u++;
+                                                                            }
+
+                                                                        endforeach;
+                                                                        echo "</table>";
+                                                                        ?></span>
+                                                                </div>  </a>
+                                                            <?php
+                                                        }
+
+                                                    endforeach;
+                                                    ?>
+                                                </div>
                                             </td>
 
                                         </tr>
                                         <tr>
 
                                             <td><label>Діастолічний артеріальний тиск (сидячи) 10`</label></td><td>
-                                                <input type="text" name="disttisk" class="form-control" value="<? echo $karta[0]['disttisk'];?>">
+                                                <div style="display: flex;"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="text" name="disttisk" class="form-control" value="<? echo $karta[0]['disttisk'];?>">
+                                                    <?php
+                                                    $b74='no';
+
+                                                    foreach($hist as $key=>$item):
+
+                                                        if($item['nameStol']=='disttisk' and $b74=='no'){
+                                                            $b74='yes';
+                                                            ?>
+                                                            <a id="b74" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                                <div id="m74" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
+
+                                                      <span style="font-size: 9px;font-weight: bold;"><?
+                                                          echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
+
+                                                                    <span class="n"> <? echo "Діастолічний артеріальний тиск (сидячи) 10`";?>
+                                                                        <?
+                                                                        $u=1;
+                                                                        echo "<table class='table table-bordered'>";
+                                                                        foreach($hist as $key=>$item):
+
+                                                                            if($item['nameStol']=='disttisk'){
+                                                                                echo "<tr><td>{$u}</td><td> {$item['val']}</td><td> {$item['date_izm']}</td>";
+                                                                                $u++;
+                                                                            }
+
+                                                                        endforeach;
+                                                                        echo "</table>";
+                                                                        ?></span>
+                                                                </div>  </a>
+                                                            <?php
+                                                        }
+
+                                                    endforeach;
+                                                    ?>
+                                                </div>
                                             </td>
 
                                         </tr>
@@ -1751,11 +2948,16 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="zhitt">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.Б. Спосіб життя</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%">
 
                                         <tr>
-                                            <td><label>Ви палите?</label></td><td>
-                                                <div style="display: flex;"><select class="form-control" name="smouk">
+                                            <td><label class="lb1">Ви палите?</label></td>
+                                            <td style="width: 100%">
+                                                <div style="display: flex;"><select <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> class="form-control" name="smouk" onchange="showPal(this.value)">
                                                         <option value="--" <? if( $karta[0]['smouk']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['smouk']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['smouk']=='Так'){echo 'selected';}?>>Так</option>
@@ -1768,7 +2970,7 @@ endforeach;
                                                     if($item['nameStol']=='smouk' and $b8=='no'){
                                                         $b8='yes';
                                                         ?>
-                                                        <a id="b6" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b6" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m6" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1796,17 +2998,21 @@ endforeach;
                                                 ?>
                             </div>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['smouk']!='Так'){echo 'class="showPal"';}?> id="chastoPal" >
                                             <td><label>Якщо курите, як часто?</label></td><td>
-                                                <select class="form-control" name="smoukTime">
+                                                <select  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> class="form-control" name="smoukTime"  id="smoukTime">
                                                     <option value="--" <? if( $karta[0]['smoukTime']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Кожен день" <? if( $karta[0]['smoukTime']=='Кожен день'){echo 'selected';}?>>Кожен день</option>
                                                     <option value="Кілька днів на тиждень" <? if( $karta[0]['smoukTime']=='Кілька днів на тиждень'){echo 'selected';}?>>Кілька днів на тиждень</option>
                                                     <option value="Дуже рідко" <? if( $karta[0]['smoukTime']=='Дуже рідко'){echo 'selected';}?>>Дуже рідко</option>
                                                 </select></td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['smouk']!='Так'){echo 'class="showPal"';}?> id="kolPal">
                                             <td><label>Кількість викурених сигарет за
-                                                    1 день</label></td><td><input class="form-control" type="text" value="<? echo $karta[0]['smokeKol'];?>" name="smokeKol" placeholder=""></td>
+                                                    1 день</label></td><td><input class="form-control" type="text" id="smoukkol" value="<? echo $karta[0]['smokeKol'];?>" name="smokeKol" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -1814,7 +3020,11 @@ endforeach;
 
                                             </td>
                                             <td>
-                                                <select name="alkogol" class="form-control">
+                                                <select  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="alkogol" class="form-control">
                                                     <option value="--" <? if( $karta[0]['alkogol']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ніколи" <? if( $karta[0]['alkogol']=='Ніколи'){echo 'selected';}?>>Ніколи</option>
                                                     <option value="Менше 1 разу на місяць" <? if( $karta[0]['alkogol']=='Менше 1 разу на місяць'){echo 'selected';}?>>Менше 1 разу на місяць</option>
@@ -1833,15 +3043,20 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="hist">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.В. Історія хвороби:</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
                                             <td>
-                                                <label>Тип діабету:</label>
+                                                <label class="lb1">Тип діабету:<span class="red"> *</span></label>
 
                                             </td>
-                                            <td><div style="display: flex">
-                                                <select name="typeDiab" class="form-control">
-                                                    <option value="--" <? if( $karta[0]['typeDiab']=='--'){echo 'selected';}?>>--</option>
+                                            <td style="width: 100%"><div style="display: flex">
+                                                <select  <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="typeDiab" id="typeDiab12" class="form-control" onchange="showDiab(this.value)" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Тип діабету )" oninput="setCustomValidity('')">
+                                                    <option value="" <? if( $karta[0]['typeDiab']==''){echo 'selected';}?>>--</option>
+                                                    <option value="Не хворіє" <? if( $karta[0]['typeDiab']=='Не хворіє'){echo 'selected';}?>>Не хворіє</option>
                                                     <option value="ЦД 1 типу" <? if( $karta[0]['typeDiab']=='ЦД 1 типу'){echo 'selected';}?>>ЦД 1 типу</option>
                                                     <option value="ЦД 2 типу" <? if( $karta[0]['typeDiab']=='ЦД 2 типу'){echo 'selected';}?> >ЦД 2 типу</option>
                                                     <option value="Латентний аутоімунний (LADA)" <? if( $karta[0]['typeDiab']=='Латентний аутоімунний (LADA)'){echo 'selected';}?>>Латентний аутоімунний
@@ -1860,7 +3075,7 @@ endforeach;
                                                     if($item['nameStol']=='typeDiab' and $b8=='no'){
                                                         $b8='yes';
                                                         ?>
-                                                        <a id="b8" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b8" style='position: relative; display:none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m8" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1889,16 +3104,24 @@ endforeach;
                             </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr <? if($karta[0]['typeDiab']=='' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabRik">
                                             <td>
-                                                <label>Рік постановки діагнозу:</label></td><td>
-                                                <input type="text" name="yearD" value="<? echo $karta[0]['yearD'];?>" class="form-control">
+                                                <label>Рік постановки діагнозу:<span class="red"> *</span></label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="yearD" value="<? echo $karta[0]['yearD'];?>" class="form-control" id="yearD"  oninput="setCustomValidity('')"> <!--required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Рік постановки діагнозу' )"-->
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['typeDiab']=='' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabVik">
                                             <td>
-                                                <label>Вік дебюту діабету (років):</label></td><td>
+                                                <label>Вік дебюту діабету (років):<span class="red"> *</span></label></td><td>
                                                 <div style="display: flex">
-                                                    <input type="text" name="vekD" value="<? echo $karta[0]['vekD'];?>" class="form-control">
+                                                    <input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="text" name="vekD" value="<? echo $karta[0]['vekD'];?>" class="form-control" id="vekD" oninput="setCustomValidity('')"> <!--required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Вік дебюту діабету (років)' )"-->
                                                     <?php
                                                     $b9='no';
 
@@ -1907,7 +3130,7 @@ endforeach;
                                                         if($item['nameStol']=='vekD' and $b9=='no'){
                                                             $b9='yes';
                                                             ?>
-                                                            <a id="b9" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                            <a id="b9" style='position: relative; display: none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                                 <div id="m9" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -1935,10 +3158,14 @@ endforeach;
                                                     ?>
                                                 </div>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['typeDiab']=='' or $_POST['typeDiab']=='Не хворіє'){echo 'class="showDiabet"';}?> id="showDiabkol">
                                             <td>
-                                                <label>Тривалість діабету (років):</label></td><td>
-                                                <input type="text" name="longD" value="<? echo $karta[0]['longD'];?>" class="form-control">
+                                                <label>Тривалість діабету (років):<span class="red"> *</span></label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="longD" value="<? echo $karta[0]['longD'];?>" class="form-control" id="longD"  oninput="setCustomValidity('')"> <!--required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Тривалість діабету (років)' )"-->
                                             </td>
                                         </tr>
 
@@ -1948,15 +3175,19 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="bol">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.Г. Супутні захворювання:</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%">
                                         <tr>
                                             <td >
-                                                <label>Інфекційні:</label>
+                                                <label class="lb1">Інфекційні:</label>
 
                                             </td>
-                                            <td colspan="2">
+                                            <td colspan="2" style="width: 100%">
                                                 <div style="display: flex">
-                                                <textarea name="inf" class="form-control"><? echo $karta[0]['inf'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="inf" class="form-control"><? echo $karta[0]['inf'];?></textarea>
                                                 <?php
                                                 $b10='no';
 
@@ -1965,7 +3196,7 @@ endforeach;
                                                     if($item['nameStol']=='inf' and $b10=='no'){
                                                         $b10='yes';
                                                         ?>
-                                                        <a id="b10" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b10" style='position: relative; display: none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m10" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -2001,7 +3232,11 @@ endforeach;
                                             </td>
                                             <td colspan="2">
                                                 <div style="display: flex">
-                                                <textarea name="aut" class="form-control"><? echo $karta[0]['aut'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="aut" class="form-control"><? echo $karta[0]['aut'];?></textarea>
                                                 <?php
                                                 $b11='no';
 
@@ -2010,7 +3245,7 @@ endforeach;
                                                     if($item['nameStol']=='aut' and $b11=='no'){
                                                         $b11='yes';
                                                         ?>
-                                                        <a id="b11" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b11" style='position: relative; display: none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m11" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -2046,7 +3281,11 @@ endforeach;
                                             </td>
                                             <td colspan="2">
                                                 <div style="display: flex">
-                                                <textarea name="porok" class="form-control"><? echo $karta[0]['porok'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="porok" class="form-control"><? echo $karta[0]['porok'];?></textarea>
                                                 <?php
                                                 $b12='no';
 
@@ -2055,7 +3294,7 @@ endforeach;
                                                     if($item['nameStol']=='porok' and $b12=='no'){
                                                         $b12='yes';
                                                         ?>
-                                                        <a id="b12" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b12" style='position: relative; display: none;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m12" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -2091,7 +3330,11 @@ endforeach;
                                             </td>
                                             <td colspan="2">
                                                 <div style="display: flex">
-                                                <textarea name="endoc" class="form-control"><? echo $karta[0]['endoc'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="endoc" class="form-control"><? echo $karta[0]['endoc'];?></textarea>
                                                 <?php
                                                 $b12='no';
 
@@ -2100,7 +3343,7 @@ endforeach;
                                                     if($item['nameStol']=='endoc' and $b12=='no'){
                                                         $b12='yes';
                                                         ?>
-                                                        <a id="b12" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b12" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m12" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -2136,7 +3379,11 @@ endforeach;
                                             </td>
                                             <td colspan="2">
                                                 <div style="display: flex";>
-                                                <textarea name="patol" class="form-control"><? echo $karta[0]['patol'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="patol" class="form-control"><? echo $karta[0]['patol'];?></textarea>
                                                 <?php
                                                 $b13='no';
 
@@ -2145,7 +3392,7 @@ endforeach;
                                                     if($item['nameStol']=='patol' and $b13=='no'){
                                                         $b13='yes';
                                                         ?>
-                                                        <a id="b13" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b13" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m13" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -2180,9 +3427,71 @@ endforeach;
 
                                             </td>
                                             <td colspan="2">
-                                                <input type="text" name="DGR" value="<? echo $karta[0]['DGR'];?>" class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="DGR" value="<? echo $karta[0]['DGR'];?>" class="form-control">
 
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="lb1">ЧИ хворієте Ви на онкологічні захворювання?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Onko" class="form-control" onchange="onko(this.value)">
+                                                    <option value="--" <? if( $karta[0]['Onko']=='--'){echo 'selected';}?>>--</option>
+                                                    <option value="Ні" <? if( $karta[0]['Onko']=='Ні'){echo 'selected';}?>>Ні</option>
+                                                    <option value="Так" <? if( $karta[0]['Onko']=='Так'){echo 'selected';}?>>Так</option>
+
+                                                </select>
+                                            </td>
+                                        </tr><tr <? if($karta[0]['Onko']!='Так'){echo 'class="onkoshow"';}?> id="vidOnkoz">
+                                            <td>
+                                                <label class="lb1">Вкажіть вид онкозахворювання</label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="VidOnko" id="vidOnko" value='<? echo $karta[0]['VidOnko'];?>' class="form-control">
+                                            </td>
+                                        </tr><tr <? if($karta[0]['Onko']!='Так'){echo 'class="onkoshow"';}?> id="datOnko">
+                                            <td>
+                                                <label class="lb1">Дата постановки діагнозу
+                                                    онкозахворювання</label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" id="dateOnko" name="dateOnko" value='<? echo $karta[0]['dateOnko'];?>' class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr <? if($karta[0]['Onko']!='Так'){echo 'class="onkoshow"';}?> id="likOnko">
+                                            <td><label class="lb1">Якщо так - лікування онкозахворювання
+                                                    (Препарати - назва препаратів,
+                                                    група)?</label>
+
+                                            </td>
+                                            <td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="OnkoLek" class="form-control" id="onkoLek">
+                                                    <option value="--" <? if( $karta[0]['OnkoLek']=='--'){echo 'selected';}?>>--</option>
+                                                    <option value="Ні" <? if( $karta[0]['OnkoLek']=='Ні'){echo 'selected';}?>>Ні</option>
+                                                    <option value="Хіміотерапія" <? if( $karta[0]['OnkoLek']=='Хіміотерапія'){echo 'selected';}?>>Хіміотерапія</option>
+                                                    <option value="Імунотерапія" <? if( $karta[0]['OnkoLek']=='Імунотерапія'){echo 'selected';}?>>Імунотерапія</option>
+                                                    <option value="Гормональна терапія" <? if( $karta[0]['OnkoLek']=='Гормональна терапія'){echo 'selected';}?>>Гормональна терапія</option>
+                                                    <option value="Комбінована (хіміо + тергетная терапія)" <? if( $karta[0]['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){echo 'selected';}?>>Комбінована (хіміо + тергетная терапія)</option>
+                                                    <option value="Таргетная терапія" <? if( $karta[0]['OnkoLek']=='Таргетная терапія'){echo 'selected';}?>>Таргетная терапія</option>
+                                                    <option value="Хірургічне" <? if( $karta[0]['OnkoLek']=='Хірургічне'){echo 'selected';}?>>Хірургічне</option>
+                                                    <option value="Інші" <? if( $karta[0]['OnkoLek']=='Інші'){echo 'selected';}?>>Інші</option>
+                                                </select>
+                                            </td>
+
                                         </tr>
                                     </table>
                                 </fieldset>
@@ -2190,46 +3499,67 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="ser">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>3.А. Обстеження серцево-судинної системи</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label>Чи був у вас інфаркт?</label></td><td>
-                                                <select name="infarkt" class="form-control" onchange="addIn(this.value)">
+                                            <td>
+                                                <label class="lb1">Чи був у вас інфаркт?</label>
+                                            </td>
+                                            <td style="width: 100%">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="infarkt" class="form-control" onchange="addIn(this.value)">
                                                     <option value="--" <? if( $karta[0]['infarkt']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['infarkt']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['infarkt']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select>
                                                                                                <?php
                                                     if( $karta[0]['infarkt']=='Так'){
-                                                        echo "<span id='ki' style='display: flex;'>
+                                                        echo "<span id='ki' style='display: flex;flex-direction: column;'>
 <label id='kolinfL'>Введіть кількість інфарктів</label>
-<span id='ki2' style='display: flex;'><input type='text' id='kolinf' value='{$karta[0]['kolInf']}' name='kolinf' 
- class='form-control' onchange='addPol(this.value)'> </span>";
+<span id='ki2' style='display: flex;flex-direction: column;'>";
+
+    ?><select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id='kolinf' name='kolinf' class='form-control' onchange='addPol(this.value)'>";?>
+<option <? if($karta[0]['kolInf']==''){ echo 'selected';}?> ></option>
+<option <? if($karta[0]['kolInf']=='1'){ echo 'selected';}?> >1</option>
+<option <? if($karta[0]['kolInf']=='2'){ echo 'selected';}?> >2</option>
+<option <? if($karta[0]['kolInf']=='3'){ echo 'selected';}?> >3</option>
+                                                    <?
+echo "</select>  </span>";
                                                         ?>
 
 
-                                            <table id="ttt" width="250px">
+                                           <br> <table id="ttt" width="450px">
                                                 <?
                                                 $inf=explode(';',$karta[0]['datInf']);
 
                                                 for($i=0;$i<$karta[0]['kolInf'];$i++){
                                                     ?>
-                                                    <tr id="rowDat<?echo $i;?>"><td><label id="datInfL<?echo $i;?>">Інфаркт № <? echo $i+1;?>(рік)</label></td>
-                                                        <td><input type="text" name="datInf[]" value='<? echo $inf[$i];?>' id="datInf<?echo $i;?>" class="form-control"></td></tr>
+                                                    <tr id="rowDat<?echo $i;?>"><td><label id="datInfL<?echo $i;?>">Інфаркт № <? echo $i+1;?>(рік)</label><input <?
+                                                            if($statysA=='ВИКОНАНА'){
+                                                                echo "readonly, disabled";
+                                                            }
+                                                            ?> type="text" name="datInf[]" value='<? echo $inf[$i];?>' id="datInf<?echo $i;?>" class="form-control"></td></tr>
 
                                                 <?
                                                 }
                                                 ?>
-                                                </table></td>
+                                                </table>
+                                            </td>
 
 
                                                     <?}
                                                     else{
                                                         ?>
-                                                        <span id='ki' style='display: flex;'>
-                                                        </span></td>
-                                                        <td>
-                                                            <span id="ki2" style="display: flex;"></span>
-                                                            <table id="ttt" width="250px"><tbody></tbody></table></td>
+                                                        <span id='ki' style='display: flex;flex-direction: column;'>
+                                                        </span>
+                                                            <span id="ki2" style="display: flex;"></span><br>
+                                                            <table id="ttt" width="450px"><tbody></tbody></table>
                                             <?
                                                     }
                                                     ?>
@@ -2237,8 +3567,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label>Чи був у вас інсульт?</label></td><td>
-                                                <select name="insult" class="form-control" onchange="addIn1(this.value)">
+                                            <td><label>Чи був у вас інсульт?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="insult" class="form-control" onchange="addIn1(this.value)">
                                                     <option value="--" <? if( $karta[0]['insult']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['insult']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['insult']=='Так'){echo 'selected';}?>>Так</option>
@@ -2246,45 +3580,64 @@ endforeach;
 
                                                 <?php
                                                     if( $karta[0]['insult']=='Так'){
-                                                echo "<span id='kiIns' style='display: flex;'>
+                                                echo "<span id='kiIns' style='display: flex;flex-direction: column;'>
 <label id='kolinsL'>Введіть кількість інсультів</label>
-<span id='kiIns2' style='display: flex;'><input type='text' id='kolins' value='{$karta[0]['kolIns']}' name='kolins' 
- class='form-control' onchange='addPol1(this.value)'> </span>";
+<span id='kiIns2' style='display: flex;'>";?>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> id='kolins' name='kolins' class='form-control' onchange='addPol1(this.value)'>";?>
+                                                    <option <? if($karta[0]['kolIns']==''){ echo 'selected';}?> ></option>
+                                                    <option <? if($karta[0]['kolIns']=='1'){ echo 'selected';}?> >1</option>
+                                                    <option <? if($karta[0]['kolIns']=='2'){ echo 'selected';}?> >2</option>
+                                                    <option <? if($karta[0]['kolIns']=='3'){ echo 'selected';}?> >3</option>
+                                                    <?
+                                                    echo "</select>       
+                                                </span>";
                                                 ?>
-                                                <table id="tttIns" width="250px">
+                                               <br> <table id="tttIns" width="450px">
                                                     <?
                                                     $inf=explode(';',$karta[0]['datIns']);
 
                                                     for($i=0;$i<$karta[0]['kolIns'];$i++){
                                                         ?>
-                                                        <tr id="rowDatIns<?echo $i;?>"><td><label id="datInsL<?echo $i;?>">Інсульт № <? echo $i;?>(рік)</label></td>
-                                                            <td><input type="text" name="datIns[]" value='<? echo $inf[$i];?>' id="datIns<?echo $i;?>" class="form-control"></td></tr>
+                                                        <tr id="rowDatIns<?echo $i;?>"><td><label id="datInsL<?echo $i;?>">Інсульт № <? echo $i+1;?>(рік)</label>
+                                                           <input <?
+                                                           if($statysA=='ВИКОНАНА'){
+                                                               echo "readonly, disabled";
+                                                           }
+                                                           ?> type="text" name="datIns[]" value='<? echo $inf[$i];?>' id="datIns<?echo $i;?>" class="form-control"></td></tr>
 
                                                         <?
                                                     }
                                                     ?>
                                                 </table>
                                                 </td>
-                                            <td>
+
                                                <? } else{
                                                 ?>
-                                                <span id='kiIns' style='display: flex;'>
-                                                        </span></td>
-                                            <td>
-                                                <span id="kiIns2" style="display: flex;"></span>
-                                                <table id="tttIns" width="250px"><tbody></tbody></table></td>
+                                                <span id='kiIns' style='display: flex;flex-direction: column;'>
+                                                        </span>
+
+                                                <span id="kiIns2" style="display: flex;"></span><br>
+                                                <table id="tttIns" width="450px"><tbody></tbody></table>
                                             <?
                                             }
                                             ?>
-
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label>Хронічна серцева
+                                            <td><label>Хронічна серцева
                                                     недостатність - вказати стадію</label>
 
                                             </td>
-                                            <td>
-                                                <select name="hronSerd" class="form-control" onchange="addStad(this.value)">
+                                            <td style="width: 100%">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="hronSerd" class="form-control" onchange="addStad(this.value)">
                                                     <option value="--" <? if( $karta[0]['hronSerd']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['hronSerd']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Стадія I" <? if( $karta[0]['hronSerd']=='Стадія I'){echo 'selected';}?>>Стадія I</option>
@@ -2293,39 +3646,73 @@ endforeach;
                                                     <option value="Стадія III, Період А (стадія IIIа)" <? if( $karta[0]['hronSerd']=='Стадія III, Період А (стадія IIIа)'){echo 'selected';}?>>Стадія III, Період А (стадія IIIа)</option>
                                                     <option value="Стадія III, Період Б (стадія IIIб)" <? if( $karta[0]['hronSerd']=='Стадія III, Період Б (стадія IIIб)'){echo 'selected';}?>>Стадія III, Період Б (стадія IIIб)</option>
                                                 </select>
-                                            </td>
-                                            <td style="display: flex;">
-                                                <? if($karta[0]['hronSerd']!='Ні'){
+
+                                                <?
+
+                                                if($karta[0]['hronSerd']=='Ні') {
+                                                    ?>
+                                                    <span id="kiStad" style="display: flex;"></span>
+                                                    <span id="kiStad2" style="display: flex; width: 100px;"></span>
+
+                                                <?}
+                                                elseif($karta[0]['hronSerd']=='--'){?>
+                                                    <span id="kiStad" style="display: flex;"></span>
+                                                    <span id="kiStad2" style="display: flex; width: 100px;"></span>
+                                             <?   }
+                                                elseif($karta[0]['hronSerd']==''){?>
+                                                    <span id="kiStad" style="display: flex;"></span>
+                                                    <span id="kiStad2" style="display: flex; width: 100px;"></span>
+                                                <?   }
+                                                elseif($karta[0]['hronSerd']!='' or ($karta[0]['hronSerd']!='--' or ($karta[0]['hronSerd']!='Ні'))){
+                                                    ?>
+                                                    <span id="kiStad" style="display: flex;"><label id="datStadL">Дата постановки (рік)</label></span>
+                                                    <span id="kiStad2" style="display: flex; width: 100px;"><input <input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="text" name="datStad" value='<? echo $karta[0]['datStad'];?>' id="datStad" class="form-control" width="100px"></span>
+                                                <? }
+                                                else{
                                                     ?>
                                                     <span id="kiStad" style="display: flex;"><label id="datStadL">Дата постановки (рік)</label></span>
                                                     <span id="kiStad2" style="display: flex; width: 100px;"><input type="text" name="datStad" value='<? echo $karta[0]['datStad'];?>' id="datStad" class="form-control" width="100px"></span>
-                                                <?}else{
-                                                    ?>
 
                                                 <span id="kiStad" style="display: flex;"></span>
                                                 <span id="kiStad2" style="display: flex; width: 100px;"></span>
                                                 <?php
                                                 }
                                                 ?>
-                                            </td>
-                                        </tr>
-                                    </table>
+
+                                    </td>
+                                    </tr></table>
+
                                 </fieldset>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="diab">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>4.А. Обстеження очей</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дата обстеження очного дна: дд-мм-рр</label>
-
+                                            <td>
+                                                <label class="lb1">Дата обстеження очного дна: дд-мм-рр</label>
                                             </td>
-                                            <td><input type="date" value='<? echo $karta[0]['glaz'];?>'class="form-control" name="glaz"></td>
+                                            <td style="width: 100%">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" value='<? echo $karta[0]['glaz'];?>'class="form-control" name="glaz">
+                                            </td>
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex; width: 500px;"><label class="lb1">Діабетична ретинопатія?</label></td><td>
-                                                <select name="diabDiab" class="form-control" onchange="addDiab(this.value)">
+                                            <td><label class="lb1">Діабетична ретинопатія?</label></td>
+                                            <td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabDiab" class="form-control" onchange="addDiab(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabDiab']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabDiab']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabDiab']=='Так'){echo 'selected';}?>>Так</option>
@@ -2336,7 +3723,11 @@ endforeach;
 
                                                 <span id="kiDiab"><label id="datDiabL">Дата постановки</label></span>
 
-                                                    <span id="kiDiab2"><input type="date" name="datDiab" id="datDiab" value='<? echo $karta[0]['datDiab'];?>' class="form-control" width="100px"></span>
+                                                    <span id="kiDiab2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" name="datDiab" id="datDiab" value='<? echo $karta[0]['datDiab'];?>' class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2351,18 +3742,28 @@ endforeach;
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Непролиферативная ретинопатія?</label></td><td>
-                                                <select name="diabNep" class="form-control" onchange="addNep(this.value)">
+                                            <td><label class="lb1">Непроліферативна ретинопатія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabNep" class="form-control" onchange="addNep(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabNep']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabNep']=='Ні'){echo 'selected';}?>>Ні</option>
-                                                    <option value="Так" <? if( $karta[0]['diabNep']=='Так'){echo 'selected';}?>>Так</option>
+                                                    <option value="Так - легкого ступеню" <? if( $karta[0]['diabNep']=='Так - легкого ступеню'){echo 'selected';}?>>Так - легкого ступеню</option>
+                                                    <option value="Так - середнього ступеню" <? if( $karta[0]['diabNep']=='Так - середнього ступеню'){echo 'selected';}?>>Так - середнього ступеню</option>
+                                                    <option value="Так - важкого ступеню" <? if( $karta[0]['diabNep']=='Так - важкого ступеню'){echo 'selected';}?>>Так - важкого ступеню</option>
                                                 </select>
 
                                             <? if($karta[0]['diabNep']=='Так') {
                                             ?>
                                             <span id="kiNep"><label id="datNepL">Дата постановки</label></span>
 
-                                                <span id="kiNep2"><input type="date" name="datNep" value='<? echo $karta[0]['datNep'];?>' id="datNep" class="form-control" width="100px"></span>
+                                                <span id="kiNep2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datNep" value='<? echo $karta[0]['datNep'];?>' id="datNep" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2376,8 +3777,12 @@ endforeach;
                                             ?>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Препроліфератівная ретинопатія?</label></td><td>
-                                                <select name="diabPrep" class="form-control" onchange="addPrep(this.value)">
+                                            <td><label class="lb1">Препроліферативна ретинопатія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabPrep" class="form-control" onchange="addPrep(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabPrep']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabPrep']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabPrep']=='Так'){echo 'selected';}?>>Так</option>
@@ -2387,7 +3792,11 @@ endforeach;
                                             ?>
                                             <span id="kiPrep"><label id="datPrepL">Дата постановки</label></span>
 
-                                                <span id="kiPrep2"><input type="date" name="datPrep" value='<? echo $karta[0]['datPrep'];?>' id="datPrep" class="form-control" width="100px"></span>
+                                                <span id="kiPrep2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datPrep" value='<? echo $karta[0]['datPrep'];?>' id="datPrep" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2402,18 +3811,27 @@ endforeach;
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Пролиферативная ретинопатія?</label></td><td>
-                                                <select name="diabPrep2" class="form-control" onchange="addPrep2(this.value)">
+                                            <td><label class="lb1">Проліферативна ретинопатія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabPrep2" class="form-control" onchange="addPrep2(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabPrep2']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabPrep2']=='Ні'){echo 'selected';}?>>Ні</option>
-                                                    <option value="Так" <? if( $karta[0]['diabPrep2']=='Так'){echo 'selected';}?>>Так</option>
+                                                    <option value="Так - проліферативна діабетична ретинопатія з низьким ризиком" <? if( $karta[0]['diabPrep2']=='Так - проліферативна діабетична ретинопатія з низьким ризиком'){echo 'selected';}?>>Так - проліферативна діабетична ретинопатія з низьким ризиком</option>
+                                                    <option value="Так - проліферативна діабетична ретинопатія з високим ризиком" <? if( $karta[0]['diabPrep2']=='Так - проліферативна діабетична ретинопатія з високим ризиком'){echo 'selected';}?>>Так - проліферативна діабетична ретинопатія з високим ризиком</option>
                                                 </select>
 
                                             <? if($karta[0]['diabPrep2']=='Так') {
                                             ?>
                                             <span id="kiPrep12"><label id="datPrep2L">Дата постановки</label></span>
 
-                                                <span id="kiPrep22"><input type="date" name="datPrep2" value='<? echo $karta[0]['datPrep2'];?>' id="datPrep2" class="form-control" width="100px"></span>
+                                                <span id="kiPrep22"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datPrep2" value='<? echo $karta[0]['datPrep2'];?>' id="datPrep2" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2427,8 +3845,12 @@ endforeach;
                                             ?>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Сліпота?</label></td><td>
-                                                <select name="Slep" class="form-control" onchange="addSlep(this.value)">
+                                            <td><label class="lb1">Сліпота?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Slep" class="form-control" onchange="addSlep(this.value)">
                                                     <option value="--" <? if( $karta[0]['Slep']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Slep']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Так']=='Ні'){echo 'selected';}?>>Так</option>
@@ -2438,7 +3860,11 @@ endforeach;
                                             ?>
                                            <span id="kiSlep"><label id="datSlepL">Дата постановки</label></span>
 
-                                                <span id="kiSlep2"><input type="date" name="datSlep" value='<? echo $karta[0]['datSlep'];?>' id="datSlep" class="form-control" width="100px"></span>
+                                                <span id="kiSlep2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datSlep" value='<? echo $karta[0]['datSlep'];?>' id="datSlep" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2453,8 +3879,12 @@ endforeach;
                                             ?>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Лазерне лікування?</label></td><td>
-                                                <select name="Lazer" class="form-control" onchange="addLazer(this.value)">
+                                            <td><label class="lb1">Лазерне лікування?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Lazer" class="form-control" onchange="addLazer(this.value)">
                                                     <option value="--" <? if( $karta[0]['Lazer']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Lazer']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Lazer']=='Так'){echo 'selected';}?>>Так</option>
@@ -2464,7 +3894,11 @@ endforeach;
                                             ?>
                                            <span id="kiLazer"><label id="datLazerL">Дата постановки</label></span>
 
-                                                <span id="kiLazer2"><input type="date" name="datLazer" value='<? echo $karta[0]['datLazer'];?>' id="datLazer" class="form-control" width="100px"></span>
+                                                <span id="kiLazer2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datLazer" value='<? echo $karta[0]['datLazer'];?>' id="datLazer" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2479,8 +3913,12 @@ endforeach;
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Катаракта?</label></td><td>
-                                                <select name="Katar" class="form-control" onchange="addKatar(this.value)">
+                                            <td><label class="lb1">Катаракта?</label></td><td>
+                                                <select  <?
+                                                         if($statysA=='ВИКОНАНА'){
+                                                             echo "readonly, disabled";
+                                                         }
+                                                         ?> name="Katar" class="form-control" onchange="addKatar(this.value)">
                                                     <option value="--" <? if( $karta[0]['Katar']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Katar']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Katar']=='Так'){echo 'selected';}?>>Так</option>
@@ -2490,7 +3928,11 @@ endforeach;
                                             ?>
                                             <span id="kiKatar"><label id="datKatarL">Дата постановки</label></span>
 
-                                                <span id="kiKatar2"><input type="date" name="datKatar" value='<? echo $karta[0]['datKatar'];?>' id="datKatar" class="form-control" width="100px"></span>
+                                                <span id="kiKatar2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datKatar" value='<? echo $karta[0]['datKatar'];?>' id="datKatar" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2504,8 +3946,12 @@ endforeach;
                                             ?>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Макулопатія?</label></td><td>
-                                                <select name="Mal" class="form-control" onchange="addMal(this.value)">
+                                            <td><label class="lb1">Макулопатія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Mal" class="form-control" onchange="addMal(this.value)">
                                                     <option value="--" <? if( $karta[0]['Mal']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Mal']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Mal']=='Так'){echo 'selected';}?>>Так</option>
@@ -2515,7 +3961,11 @@ endforeach;
                                                 ?>
                                                 <span id="kiMal"><label id="datMalL">Дата постановки</label></span>
 
-                                                    <span id="kiMal2"><input type="date" name="datMal" value='<? echo $karta[0]['datMal'];?>' id="datMal" class="form-control" width="100px"></span>
+                                                    <span id="kiMal2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" name="datMal" value='<? echo $karta[0]['datMal'];?>' id="datMal" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2530,8 +3980,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Глаукома?</label></td><td>
-                                                <select name="Glauk" class="form-control" onchange="addGlauk(this.value)">
+                                            <td><label class="lb1">Глаукома?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Glauk" class="form-control" onchange="addGlauk(this.value)">
                                                     <option value="--" <? if( $karta[0]['Glauk']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Glauk']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Glauk']=='Так'){echo 'selected';}?>>Так</option>
@@ -2541,7 +3995,11 @@ endforeach;
                                                 ?>
                                                 <span id="kiGlauk"><label id="datGlaukL">Дата постановки</label></span>
 
-                                                    <span id="kiGlauk2"><input type="date" value='<? echo $karta[0]['datGlauk'];?>' name="datGlauk" id="datGlauk" class="form-control" width="100px"></span>
+                                                    <span id="kiGlauk2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" value='<? echo $karta[0]['datGlauk'];?>' name="datGlauk" id="datGlauk" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2557,8 +4015,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">На сьогодні лікування ДР:</label></td><td>
-                                                <select name="LechDR" class="form-control">
+                                            <td><label class="lb1">На сьогодні лікування ДР:</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechDR" class="form-control">
                                                     <option value="--" <? if( $karta[0]['LechDR']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['LechDR']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Кортикостероїди (триамцинолон)" <? if( $karta[0]['LechDR']=='Кортикостероїди (триамцинолон)'){echo 'selected';}?>>Кортикостероїди (триамцинолон)</option>
@@ -2570,10 +4032,14 @@ endforeach;
                                                 </select>
                                             </td>
                                         </tr><tr><td>
-                                                <label>Дані OST:</label>
+                                                <label>Дані OCT:</label>
                                             </td><td>
 
-                                                <input type="file" value='<? echo $karta[0]['OST'];?>' style='background: transparent;' name="OST" class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="file" value='<? echo $karta[0]['OST'];?>' style='background: transparent;' name="OST" class="form-control">
                                             </td>
                                         </tr>
                                     </table>
@@ -2582,17 +4048,26 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="nefr">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>5.А. Обстеження нирок</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дата обстеження нирок:: дд-мм-рр</label>
+                                            <td>
+                                                <label class="lb1">Дата обстеження нирок:: дд-мм-рр</label>
 
                                             </td>
-                                            <td><input type="date" value='<? echo $karta[0]['pochki'];?>' class="form-control" name="pochki"></td>
+                                            <td style="width: 100%;"><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" value='<? echo $karta[0]['pochki'];?>' class="form-control" name="pochki"></td>
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex; width: 500px;"><label class="lb1">Діабетична нефропатія?</label></td><td>
-                                                <select name="diabNefro" class="form-control" onchange="addNefro(this.value)">
+                                            <td><label class="lb1">Діабетична нефропатія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabNefro" class="form-control" onchange="addNefro(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabNefro']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabNefro']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabNefro']=='Так'){echo 'selected';}?>>Так</option>
@@ -2602,7 +4077,11 @@ endforeach;
                                                 ?>
                                                 <span id="kiNefro"><label id="datNefroL">Дата постановки</label></span>
 
-                                                    <span id="kiNefro2"><input type="date" name="datNefro" value='<? echo $karta[0]['datNefro'];?>' id="datNefro" class="form-control" width="100px"></span>
+                                                    <span id="kiNefro2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" name="datNefro" value='<? echo $karta[0]['datNefro'];?>' id="datNefro" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2617,8 +4096,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Хронічна ниркова недостатність?</label></td><td>
-                                                <select name="diabPochNEd" class="form-control" onchange="addPochNEd(this.value)">
+                                            <td><label class="lb1">Хронічна ниркова недостатність?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabPochNEd" class="form-control" onchange="addPochNEd(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabPochNEd']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabPochNEd']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabPochNEd']=='Так'){echo 'selected';}?>>Так</option>
@@ -2628,7 +4111,11 @@ endforeach;
                                                 ?>
                                                 <span id="kiPochNEd"><label id="datPochNEdL">Дата постановки</label></span>
 
-                                                    <span id="kiPochNEd2"><input type="date" value='<? echo $karta[0]['datPochNEd'];?>' name="datPochNEd" id="datPochNEd" class="form-control" width="100px"></span>
+                                                    <span id="kiPochNEd2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" value='<? echo $karta[0]['datPochNEd'];?>' name="datPochNEd" id="datPochNEd" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2645,8 +4132,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Хронічна ниркова недостатність - це заключна стадія?</label></td><td>
-                                                <select name="diabPochSt" class="form-control" onchange="addPochSt(this.value)">
+                                            <td><label class="lb1">Хронічна ниркова недостатність заключна стадія?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabPochSt" class="form-control" onchange="addPochSt(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabPochSt']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabPochSt']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabPochSt']=='Так'){echo 'selected';}?>>Так</option>
@@ -2655,7 +4146,11 @@ endforeach;
                                             <? if($karta[0]['diabPochSt']=='Так') {
                                                 ?>
                                                 <span id="kiPochSt"><label id="datPochStL">Дата постановки</label></span>
-                                                    <span id="kiPochSt2"><input type="date" name="datPochSt" value='<? echo $karta[0]['datPochSt'];?>' id="datPochSt" class="form-control" width="100px"></span>
+                                                    <span id="kiPochSt2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" name="datPochSt" value='<? echo $karta[0]['datPochSt'];?>' id="datPochSt" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2670,8 +4165,12 @@ endforeach;
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Діаліз?</label></td><td>
-                                                <select name="diabDializ" class="form-control" onchange="addDializ(this.value)">
+                                            <td><label class="lb1">Діаліз?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabDializ" class="form-control" onchange="addDializ(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabDializ']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabDializ']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabDializ']=='Так'){echo 'selected';}?>>Так</option>
@@ -2681,7 +4180,11 @@ endforeach;
                                                 ?>
                                                 <span id="kiDializ"><label id="datDializL">Дата постановки</label></span>
 
-                                                    <span id="kiDializ2"><input type="date" value='<? echo $karta[0]['datDializ'];?>' name="datDializ" id="datDializ" class="form-control" width="100px"></span>
+                                                    <span id="kiDializ2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" value='<? echo $karta[0]['datDializ'];?>' name="datDializ" id="datDializ" class="form-control" width="100px"></span>
 
                                                 <?php
                                             }else{
@@ -2699,12 +4202,16 @@ endforeach;
                                         </tr>
 
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Поточні методи лікування:
+                                            <td><label class="lb1">Поточні методи лікування:
                                                     ліки (назви та група):</label>
 
                                             </td>
                                             <td>
-                                                <select name="LechPoch" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechPoch" class="form-control">
                                                     <option value="--" <? if( $karta[0]['LechPoch']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['LechPoch']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Інгібітори АПФ" <? if( $karta[0]['LechPoch']=='Інгібітори АПФ'){echo 'selected';}?>>Інгібітори АПФ</option>
@@ -2729,12 +4236,20 @@ endforeach;
                                             <td ><label class="lb1">Дата обстеження: дд-мм-рр</label>
 
                                             </td>
-                                            <td><input type="date" value='<? echo $karta[0]['datPoli'];?>' class="form-control" name="datPoli"></td>
+                                            <td style="width: 100%;"><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" value='<? echo $karta[0]['datPoli'];?>' class="form-control" name="datPoli"></td>
 
                                         </tr>
                                         <tr>
                                             <td ><label class="lb1">Ангіопатія нижніх кінцівок?</label></td><td>
-                                                <select name="diabAngin" class="form-control" onchange="addAngin(this.value)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabAngin" class="form-control" onchange="addAngin(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabAngin']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabAngin']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabAngin']=='Так'){echo 'selected';}?>>Так</option>
@@ -2744,11 +4259,19 @@ endforeach;
                                                 ?>
                                                 <span id="kiAngin"><label id="datAnginL">Дата постановки</label></span>
 
-                                                <span id="kiAngin2"><input type="date" name="datAngin" value='<? echo $karta[0]['datAngin'];?>' id="datAngin" class="form-control" width="100px"></span>
+                                                <span id="kiAngin2"><input <?
+                                                    if($statysA=='ВИКОНАНА'){
+                                                        echo "readonly, disabled";
+                                                    }
+                                                    ?> type="date" name="datAngin" value='<? echo $karta[0]['datAngin'];?>' id="datAngin" class="form-control" width="100px"></span>
                                                     <span id="kiAngin3"><label id="kakAng">Яка ангіопатія?</label></span>
 
 
-                                                   <span id="kiAngin4"><select id="kakAngio" name="kakAngio" class="form-control">
+                                                   <span id="kiAngin4"><select <?
+                                                       if($statysA=='ВИКОНАНА'){
+                                                           echo "readonly, disabled";
+                                                       }
+                                                       ?> id="kakAngio" name="kakAngio" class="form-control">
                                                            <option value="--" <? if( $karta[0]['kakAngio']=='--'){echo 'selected';}?>>--</option>
                                                             <option value="пальців стоп" <? if( $karta[0]['kakAngio']=='пальців стоп'){echo 'selected';}?>>пальців стоп</option>
                                                             <option value="вище стопи до коліна" <? if( $karta[0]['kakAngio']=='вище стопи до коліна'){echo 'selected';}?>>вище стопи до коліна</option>
@@ -2772,17 +4295,25 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td ><label class="lb1">Периферична нейропатія?</label></td><td>
-                                                <select name="diabNejr" class="form-control" onchange="addNejr(this.value)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabNejr" class="form-control" onchange="addNejr(this.value)">
                                                     <option value="--" <? if( $karta[0]['diabNejr']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['diabNejr']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['diabNejr']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select>
-                                            </td>
+
                                             <? if($karta[0]['diabNejr']=='Так') {
                                                 ?>
                                                <span id="kiNejr"><label id="datNejrL">Дата постановки</label></span>
 
-                                                    <span id="kiNejr2"><input type="date" value='<? echo $karta[0]['datNejr'];?>' name="datNejr" id="datNejr" class="form-control" width="100px"></span>
+                                                    <span id="kiNejr2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" value='<? echo $karta[0]['datNejr'];?>' name="datNejr" id="datNejr" class="form-control" width="100px"></span>
 
 
                                                 <?php
@@ -2797,11 +4328,15 @@ endforeach;
                                             }
                                             ?>
 
-
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td ><label class="lb1">Чи бувають незвичайні відчуття в стопах?</label></td><td>
-                                                <select name="diabStopp" class="form-control" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabStopp" class="form-control" >
                                                     <option value="--" <? if( $karta[0]['diabStopp']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні, все нормально" <? if( $karta[0]['diabStopp']=='Ні, все нормально'){echo 'selected';}?>>Ні, все нормально</option>
                                                     <option value="Оніміння" <? if( $karta[0]['diabStopp']=='Оніміння'){echo 'selected';}?>>Оніміння</option>
@@ -2815,19 +4350,27 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td><label class="lb1">Чи є біль в обох ногах?</label></td><td>
-                                                <select name="Bol" class="form-control" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Bol" class="form-control" onchange="bolNoga(this.value)">
                                                     <option value="--" <? if( $karta[0]['Bol']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні, болю немає" <? if( $karta[0]['Bol']=='Ні, болю немає'){echo 'selected';}?>>Ні, болю немає</option>
                                                     <option value="Ні, біль з одного боку" <? if( $karta[0]['Bol']=='Ні, біль з одного боку'){echo 'selected';}?>>Ні, біль з одного боку</option>
                                                     <option value="Так" <? if( $karta[0]['Bol']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolStopa" >
                                             <td>
                                                 <label class="lb1">Якщо біль в обох стопах, як вона
                                                     проявляється?</label></td><td>
-                                                <select name="Boltwo" class="form-control">
-                                                    <option value="" <? if( $karta[0]['Boltwo']==''){echo 'selected';}?>></option>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Boltwo" class="form-control" id="Boltwo">
+                                                    <option value="--" <? if( $karta[0]['Boltwo']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Спонтанна" <? if( $karta[0]['Boltwo']=='Спонтанна'){echo 'selected';}?>>Спонтанна</option>
                                                     <option value="Постійна" <? if( $karta[0]['Boltwo']=='Постійна'){echo 'selected';}?>>Постійна</option>
 
@@ -2835,9 +4378,13 @@ endforeach;
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr <? if($karta[0]['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolIntens">
                                             <td ><label class="lb1">Яка інтенсивність болю (шкала від 1 до 5)?</label></td><td>
-                                                <select name="BolInten" class="form-control" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="BolInten" class="form-control" id="BolInten">
                                                     <option value="--" <? if( $karta[0]['BolInten']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="1" <? if( $karta[0]['BolInten']=='1'){echo 'selected';}?>>1</option>
                                                     <option value="2" <? if( $karta[0]['BolInten']=='2'){echo 'selected';}?>>2</option>
@@ -2847,9 +4394,13 @@ endforeach;
 
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['Bol']!='Так'){echo 'class="showNoga"';}?> id="bolProjav">
                                             <td><label class="lb1">Як проявляється біль?</label></td><td>
-                                                <select name="Bolkak" class="form-control" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Bolkak" class="form-control" id="Bolkak">
                                                     <option value="--" <? if( $karta[0]['Bolkak']=='--'){echo 'selected';}?>>--</option>
                                                         <option value="Печіння" <? if( $karta[0]['Bolkak']=='Печіння'){echo 'selected';}?>>Печіння</option>
                                                     <option value="Викручування" <? if( $karta[0]['Bolkak']=='Викручування'){echo 'selected';}?>>Викручування</option>
@@ -2861,7 +4412,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Прийом препаратів?</label></td><td>
-                                                <select name="Preparat" class="form-control" style="width: 70%;" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Preparat" class="form-control" onchange="preparat(this.value)" >
                                                     <option value="--" <? if( $karta[0]['Preparat']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Preparat']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Preparat']=='Так'){echo 'selected';}?>>Так</option>
@@ -2870,9 +4425,13 @@ endforeach;
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr <? if($karta[0]['Preparat']!='Так'){echo 'class="showPrep"';}?> id="whatPrep">
                                             <td ><label class="lb1">Якщо так, розписати які препарати?</label></td><td>
-                                                <select name="PreparatKakie" class="form-control" >
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="PreparatKakie" class="form-control"  id="PreparatKakie">
                                                     <option value="--" <? if( $karta[0]['PreparatKakie']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Антиконвульсанти (прегабалін, габапентин)" <? if( $karta[0]['PreparatKakie']=='Антиконвульсанти (прегабалін, габапентин)'){echo 'selected';}?>>Антиконвульсанти (прегабалін, габапентин)</option>
                                                     <option value="Антидепресанти (Дулоксетин - інгібітори зворотного захоплення серотоніну. НА)" <? if( $karta[0]['PreparatKakie']=='Антидепресанти (Дулоксетин - інгібітори зворотного захоплення серотоніну. НА)'){echo 'selected';}?>>
@@ -2894,15 +4453,24 @@ endforeach;
                                 <fieldset style="margin-top: 30px;">
                                     <h4>6.Б.Обстеження стопи</label>
                                         <div id="tab-content10"</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label>Дата обстеження стопи: дд-мм-рр?</label></td><td>
-                                                <input type="date" name="datStopObsl" value='<? echo $karta[0]['datStopObsl'];?>' class="form-control">
+                                            <td ><label class="lb1">Дата обстеження стопи: дд-мм-рр?</label></td>
+                                            <td style="width: 100%">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datStopObsl" value='<? echo $karta[0]['datStopObsl'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label>Зниження температури?</label></td><td>
-                                                <select name="SnizhT" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="SnizhT" class="form-control">
                                                     <option value="--" <? if( $karta[0]['SnizhT']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['SnizhT']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['SnizhT']=='Так'){echo 'selected';}?>>Так</option>
@@ -2911,7 +4479,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label>Порушення тактильної чутливості?</label></td><td>
-                                                <select name="Chyvs" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Chyvs" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Chyvs']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Chyvs']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Chyvs']=='Так'){echo 'selected';}?>>Так</option>
@@ -2920,7 +4492,11 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td ><label>Порушення вібраційної чутливості?</label></td><td>
-                                                <select name="NarVibr" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="NarVibr" class="form-control">
                                                     <option value="--" <? if( $karta[0]['NarVibr']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['NarVibr']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['NarVibr']=='Так'){echo 'selected';}?>>Так</option>
@@ -2928,14 +4504,22 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td><label>Зниження / відсутність рефлексів?</label></td><td>
-                                                <select name="Reflex" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Reflex" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Reflex']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Reflex']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Reflex']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select></td>
                                         </tr><tr>
                                             <td><label>Наявність виразок?</label></td><td>
-                                                <select name="Jazv" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Jazv" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Jazv']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Jazv']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Jazv']=='Так'){echo 'selected';}?>>Так</option>
@@ -2944,7 +4528,11 @@ endforeach;
                                         </tr>
                                         <tr>
                                             <td ><label>Нагноєння виразок?</label></td><td>
-                                                <select name="GnojJazv" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="GnojJazv" class="form-control">
                                                     <option value="--" <? if( $karta[0]['GnojJazv']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['GnojJazv']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['GnojJazv']=='Так'){echo 'selected';}?>>Так</option>
@@ -2952,14 +4540,22 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td><label>Пульс на стопі?</label></td><td>
-                                                <select name="PylsStopa" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="PylsStopa" class="form-control">
                                                     <option value="--" <? if( $karta[0]['PylsStopa']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['PylsStopa']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['PylsStopa']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select></td>
                                         </tr><tr>
                                             <td><label>Шунтування / ангіопластика?</label></td><td>
-                                                <select name="Shynt" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Shynt" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Shynt']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Shynt']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Shynt']=='Так'){echo 'selected';}?>>Так</option>
@@ -2967,8 +4563,12 @@ endforeach;
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><label>Перемежовуються кульгавість?</label></td><td>
-                                                <select name="Hrom" class="form-control">
+                                            <td ><label>Синдром переміжної кульгавості?</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Hrom" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Hrom']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Hrom']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так"  <? if( $karta[0]['Hrom']=='Так'){echo 'selected';}?>>Так</option>
@@ -2976,17 +4576,49 @@ endforeach;
                                             </td>
                                         </tr><tr>
                                             <td><label>Ампутація?</label></td><td>
-                                                <select name="Ampyt" class="form-control" onchange="addAmput(this.value)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Ampyt" class="form-control" onchange="addAmput(this.value)">
                                                     <option value="--" <? if( $karta[0]['Ampyt']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Ampyt']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Ліва нога" <? if( $karta[0]['Ampyt']=='Ліва нога'){echo 'selected';}?>>Ліва нога</option>
                                                     <option value="Права нога" <? if( $karta[0]['Ampyt']=='Права нога'){echo 'selected';}?>>Права нога</option>
                                                 </select>
-                                                <? if($karta[0]['Ampyt']!='Ні') {
+                                                <? if($karta[0]['Ampyt']=='Ні') {
+                                                ?>
+                                                    <span id="kiAmput1"></span>
+
+                                                    <span id="kiAmput3"></span>
+                                                    <span id="kiAmput"></span>
+
+                                                    <span id="kiAmput2"></span>
+
+
+                                            <?php
+                                            }
+                                           if($karta[0]['Ampyt']=='--') {
+                                                ?>
+                                                <span id="kiAmput1"></span>
+
+                                                <span id="kiAmput3"></span>
+                                                <span id="kiAmput"></span>
+
+                                                <span id="kiAmput2"></span>
+
+
+                                                <?php
+                                                }
+                                            elseif($karta[0]['Ampyt']!='--' or $karta[0]['Ampyt']!='Ні'){
                                                 ?>
                                                     <span id="kiAmput1"><label id="kakAmput">Локалізація ампутації?</label></span>
 
-                                                    <span id="kiAmput3"><select id="kakAmput1" name="kakAmput1" class="form-control">
+                                                    <span id="kiAmput3"><select <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> id="kakAmput1" name="kakAmput1" class="form-control">
                                                             <option  value="--" <? if( $karta[0]['kakAmput1']=='--'){echo 'selected';}?>>--</option>
                                                             <option  value="Великий палець" <? if( $karta[0]['kakAmput1']=='Великий палець'){echo 'selected';}?>>Великий палець</option>
                                                             <option  value="Стопа" <? if( $karta[0]['kakAmput1']=='Стопа'){echo 'selected';}?>>Стопа</option>
@@ -2995,9 +4627,13 @@ endforeach;
                                                         </select></span>
                                                     <span id="kiAmput"><label id="datAmputL">Рік ампутації</label></span>
 
-                                                    <span id="kiAmput2"><input type="text" value='<? echo $karta[0]['datAmput'];?>' name="datAmput" id="datAmput" class="form-control" width="100px"></span>
+                                                    <span id="kiAmput2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="text" value='<? echo $karta[0]['datAmput'];?>' name="datAmput" id="datAmput" class="form-control" width="100px"></span>
                                             <?php
-                                            }else{
+                                            } else{
                                                 ?>
                                                     <span id="kiAmput1"></span>
 
@@ -3022,9 +4658,14 @@ endforeach;
                                     <h4>7.А. Лабораторні дослідження</h4>
                                     <table class='mainT' id="forTab1" style="width: 80%;">
                                         <tr>
-                                            <td ><label class="lb1">Дата обстеження: дд-мм-рр</label></td><td>
+                                            <td ><label class="lb1">Дата обстеження: дд-мм-рр</label></td>
+                                            <td style="width: 100%">
                                                <div style="display: flex">
-                                                <input type="date" value='<? echo $karta[0]['datLab'];?>' class="form-control" name="datLab">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" value='<? echo $karta[0]['datLab'];?>' class="form-control" name="datLab">
                                                 <?php
                                                 $b14='no';
 
@@ -3033,7 +4674,7 @@ endforeach;
                                                     if($item['nameStol']=='datLab' and $b14=='no'){
                                                         $b14='yes';
                                                         ?>
-                                                        <a id="b14" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b14" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m14" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3065,7 +4706,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Ви зараз натщесерце?</label></td><td>
-                                                <select name="Natosh" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Natosh" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Natosh']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Natosh']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Natosh']=='Так'){echo 'selected';}?>>Так</option>
@@ -3074,7 +4719,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">О котрій годині був останній прийом їжі (напередодні ввечері)?</label></td><td>
-                                                <input name="Pisha" type="text" value='<? echo $karta[0]['Pisha'];?>' class="form-control" placeholder="">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Pisha" type="time" value='<? echo $karta[0]['Pisha'];?>' class="form-control" placeholder="">
 
                                             </td>
                                         </tr>
@@ -3086,9 +4735,13 @@ endforeach;
                                         <tr>
 
                                             <td>
-                                                <label class="lb1">Показник, nmol / l</label></td><td>
+                                                <label class="lb1">Показник, ммоль/л</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="nmol" value='<? echo $karta[0]['nmol'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="nmol" value='<? echo $karta[0]['nmol'];?>' class="form-control">
                                                 <?php
                                                 $b15='no';
 
@@ -3097,7 +4750,7 @@ endforeach;
                                                     if($item['nameStol']=='nmol' and $b15=='no'){
                                                         $b15='yes';
                                                         ?>
-                                                        <a id="b15" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b15" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m15" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3128,11 +4781,15 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="Datnmol" value='<? echo $karta[0]['Datnmol'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="Datnmol" value='<? echo $karta[0]['Datnmol'];?>' class="form-control">
                                             </td>
                                         </tr>
                                         <tr style="background: #295b8e;">
-                                            <td><label class="lb1" style="color:white;">Глікозилювання гемоглобін?</label></td>
+                                            <td><label class="lb1" style="color:white;">Глікований гемоглобін?</label></td>
                                             <td></td>
 
                                         </tr>
@@ -3140,7 +4797,11 @@ endforeach;
                                             <td >
                                                 <label class="lb1">%</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="vidsot" value='<? echo $karta[0]['vidsot'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="vidsot" value='<? echo $karta[0]['vidsot'];?>' class="form-control">
                                                 <?php
                                                 $b16='no';
 
@@ -3149,13 +4810,13 @@ endforeach;
                                                     if($item['nameStol']=='vidsot' and $b16=='no'){
                                                         $b16='yes';
                                                         ?>
-                                                        <a id="b16" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b16" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m16" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
                                                           echo $karta[0]['fname']." ".$karta[0]['name']." ".$karta[0]['sname'];?></span><br>
 
-                                                                <span class="n"> <? echo "Глікозилювання гемоглобін %:";?>
+                                                                <span class="n"> <? echo "Глікований гемоглобін %:";?>
                                                                     <?
                                                                     $u=1;
                                                                     echo "<table class='table table-bordered'>";
@@ -3181,7 +4842,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">pmol/pmol</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="gemogl" value='<? echo $karta[0]['gemogl'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="gemogl" value='<? echo $karta[0]['gemogl'];?>' class="form-control">
                                                 <?php
                                                 $b17='no';
 
@@ -3190,7 +4855,7 @@ endforeach;
                                                     if($item['nameStol']=='gemogl' and $b17=='no'){
                                                         $b17='yes';
                                                         ?>
-                                                        <a id="b17" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b17" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m17" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3222,7 +4887,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="Datgemogl" value='<? echo $karta[0]['Datgemogl'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="Datgemogl" value='<? echo $karta[0]['Datgemogl'];?>' class="form-control">
 
                                             </td>
                                         </tr>
@@ -3231,7 +4900,11 @@ endforeach;
 
                                             </td>
                                             <td>
-                                                <input type="date" name="Datkrovi" value='<? echo $karta[0]['Datkrovi'];?>'  class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="Datkrovi" value='<? echo $karta[0]['Datkrovi'];?>'  class="form-control">
                                             </td>
                                         </tr>
 
@@ -3239,7 +4912,11 @@ endforeach;
                                             <td >
                                                 <label class="lb1">Еритроцити</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="eritr" value='<? echo $karta[0]['eritr'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="eritr" value='<? echo $karta[0]['eritr'];?>' class="form-control">
                                                 <?php
                                                 $b18='no';
 
@@ -3248,7 +4925,7 @@ endforeach;
                                                     if($item['nameStol']=='eritr' and $b18=='no'){
                                                         $b18='yes';
                                                         ?>
-                                                        <a id="b18" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b18" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m18" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3281,7 +4958,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Гемоглобін</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="gemogl2" value='<? echo $karta[0]['gemogl2'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="gemogl2" value='<? echo $karta[0]['gemogl2'];?>' class="form-control">
 
                                                 <?php
                                                 $b19='no';
@@ -3291,7 +4972,7 @@ endforeach;
                                                     if($item['nameStol']=='gemogl2' and $b19=='no'){
                                                         $b19='yes';
                                                         ?>
-                                                        <a id="b19" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b19" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m19" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3323,7 +5004,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Лейкоцити (кількість)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="lekoz" value='<? echo $karta[0]['lekoz'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="lekoz" value='<? echo $karta[0]['lekoz'];?>' class="form-control">
                                                 <?php
                                                 $b20='no';
 
@@ -3332,7 +5017,7 @@ endforeach;
                                                     if($item['nameStol']=='lekoz' and $b20=='no'){
                                                         $b20='yes';
                                                         ?>
-                                                        <a id="b20" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b20" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m20" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3365,7 +5050,11 @@ endforeach;
                                             <td >
                                                 <label class="lb1">Нейтрофіли (абс к-ть)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="nejtrof" value='<? echo $karta[0]['nejtrof'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="nejtrof" value='<? echo $karta[0]['nejtrof'];?>' class="form-control">
                                                 <?php
                                                 $b21='no';
 
@@ -3374,7 +5063,7 @@ endforeach;
                                                     if($item['nameStol']=='nejtrof' and $b21=='no'){
                                                         $b21='yes';
                                                         ?>
-                                                        <a id="b21" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b21" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m21" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3409,7 +5098,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Моноцити (абс к-ть)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="monozit" value='<? echo $karta[0]['monozit'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="monozit" value='<? echo $karta[0]['monozit'];?>' class="form-control">
 
                                                 <?php
                                                 $b22='no';
@@ -3419,7 +5112,7 @@ endforeach;
                                                     if($item['nameStol']=='monozit' and $b22=='no'){
                                                         $b22='yes';
                                                         ?>
-                                                        <a id="b22" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b22" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m22" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3452,7 +5145,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Лімфоцити (абс к-во)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="limfoz" value='<? echo $karta[0]['limfoz'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="limfoz" value='<? echo $karta[0]['limfoz'];?>' class="form-control">
                                                 <?php
                                                 $b23='no';
 
@@ -3461,7 +5158,7 @@ endforeach;
                                                     if($item['nameStol']=='limfoz' and $b23=='no'){
                                                         $b23='yes';
                                                         ?>
-                                                        <a id="b23" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b23" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m23" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3495,7 +5192,11 @@ endforeach;
                                             <td >
                                                 <label class="lb1">Тромбоцити (абс к-во)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="tromb" value='<? echo $karta[0]['tromb'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="tromb" value='<? echo $karta[0]['tromb'];?>' class="form-control">
 
 
                                                 <?php
@@ -3506,7 +5207,7 @@ endforeach;
                                                     if($item['nameStol']=='tromb' and $b24=='no'){
                                                         $b24='yes';
                                                         ?>
-                                                        <a id="b24" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b24" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m24" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3538,7 +5239,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Тромбоцити, MPV</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="mpv" value='<? echo $karta[0]['mpv'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="mpv" value='<? echo $karta[0]['mpv'];?>' class="form-control">
 
 
                                                 <?php
@@ -3549,7 +5254,7 @@ endforeach;
                                                     if($item['nameStol']=='mpv' and $b25=='no'){
                                                         $b25='yes';
                                                         ?>
-                                                        <a id="b25" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b25" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m25" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3581,7 +5286,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Інше (показник)</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="dryg" value='<? echo $karta[0]['dryg'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="dryg" value='<? echo $karta[0]['dryg'];?>' class="form-control">
                                                 <?php
                                                 $b26='no';
 
@@ -3590,7 +5299,7 @@ endforeach;
                                                     if($item['nameStol']=='dryg' and $b26=='no'){
                                                         $b26='yes';
                                                         ?>
-                                                        <a id="b26" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b26" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m26" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3629,7 +5338,11 @@ endforeach;
                                             <td>
                                                 <label class="lb1">Показник, мкмоль / л</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="kreat" value='<? echo $karta[0]['kreat'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="kreat" value='<? echo $karta[0]['kreat'];?>' class="form-control">
 
 
                                                 <?php
@@ -3640,7 +5353,7 @@ endforeach;
                                                     if($item['nameStol']=='kreat' and $b27=='no'){
                                                         $b27='yes';
                                                         ?>
-                                                        <a id="b27" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b27" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m27" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3671,7 +5384,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="datkreat" value='<? echo $karta[0]['datkreat'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datkreat" value='<? echo $karta[0]['datkreat'];?>' class="form-control">
 
                                             </td>
                                         </tr>
@@ -3685,7 +5402,11 @@ endforeach;
 
                                                 <label class="lb1">Показник, мкмоль / л</label></td><td>
                                                 <div style="display: flex">
-                                                <input type="text" name="kreatMocha" value='<? echo $karta[0]['kreatMocha'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="kreatMocha" value='<? echo $karta[0]['kreatMocha'];?>' class="form-control">
 
 
                                                 <?php
@@ -3696,7 +5417,7 @@ endforeach;
                                                     if($item['nameStol']=='kreatMocha' and $b28=='no'){
                                                         $b28='yes';
                                                         ?>
-                                                        <a id="b28" style='position: relative;' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
+                                                        <a id="b28" style='position: relative; display: none' onclick="show1(this.id)"><i class="fas fa-clipboard-list"></i>
                                                             <div id="m28" class="pop" onmouseout="hide1(this.id)" onmouseover="show2(this.id)">
 
                                                       <span style="font-size: 9px;font-weight: bold;"><?
@@ -3727,13 +5448,21 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="datMocha" value='<? echo $karta[0]['datMocha'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datMocha" value='<? echo $karta[0]['datMocha'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
 
                                                 <label class="lb1">Кліренс креатиніну (СКФ, швидкості клубочкової фільтрації)</label></td><td>
-                                                <input type="text" name="klirkreat"  value='<? echo $karta[0]['klirkreat'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="klirkreat"  value='<? echo $karta[0]['klirkreat'];?>' class="form-control">
 
 
 
@@ -3744,21 +5473,33 @@ endforeach;
                                         <tr>
                                             <td >
                                                 <label class="lb1">Протеїнурія</label></td><td>
-                                                <select name="Protein" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Protein" class="form-control" onchange="protein(this.value)">
                                                     <option value="--" <? if( $karta[0]['Protein']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Protein']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Protein']=='Так'){echo 'selected';}?>>Так</option>
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['Protein']!='Так'){echo 'class="showProt"';}?> id="prote">
                                             <td>
                                                 <label class="lb1">Останній вимір, мг / сут</label></td><td>
-                                                <input type="text" name="posIzm" value='<? echo $karta[0]['posIzm'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="posIzm" id="posIzm" value='<? echo $karta[0]['posIzm'];?>' class="form-control">
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr <? if($karta[0]['Protein']!='Так'){echo 'class="showProt"';}?> id="datprote">
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="datProtein" value='<? echo $karta[0]['datProtein'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datProtein" id="datProtein" value='<? echo $karta[0]['datProtein'];?>' class="form-control">
 
                                             </td>
                                         </tr>
@@ -3773,7 +5514,11 @@ endforeach;
                                             </style>
                                             <td >
                                                 <label class="lb1">Мікроальбумінурія</label></td><td>
-                                                <select name="Mikroalmb" class="form-control" onchange="addMikro(this.value)">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Mikroalmb" class="form-control" onchange="addMikro(this.value)">
                                                     <option value="--" <? if( $karta[0]['Mikroalmb']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Mikroalmb']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Mikroalmb']=='Так'){echo 'selected';}?>>Так</option>
@@ -3785,11 +5530,19 @@ endforeach;
 
 
                                                     <span id="kiMikro3"><label id="kakMikro">Якщо так – показник, мг/л</label></span>
-                                                    <span id="kiMikro1"><input name="kakMikro1" value='<? echo $karta[0]['kakMikro1'];?>' id="kakMikro1" class="form-control"></span>
+                                                    <span id="kiMikro1"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> name="kakMikro1" value='<? echo $karta[0]['kakMikro1'];?>' id="kakMikro1" class="form-control"></span>
 
 
                                                <span id="kiMikro"><label id="datMikroL">Дата</label></span>
-                                                    <span id="kiMikro2"><input type="date" name="datMikro" value='<? echo $karta[0]['datMikro'];?>' id="datMikro" class="form-control" width="100px"></span>
+                                                    <span id="kiMikro2"><input <?
+                                                        if($statysA=='ВИКОНАНА'){
+                                                            echo "readonly, disabled";
+                                                        }
+                                                        ?> type="date" name="datMikro" value='<? echo $karta[0]['datMikro'];?>' id="datMikro" class="form-control" width="100px"></span>
 
 
                                                 <?php
@@ -3816,33 +5569,53 @@ endforeach;
                                         </tr>
                                         <tr style="background: #295b8e;">
                                             <td><label class="lb1" style="color:white;">Лабораторний аналіз ліпідів в крові (дата):</label></td>
-                                            <td><input type="date" name="Lipiddat" value='<? echo $karta[0]['Lipiddat'];?>' class="form-control"> </td>
+                                            <td><input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="Lipiddat" value='<? echo $karta[0]['Lipiddat'];?>' class="form-control"> </td>
 
                                         </tr>
                                         <tr>
                                             <td >
 
                                                 <label class="lb1">Холестерин (показник)</label></td><td>
-                                                <input type="text" name="Holest" value='<? echo $karta[0]['Holest'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="Holest" value='<? echo $karta[0]['Holest'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Ліпіди високої щільності
                                                     (Показник)</label></td><td>
-                                                <input type="text" name="LipidVis" value='<? echo $karta[0]['LipidVis'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="LipidVis" value='<? echo $karta[0]['LipidVis'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
 
                                                 <label class="lb1">Ліпіди низької щільності (показник)</label></td><td>
-                                                <input type="text" name="LipidNiz" value='<? echo $karta[0]['LipidNiz'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="LipidNiz" value='<? echo $karta[0]['LipidNiz'];?>' class="form-control">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
 
                                                 <label class="lb1">Тригліцериди (показник)</label></td><td>
-                                                <input type="text" name="Trigliz" value='<? echo $karta[0]['Trigliz'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="Trigliz" value='<? echo $karta[0]['Trigliz'];?>' class="form-control">
                                             </td>
 
                                         </tr>
@@ -3850,62 +5623,102 @@ endforeach;
                                             <td >
 
                                                 <label class="lb1">Аспартатамінотрансфераза (АСТ)</label></td><td>
-                                                <input type="text" name="Asparta" value='<? echo $karta[0]['Asparta'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="Asparta" value='<? echo $karta[0]['Asparta'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Аланінамінотрансфераза (АСТ)</label></td><td>
-                                                <input type="text" name="Alanin" value='<? echo $karta[0]['Alanin'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="Alanin" value='<? echo $karta[0]['Alanin'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">С-реактивний білок</label></td><td>
-                                                <input type="text" name="BelocS" value='<? echo $karta[0]['BelocS'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="BelocS" value='<? echo $karta[0]['BelocS'];?>' class="form-control">
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr style="display: none;">
                                             <td >
 
                                                 <label class="lb1">C-пептид, показник:</label></td><td>
-                                                <input type="text" name="Peptid" value='<? echo $karta[0]['Peptid'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="Peptid" value='<? echo $karta[0]['Peptid'];?>' class="form-control">
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr style="display: none;">
                                             <td>
                                                 <label class="lb1">C-пептид, одиниця виміру:</label></td><td>
-                                                <input type="text" name="PeptiEdIzm" value='<? echo $karta[0]['PeptiEdIzm'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="PeptiEdIzm" value='<? echo $karta[0]['PeptiEdIzm'];?>' class="form-control">
                                             </td>
                                         </tr><tr>
                                             <td>
-                                                <label class="lb1">pmol/l</label></td><td>
-                                                <input type="text" name="PeptidPmol" value='<? echo $karta[0]['PeptidPmol'];?>' class="form-control">
+                                                <label class="lb1">C-пептид, одиниця виміру нг/мл:</label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="PeptidPmol" value='<? echo $karta[0]['PeptidPmol'];?>' class="form-control">
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
 
-                                                <label class="lb1">nmol/l:</label></td><td>
-                                                <input type="text" name="PeptidNmol" value='<? echo $karta[0]['PeptidNmol'];?>' class="form-control">
+                                                <label class="lb1">C-пептид, одиниця виміру nmol/l:</label></td><td>
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="PeptidNmol" value='<? echo $karta[0]['PeptidNmol'];?>' class="form-control">
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr >
                                             <td>
                                                 <label class="lb1">C-пептід, Дата: дд-мм-рр:</label></td><td>
-                                                <input type="date" name="S_Pep" value='<? echo $karta[0]['S_Pep'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="S_Pep" value='<? echo $karta[0]['S_Pep'];?>' class="form-control">
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td>
                                                 <label class="lb1">AT-GAD:</label></td><td>
-                                                <input type="text" name="atGad" value='<? echo $karta[0]['atGad'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="text" name="atGad" value='<? echo $karta[0]['atGad'];?>' class="form-control">
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td>
                                                 <label class="lb1">AT-GAD дата:</label></td><td>
-                                                <input type="date" name="atGaddat" value='<? echo $karta[0]['atGaddat'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="atGaddat" value='<? echo $karta[0]['atGaddat'];?>' class="form-control">
                                             </td>
 
                                         </tr>
@@ -3916,11 +5729,16 @@ endforeach;
                                 <fieldset style="margin-top: 30px;">
                                     <h4>7.Б. Біоматеріал</label>
                                         <div id="tab-content12"</h4>
-                                    <table class='mainT'>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
                                             <td >
-                                                <label>Сиворотка?</label></td><td>
-                                                <select name="Sivor" class="form-control">
+                                                <label class="lb1">Сиворотка?</label></td>
+                                            <td style="width: 100%">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Sivor" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Sivor']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Sivor']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Sivor']=='Так'){echo 'selected';}?>>Так</option>
@@ -3929,7 +5747,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label>Плазма?</label></td><td>
-                                                <select name="Plazma" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Plazma" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Plazma']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Plazma']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Plazma']=='Так'){echo 'selected';}?>>Так</option>
@@ -3938,7 +5760,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label>Кров на ДНК?</label></td><td>
-                                                <select name="DNK" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="DNK" class="form-control">
                                                     <option value="--" <? if( $karta[0]['DNK']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['DNK']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['DNK']=='Так'){echo 'selected';}?>>Так</option>
@@ -3948,13 +5774,21 @@ endforeach;
                                         <tr>
                                             <td >
                                                 <label>Кров на РНК?</label></td><td>
-                                                <input name="PHK" type="text" value='<? echo $karta[0]['PHK'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="PHK" type="text" value='<? echo $karta[0]['PHK'];?>' class="form-control">
 
                                             </td>
                                         </tr><tr>
                                             <td>
                                                 <label>Слина?</label></td><td>
-                                                <select name="Sluna" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Sluna" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Sluna']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Sluna']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Sluna']=='Так'){echo 'selected';}?>>Так</option>
@@ -3963,7 +5797,11 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label>Біоптат кожи?</label></td><td>
-                                                <select name="Biopat" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="Biopat" class="form-control">
                                                     <option value="--" <? if( $karta[0]['Biopat']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Ні" <? if( $karta[0]['Biopat']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Biopat']=='Так'){echo 'selected';}?>>Так</option>
@@ -3977,7 +5815,11 @@ endforeach;
 
                                             </td>
                                             <td>
-                                                <textarea name="PrimZAbKrov" class="form-control"><? echo $karta[0]['PrimZAbKrov'];?></textarea>
+                                                <textarea <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="PrimZAbKrov" class="form-control"><? echo $karta[0]['PrimZAbKrov'];?></textarea>
                                             </td>
 
                                         </tr>
@@ -3987,10 +5829,15 @@ endforeach;
                             <div role="tabpanel" class="tab-pane" id="lik">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>8.А. Лікування</h4>
-                                    <table class='mainT' id="forTab2">
+                                    <table class='mainT' id="forTab2" style="width: 80%">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Лікування цукрового діабету</label></td><td>
-                                                <select name="LechDIabet" class="form-control">
+                                            <td><label class="lb1">Лікування цукрового діабету</label></td>
+                                            <td style="width: 100%;">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechDIabet" class="form-control">
                                                     <option value="--" <? if( $karta[0]['LechDIabet']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Не проводиться" <? if( $karta[0]['LechDIabet']=='Не проводиться'){echo 'selected';}?>>Не проводиться</option>
                                                     <option value="Дієта" <? if( $karta[0]['LechDIabet']=='Дієта'){echo 'selected';}?>>Дієта</option>
@@ -4001,8 +5848,12 @@ endforeach;
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дієта</label></td><td>
-                                                <select name="dieta" class="form-control">
+                                            <td><label class="lb1">Дієта</label></td><td>
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="dieta" class="form-control">
                                                     <option value="--" <? if( $karta[0]['dieta']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Так" <? if( $karta[0]['dieta']=='Так'){echo 'selected';}?>>Так</option>
                                                     <option value="Ні" <? if( $karta[0]['dieta']=='Ні'){echo 'selected';}?>>Ні</option>
@@ -4013,23 +5864,36 @@ endforeach;
                                         <tr>
                                             <td>
                                                 <label class="lb1">Лікування діабету: інсулін (препарат, доза прийому, кратність)</label></td><td>
-                                                <select name="LechInsul" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechInsul" class="form-control" onchange="showIns(this.value)">
                                                     <option value="--" <? if( $karta[0]['LechInsul']=='--'){echo 'selected';}?>>--</option>
-                                                    <option value="Базисная инсулинотерапия" <? if( $karta[0]['LechInsul']=='Базисная инсулинотерапия'){echo 'selected';}?>>Базисна інсулінотерапії</option>
+                                                    <option value="Ні" <? if( $karta[0]['LechInsul']=='Ні'){echo 'selected';}?>>Ні</option>
+                                                    <option value="Базисна інсулінотерапія" <? if( $karta[0]['LechInsul']=='Базисна інсулінотерапія'){echo 'selected';}?>>Базисна інсулінотерапія</option>
                                                     <option value="Помпова інсулінотерапія" <? if( $karta[0]['LechInsul']=='Помпова інсулінотерапія'){echo 'selected';}?>>Помпова інсулінотерапія</option>
                                                     <option value="Змішаний" <? if( $karta[0]['LechInsul']=='Змішаний'){echo 'selected';}?>>Змішаний</option>
 
                                                 </select>
                                             </td>
-                                        </tr>
-                                            <td>
+                                        </tr><tr <? if($karta[0]['LechInsul']=='--' or $karta[0]['LechInsul']=='Ні'){echo 'class="showIns"';}?> id="insyl">
+                                            <td >
                                                 <label class="lb1">Дата початку інсулінотерапії (дд- мм-рр)</label></td><td>
-                                                <input type="date" name="datLechDiab" value='<? echo $karta[0]['datLechDiab'];?>' class="form-control">
+                                                <input <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> type="date" name="datLechDiab" id="datLechDiab" value='<? echo $karta[0]['datLechDiab'];?>' class="form-control">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="lb1">Лікування діабету: таблетки</label></td><td>
-                                                <select name="diabLechTab" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="diabLechTab" class="form-control">
                                                     <option value="--" <? if( $karta[0]['diabLechTab']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Бігуаніди" <? if( $karta[0]['diabLechTab']=='Бігуаніди'){echo 'selected';}?>>Бігуаніди</option>
                                                     <option value="Похідні сульфонілсечовини" <? if( $karta[0]['diabLechTab']=='Похідні сульфонілсечовини'){echo 'selected';}?>>Похідні сульфонілсечовини</option>
@@ -4043,9 +5907,12 @@ endforeach;
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Лікування гіпертонії (препарат, доза прийому, кратність)</label></td><td>
-                                                <select name="LechGiper" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechGiper" class="form-control">
                                                     <option value="--" <? if( $karta[0]['LechGiper']=='--'){echo 'selected';}?>>--</option>
-                                                    <option value="Ні" <? if( $karta[0]['LechGiper']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Не проводиться" <? if( $karta[0]['LechGiper']=='Не проводиться'){echo 'selected';}?>>Не проводиться</option>
                                                     <option value="Бета-блокатори" <? if( $karta[0]['LechGiper']=='Бета-блокатори-'){echo 'selected';}?>>Бета-блокатори</option>
                                                     <option value="ACE-інгібітори" <? if( $karta[0]['LechGiper']=='ACE-інгібітори'){echo 'selected';}?>>ACE-інгібітори</option>
@@ -4058,9 +5925,12 @@ endforeach;
                                         </tr>
                                             <td>
                                                 <label class="lb1">Лікування гіперліпідемії</label></td><td>
-                                                <select name="LechLipidGiper" class="form-control">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="LechLipidGiper" class="form-control">
                                                     <option value="--" <? if( $karta[0]['LechLipidGiper']=='--'){echo 'selected';}?>>--</option>
-                                                    <option value="Ні" <? if( $karta[0]['LechLipidGiper']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Не проводиться" <? if( $karta[0]['LechLipidGiper']=='Не проводиться'){echo 'selected';}?>>Не проводиться</option>
                                                     <option value="Статини" <? if( $karta[0]['LechLipidGiper']=='Статини'){echo 'selected';}?>>Статини</option>
                                                     <option value="Фібрати" <? if( $karta[0]['LechLipidGiper']=='Фібрати'){echo 'selected';}?>>Фібрати</option>
@@ -4069,58 +5939,21 @@ endforeach;
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><label class="lb1">Хворієте (хворіли) ви онкозахворюваннями?</label></td><td>
-                                                <select name="Onko" class="form-control">
-                                                    <option value="--" <? if( $karta[0]['Onko']=='--'){echo 'selected';}?>>--</option>
-                                                    <option value="Ні" <? if( $karta[0]['Onko']=='Ні'){echo 'selected';}?>>Ні</option>
-                                                    <option value="Так" <? if( $karta[0]['Onko']=='Так'){echo 'selected';}?>>Так</option>
 
-                                                </select>
-                                            </td>
-                                        </tr><tr>
-                                            <td>
-                                                <label class="lb1">Вкажіть вид онкозахворювання</label></td><td>
-                                                <input type="text" name="VidOnko" value='<? echo $karta[0]['VidOnko'];?>' class="form-control">
-                                            </td>
-                                        </tr><tr>
-                                            <td>
-                                                <label class="lb1">Дата постановки діагнозу
-                                                    онкозахворювання</label></td><td>
-                                                <input type="date" name="dateOnko" value='<? echo $karta[0]['dateOnko'];?>' class="form-control">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label class="lb1">Якщо так - лікування онкозахворювання
-                                                    (Препарати - назва препаратів,
-                                                    група)?</label>
-
-                                            </td>
-                                            <td>
-                                                <select name="OnkoLek" class="form-control">
-                                                    <option value="--" <? if( $karta[0]['OnkoLek']=='--'){echo 'selected';}?>>--</option>
-                                                    <option value="Ні" <? if( $karta[0]['OnkoLek']=='Ні'){echo 'selected';}?>>Ні</option>
-                                                    <option value="Хіміотерапія" <? if( $karta[0]['OnkoLek']=='Хіміотерапія'){echo 'selected';}?>>Хіміотерапія</option>
-                                                    <option value="Імунотерапія" <? if( $karta[0]['OnkoLek']=='Імунотерапія'){echo 'selected';}?>>Імунотерапія</option>
-                                                    <option value="Гормональна терапія" <? if( $karta[0]['OnkoLek']=='Гормональна терапія'){echo 'selected';}?>>Гормональна терапія</option>
-                                                    <option value="Комбінована (хіміо + тергетная терапія)" <? if( $karta[0]['OnkoLek']=='Комбінована (хіміо + тергетная терапія)'){echo 'selected';}?>>Комбінована (хіміо + тергетная терапія)</option>
-                                                    <option value="Таргетная терапія" <? if( $karta[0]['OnkoLek']=='Таргетная терапія'){echo 'selected';}?>>Таргетная терапія</option>
-                                                    <option value="Хірургічне" <? if( $karta[0]['OnkoLek']=='Хірургічне'){echo 'selected';}?>>Хірургічне</option>
-                                                    <option value="Інші" <? if( $karta[0]['OnkoLek']=='Інші'){echo 'selected';}?>>Інші</option>
-                                                </select>
-                                            </td>
-
-                                        </tr>
                                     </table>
                                 </fieldset>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="gen">
                                 <fieldset style="margin-top: 30px;">
-                                    <h4>9.А. Геніаологічне дерево</h4>
-                                    <table class='mainT' id="forTab2" style="width: 100%;">
+                                    <h4>9.А. Генеалогічне дерево</h4>
+                                    <table class='mainT' id="forTab2" style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Геніаологічне дерево</label></td><td>
-                                                <select name="gen" class="form-control">
+                                            <td><label class="lb1">Генеалогічне дерево</label></td><td style="width: 100%;">
+                                                <select <?
+                                                if($statysA=='ВИКОНАНА'){
+                                                    echo "readonly, disabled";
+                                                }
+                                                ?> name="gen" class="form-control">
                                                     <option value="--" <? if( $karta[0]['gen']=='--'){echo 'selected';}?>>--</option>
                                                     <option value="Так" <? if( $karta[0]['gen']=='Так'){echo 'selected';}?>>Так</option>
                                                     <option value="Ні" <? if( $karta[0]['gen']=='Ні'){echo 'selected';}?>>Ні</option>
@@ -4137,6 +5970,9 @@ endforeach;
                         </div>
 
                     </div>
+
+
+
                     <? foreach ($post as $key=>$item):
                     if($key!='id_k') {
                     echo "<input type='hidden' name='post1[{$key}]' value='{$item}'>";
@@ -4154,36 +5990,40 @@ endforeach;
         background-color: lightgrey;
     }
 </style>
-                    <div class="controls" style="display: flex;     justify-content: space-between;">
+                    <br>
+                    <div class="controls" style="display: flex; margin-left: 25%; margin-right: 50%">
                         <div style="display: flex;">
                         <a href="#" class="btn btn-default prev" style="border: 1px solid darkblue;color:darkblue;">< Попередня</a>
-                        <a href="#" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна ></a>
-                        <input type="submit" name="save" class="btn" style="border: 1px solid darkblue;color:darkblue;
-                      
-   " value="Зберегти зміни">
+
+                        <input type="submit" name="save" class="btn" id="save" style="border: 1px solid darkblue;color:darkblue;
+
+   " value="Зберегти зміни" onclick="validShow()">
 
         </form>
-        <form method="post" action="<?=Url::getAction('programm','findR')?>">
+        <form method="get" action="<?=Url::local('programm2')?>">
             <?php
 
-            foreach ($post as $key=>$item):
+         /*   foreach ($post as $key=>$item):
                 if($key!='id_k') {
                     echo "<input type='hidden' name='{$key}' value='{$item}'>";
                 }
-            endforeach;
+            endforeach;*/
             ?>
-            <input type="submit" class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Відмінити">
+            <input type="hidden" name="start" value="A">
+            <input type="submit"  class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Відмінити">
         </form>
                 <form method="post" target=_blank action="<?=Url::local('print')?>">
                     <input type='hidden' name="id_k" value="<? echo $karta[0]['id'];?>">
                     <input type="submit" class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Друк">
                 </form>
         </div>
-<div id="delbut">
+
                     <a class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Видалити" onclick="checkAll(<? echo $karta[0]['id'];?>)">Видалити
                     </a>
+    <a href="#" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна ></a>
         <span id="pokaz"></span>
-</div>
+
+
 
         </div>
             </app-login>
@@ -4227,6 +6067,7 @@ alert('Ваш запис помічений на видалення');
                 $(document).ready(function(){
 
                     var tab = $('#myTab');
+
                     var num = tab.find('.nav-tabs li').length - 1;
 
                     $('.next').click(function(){
@@ -4237,8 +6078,11 @@ alert('Ваш запис помічений на видалення');
                         if(index == num) {
                             var next = tab.find('.nav-tabs').find('li').eq(0);
                         }
+                        if( index == 3 || index == 8 || index == 10 || index == 12 || index == 14 || index == 17 || index == 20 || index == 22 || index == 24 || index == 0 || index == 4 || index == 9 || index == 11 || index == 13 || index == 15 || index == 18 || index == 21) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index+2).show(index+2);
+                        }
                         else {
-                            var next = cur.next('li');
+                            var next = cur.next('li').show(index);
                         }
 
                         next.find('a').tab('show');
@@ -4248,8 +6092,12 @@ alert('Ваш запис помічений на видалення');
                         var cur = tab.find('li.active');
                         var index = cur.index();
 
-                        if(index == 0) {
-                            var next = tab.find('.nav-tabs').find('li').eq(num);
+                        if(index == 0 || index == 4 || index == 9 || index == 11 || index == 13 || index == 15 || index == 18 || index == 21) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index-1);
+                        }
+                        if( index == 1 || index == 5 || index == 10 || index == 12 ||  index == 14 || index == 16 || index == 19 || index == 22 || index == 24 ) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index-2);
+
                         }
                         else {
                             var next = cur.prev('li');
@@ -4716,6 +6564,12 @@ el22.appendChild(select);
             el1.remove();
         }
         else{
+            var el = document.getElementById('datPrep2');
+            var el1 = document.getElementById('datPrep2L');
+            if(el){
+                el.remove();
+                el1.remove();
+            }
 
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
@@ -4726,7 +6580,7 @@ el22.appendChild(select);
             inp1.setAttribute("width", "100px");
             lab.innerText='Дата постановки';
             lab.id='datPrep2L';
-            var sp=document.getElementById('kiPrep12');
+            var sp=document.getElementById('kiPrep2');
             var sp2=document.getElementById('kiPrep22');
             sp.appendChild(lab);
             sp2.appendChild(inp1);
@@ -4770,6 +6624,13 @@ el22.appendChild(select);
             el1.remove();
         }
         else{
+            var el = document.getElementById('datNep');
+            var el1 = document.getElementById('datNepL');
+            if(el)
+            {
+                el.remove();
+                el1.remove();
+            }
 
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
@@ -4858,8 +6719,19 @@ el22.appendChild(select);
 
 
             var lab = document.createElement("label");
-            var inp1 = document.createElement('input');
-            inp1.type = 'text';
+            var inp1 = document.createElement('select');
+            var opt=document.createElement("option");
+            var opt1=document.createElement("option");
+            var opt2=document.createElement("option");
+            var opt0=document.createElement("option");
+            opt.text='1';
+            opt1.text='2';
+            opt2.text='3';
+            opt0.text='';
+            inp1.appendChild(opt0);
+            inp1.appendChild(opt);
+            inp1.appendChild(opt1);
+            inp1.appendChild(opt2);
             inp1.name = 'kolins';
             inp1.id = 'kolins';
             inp1.setAttribute("class", "form-control");
@@ -4918,7 +6790,7 @@ el22.appendChild(select);
 
         for(var i=0; i<kolIns;i++){
             var td = document.createElement("td");
-            var td1 = document.createElement("td1");
+            //var td1 = document.createElement("td1");
             var row = document.createElement("tr");
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
@@ -4932,9 +6804,9 @@ el22.appendChild(select);
             lab.id='datInsL'+i;
             td.appendChild(lab);
 
-            td1.appendChild(inp1);
+            td.appendChild(inp1);
             row.appendChild(td);
-            row.appendChild(td1);
+          //  row.appendChild(td1);
             tbody.appendChild(row);
         }
     }
@@ -4949,8 +6821,19 @@ el22.appendChild(select);
         //   var row = document.createElement("tr");
         //   var td = document.createElement("td");
            var lab = document.createElement("label");
-           var inp1 = document.createElement('input');
-           inp1.type = 'text';
+           var inp1 = document.createElement('select');
+           var opt=document.createElement("option");
+           var opt1=document.createElement("option");
+           var opt2=document.createElement("option");
+           var opt0=document.createElement("option");
+           opt.text='1';
+           opt1.text='2';
+           opt2.text='3';
+           opt0.text='';
+           inp1.appendChild(opt0);
+           inp1.appendChild(opt);
+           inp1.appendChild(opt1);
+           inp1.appendChild(opt2);
            inp1.name = 'kolinf';
            inp1.id = 'kolinf';
            inp1.setAttribute("class", "form-control");
@@ -5010,7 +6893,7 @@ lab.innerText='Введіть кількість інфарктів';
 
 for(var i=0; i<kolInf;i++){
     var td = document.createElement("td");
-    var td1 = document.createElement("td1");
+   // var td = document.createElement("td");
     var row = document.createElement("tr");
     var lab = document.createElement("label");
     var inp1 = document.createElement('input');
@@ -5025,24 +6908,15 @@ for(var i=0; i<kolInf;i++){
 
     td.appendChild(lab);
 
-    td1.appendChild(inp1);
+    td.appendChild(inp1);
 
     row.appendChild(td);
 
-    row.appendChild(td1);
+    //row.appendChild(td1);
     tbody.appendChild(row);
 }
     }
-    function ss6(el) {
-        if (el.value == 'Так') {
-            document.getElementById('h12').style.display = 'block';
-            document.getElementById('h13').style.display = 'block';
-        }
-        else {
-            document.getElementById('h12').style.display = 'none';
-            document.getElementById('h13').style.display = 'none';
-        }
-    }
+
     function ss(el) {
 if(el.value=='Так'){
     document.getElementById('h0').style.display='block';
@@ -5107,7 +6981,14 @@ else{
         else{
             document.getElementById('h10').style.display='none';
             document.getElementById('h11').style.display='none';
+            document.getElementById('h11').value='--';
         }
+    }
+    function ss7(el) {
+        $(document).ready(function(){
+            $('[name=vagaPN]').bind("change keyup input click", function() { this.value = this.value.replace(/[^0-9]/g, ''); });
+           });
+
     }
     function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
@@ -5126,4 +7007,31 @@ else{
         evt.currentTarget.className += " active";
     }
     document.getElementById("defaultOpen").click();
+    function showVizitAll(v,nomP) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?=Url::local('ajaxvizit');?>",
+            data: {nomV: v, nomPac: nomP},
+            success: function (data) {
+                $("#forajax").html(data)
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "<?=Url::local('nadajax');?>",
+            data: {nomV: v, nomPac: nomP},
+            success: function (data) {
+                $("#np").html(data)
+            }
+        });
+      //  var st="Номер учасника: №"+ document.getElementById("id_kart").value+"  ПІБ: "+document.getElementById("fname").value+" "+document.getElementById("name").value+" "+document.getElementById("sname").value+"[ № візиту "+v+" від "+ document.getElementById("datV").value+"]";
+        document.getElementById("dddd").style.display='none';
+        var el=document.getElementById('mmm');
+        el.remove();
+       /* document.getElementById("np").style.display='none';
+        document.getElementById("np1").style.display='block';
+
+        document.getElementById("np1").innerHTML=st;*/
+    }
 </script>

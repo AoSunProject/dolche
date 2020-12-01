@@ -12,7 +12,7 @@ if(isset($_SESSION['user'])){
                                 id="empty"><!----><span class="ui-menuitem-text"></span></a><!----></li><!---->
                         <li class="ui-breadcrumb-chevron pi pi-chevron-right ng-star-inserted"></li><!---->
                         <li role="menuitem" class="ng-star-inserted"><!----><a
-                                class="ui-menuitem-link ng-star-inserted"
+                                class="ui-menuitem-link ng-star-inserted" href="<?=Url::local('programm')?>"
                                 id="login"><!----><span class="ui-menuitem-text">Картотека</span></a><!----></li>
                         <!----><!----></ul>
                 </div>
@@ -468,16 +468,18 @@ if(isset($masFind)){
                             </thead>
                             <tbody>
                         <?php
+
 foreach($spis as $item):
 echo "<tr class='gradeA' ";
 if($item['del_k']==1){
     echo "style='color:red;'";
 }
-echo "id='o{$item['id']}' onclick='edit(this.id)'><td><form method='post' name='k{$item['id']}' id='k{$item['id']}'><input type='hidden' name='id_k' value='{$item['id']}'></form> {$item['id']}</td>
+echo "id='o{$item['id']}' onclick='edit(this.id)'><td><form method='post' name='k{$item['id']}' id='k{$item['id']}'>
+<input type='hidden' name='id_k' value='{$item['id']}'></form> {$item['id']}</td>
     <td>{$item['fname']} {$item['name']} {$item['sname']}</td><td>{$item['sex']}</td><td>{$item['datB']}</td>
             <td>{$item['typeDiab']}</td><td>{$item['city']}</td><td>{$item['date_izm']}</td></tr>";
  endforeach;
-                        ?>
+                       ?>
                             </tbody>
                         </table>
                     <?php
@@ -500,9 +502,13 @@ echo "id='o{$item['id']}' onclick='edit(this.id)'><td><form method='post' name='
                     <script src="../../css/1.js"></script>
                     <script src="../../css/2.js"></script>
                     <script>
+
                         $(document).ready(function() {
                             $('#example').DataTable( {
-                                "pagingType": "full_numbers"
+                                "pagingType": "full_numbers",
+                                "processing": true,
+                              /*  "serverSide": true,
+                                "ajax": "ajaxdat"*/
                             } );
                         } );
                     </script>

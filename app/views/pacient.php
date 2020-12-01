@@ -232,6 +232,15 @@ padding: 7px;
         transform: rotate(45deg);
     }
 </style>
+<script>
+    document.addEventListener('keydown', function(event) {
+        if (event.code == "Enter") {
+            validShow();
+            event.preventDefault();
+
+        }
+    });
+</script>
 <link rel="stylesheet" href="../../js/bootstrap.css">
 <?php
 if(isset($_SESSION['user'])){
@@ -292,6 +301,273 @@ if(isset($_SESSION['user'])){
                 <div _ngcontent-c2="" class="sidebar" id="sidebar">
 <script>
 
+function validShow(){
+    var tx='';
+    if($("#one11").hasClass('active') || $("#one1").hasClass('active'))
+    {
+        if(document.getElementById('fn123').value!=''
+            && document.getElementById('nam123').value!=''
+            && document.getElementById('sn123').value!=''
+            && document.getElementById('ych123').value!=''
+            && document.getElementById('stat123').value!=''
+            && document.getElementById('datv123').value!=''
+            && document.getElementById('bear123').value!=''
+            && document.getElementById('telep123').value!=''
+            && document.getElementById('status123').value!=''
+        )
+        {
+            if (
+                document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+            {
+                tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+            {
+                tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+            {
+                tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+            {
+                if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                {
+                    tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                }
+            }
+            if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+            {
+                if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                {
+                    tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                }
+            }
+            if(document.getElementById('typeDiab12').value=='' || document.getElementById('yearD').value=='' || document.getElementById('vekD').value=='' || document.getElementById('longD').value=='')
+            {
+                tx=tx+' Заповніть обов\'язкові поля в розділі 2В\n';
+
+            }
+            if(tx!='')
+            {
+                alert(tx);
+            }
+
+        }
+    }
+    if($("#one13").hasClass('active'))
+    {
+        if(document.getElementById('golodsem123').value!='' && document.getElementById('death123').value!='' && document.getElementById('death234').value!='')
+        {
+            if(document.getElementById('fn123').value==''
+                || document.getElementById('nam123').value==''
+                || document.getElementById('sn123').value==''
+                || document.getElementById('ych123').value==''
+                || document.getElementById('stat123').value==''
+                || document.getElementById('datv123').value==''
+                || document.getElementById('bear123').value==''
+                || document.getElementById('telep123').value==''
+                || document.getElementById('status123').value=='')
+            {
+                tx=tx+' Заповніть обов\'язкові поля в розділі 1А\n';
+
+            }
+            if (document.getElementById('typeDiab12').value == '')
+            {
+
+                tx = tx + ' Заповніть обов\'язкові поля в розділі 2В\n';
+
+            }
+            if(tx!='')
+            {
+                alert(tx);
+            }
+
+        }
+    }
+    if($("#one23").hasClass('active'))
+    {
+        if(document.getElementById('typeDiab12').value!='' && document.getElementById('yearD').value!='' && document.getElementById('vekD').value!='' && document.getElementById('longD').value!='')
+        {
+         if(document.getElementById('fn123').value==''
+            || document.getElementById('nam123').value==''
+            || document.getElementById('sn123').value==''
+            || document.getElementById('ych123').value==''
+            || document.getElementById('stat123').value==''
+            || document.getElementById('datv123').value==''
+            || document.getElementById('bear123').value==''
+            || document.getElementById('telep123').value==''
+            || document.getElementById('status123').value=='')
+            {
+                tx=tx+' Заповніть обов\'язкові поля в розділі 1А\n';
+
+            }
+            if (
+                document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+            {
+                tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+            {
+                tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+            {
+                tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+            }
+            if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+            {
+                if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                {
+                    tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                }
+            }
+            if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+            {
+                if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                {
+                    tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                }
+            }
+            if(tx!='')
+            {
+                alert(tx);
+            }
+        }
+        if(document.getElementById('typeDiab12').value=='Не хворіє' && document.getElementById('yearD').value=='' && document.getElementById('vekD').value=='' && document.getElementById('longD').value=='')
+        {
+            if(document.getElementById('fn123').value==''
+                || document.getElementById('nam123').value==''
+                || document.getElementById('sn123').value==''
+                || document.getElementById('ych123').value==''
+                || document.getElementById('stat123').value==''
+                || document.getElementById('datv123').value==''
+                || document.getElementById('bear123').value==''
+                || document.getElementById('telep123').value==''
+                || document.getElementById('status123').value=='')
+            {
+                tx=tx+' Заповніть обов\'язкові поля в розділі 1А\n';
+
+            }
+            if(
+                document.getElementById('golodsem123').value=='' || document.getElementById('death123').value=='' || document.getElementById('death234').value=='')
+            {
+                tx=tx+' Заповніть обов\'язкові поля в розділі 1В\n';
+
+
+            }
+            if(tx!='')
+            {
+                alert(tx);
+            }
+        }
+    }
+    if(
+        ($("#one12").hasClass('active'))
+        || ($("#one2").hasClass('active'))
+        || ($("#one21").hasClass('active'))
+        || ($("#one22").hasClass('active'))
+        || ($("#one24").hasClass('active'))
+        || ($("#one3").hasClass('active'))
+        || ($("#one31").hasClass('active'))
+        || ($("#one4").hasClass('active'))
+        || ($("#one41").hasClass('active'))
+        || ($("#one5").hasClass('active'))
+        || ($("#one51").hasClass('active'))
+        || ($("#one6").hasClass('active'))
+        || ($("#one61").hasClass('active'))
+        || ($("#one62").hasClass('active'))
+        || ($("#one7").hasClass('active'))
+        || ($("#one71").hasClass('active'))
+        || ($("#one72").hasClass('active'))
+        || ($("#one8").hasClass('active'))
+        || ($("#one81").hasClass('active'))
+        || ($("#one9").hasClass('active'))
+        || ($("#one91").hasClass('active'))
+    )
+    {
+            if (
+                document.getElementById('fn123').value == ''
+                || document.getElementById('nam123').value == ''
+                || document.getElementById('sn123').value == ''
+                || document.getElementById('ych123').value == ''
+                || document.getElementById('stat123').value == ''
+                || document.getElementById('datv123').value == ''
+                || document.getElementById('bear123').value == ''
+                || document.getElementById('telep123').value == ''
+                || document.getElementById('status123').value == ''
+                || document.getElementById('golodsem123').value == ''
+                || document.getElementById('death123').value == ''
+                || document.getElementById('death234').value == ''
+                || document.getElementById('typeDiab12').value == ''
+                || document.getElementById('yearD').value == ''
+                || document.getElementById('vekD').value == ''
+                || document.getElementById('longD').value == ''
+            )
+            {
+                if (document.getElementById('fn123').value == ''
+                    || document.getElementById('nam123').value == ''
+                    || document.getElementById('sn123').value == ''
+                    || document.getElementById('ych123').value == ''
+                    || document.getElementById('stat123').value == ''
+                    || document.getElementById('datv123').value == ''
+                    || document.getElementById('bear123').value == ''
+                    || document.getElementById('telep123').value == ''
+                    || document.getElementById('status123').value == '')
+                    {
+                        tx = tx + ' Заповніть обов\'язкові поля в розділі 1А\n';
+
+                    }
+                if (
+                document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                    {
+                         tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+
+                    }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value == '' && document.getElementById('death123').value == '' && document.getElementById('death234').value != '')
+                {
+                    tx = tx + 'Заповніть обов\'язкові поля в розділі 1В\n';
+
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value == '' && document.getElementById('death234').value == '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('golodsem123').value=='Так' && document.getElementById('death123').value != '' && document.getElementById('death234').value != '')
+                {
+                    if(document.getElementById("g1s").checked == false && document.getElementById("g2s").checked == false && document.getElementById("g3s").checked == false && document.getElementById("g1o").checked == false && document.getElementById("g2o").checked == false && document.getElementById("g3o").checked == false && document.getElementById("g1m").checked == false && document.getElementById("g2m").checked == false && document.getElementById("g3m").checked == false)
+                    {
+                        tx = tx + ' Заповніть обов\'язкові поля в розділі 1В\n';
+                    }
+                }
+                if (document.getElementById('typeDiab12').value == '')
+                    {
+
+                         tx = tx + ' Заповніть обов\'язкові поля в розділі 2В\n';
+
+                    }
+                if(tx!='')
+                {
+                    alert(tx);
+                }
+            }
+
+    }
+}
     function hide11(id) {
         var s=id+1;
         if(document.getElementById(s).style.display=='none'){
@@ -323,23 +599,51 @@ if(isset($_SESSION['user'])){
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist" id="ul1">
 
-                            <li role="presentation" id="one1" class="zag" onclick="hide11(this.id)"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 1. Опитування пацієнта</a></li>
-                            <li role="presentation" class="active pod1" id="one11"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">А. Загальні дані</a></li>
-                            <li role="presentation" class="pod1" id="one12"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Б. Сімейний анамнез</a></li>
-                            <li role="presentation" class="pod1" id="one13"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація по голодомору</a></li>
-                            <li role="presentation" id="one2" class="zag" onclick="hide11(this.id)"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 2. Огляд пацієнта</a></li>
-                            <li role="presentation" class="pod1 hh" id="one21"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">А. Антропометричні дані</a></li>
-                            <li role="presentation" class="pod1 hh" id="one22"><a href="#zhitt" aria-controls="zhitt" role="tab" data-toggle="tab">Б. Спосіб життя</a></li>
-                            <li role="presentation" class="pod1 hh" id="one23"><a href="#hist" aria-controls="hist" role="tab" data-toggle="tab">В. Історія хвороби</a></li>
-                            <li role="presentation" class="pod1 hh" id="one24"><a href="#bol" aria-controls="bol" role="tab" data-toggle="tab">Г. Супутні захворювання</a></li>
+                            <!--1 розділ-->
+                            <li role="presentation" id="one1" class="zag" onclick="hide11(this.id)">
+                                <a href="#home" aria-controls="home" class="nav-link" role="tab" data-toggle="tab">
+                                    <span class="menlab">
+                                        <i class="fas fa-chevron-right"></i></span> 1. Опитування пацієнта</a></li>
 
+                            <li role="presentation" class="active pod1" id="one11">
+                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">А. Загальні дані</a></li>
+                            <li role="presentation" class="pod1" id="one12">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Б. Сімейний анамнез</a></li>
+                            <li role="presentation" class="pod1" id="one13">
+                                <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">В. Інформація щодо голодомору</a></li>
 
-                            <li role="presentation" id="one3" class="zag" onclick="hide11(this.id)"><a href="#ser" aria-controls="ser" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 3.
+                            <!--2 розділ-->
+                            <li role="presentation" id="one2" class="zag" onclick="hide11(this.id)">
+                                <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+                                    <span class="menlab">
+                                        <i class="fas fa-chevron-right"></i></span> 2. Огляд пацієнта</a></li>
+                            <li role="presentation" class="pod1 hh" id="one21">
+                                <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">А. Антропометричні дані</a></li>
+                            <li role="presentation" class="pod1 hh" id="one22">
+                                <a href="#zhitt" aria-controls="zhitt" role="tab" data-toggle="tab">Б. Спосіб життя</a></li>
+                            <li role="presentation" class="pod1 hh" id="one23">
+                                <a href="#hist" aria-controls="hist" role="tab" data-toggle="tab">В. Історія хвороби</a></li>
+                            <li role="presentation" class="pod1 hh" id="one24">
+                                <a href="#bol" aria-controls="bol" role="tab" data-toggle="tab">Г. Супутні захворювання</a></li>
+
+                            <!--3 розділ-->
+                            <li role="presentation" id="one3" class="zag" onclick="hide11(this.id)">
+                                <a href="#ser" aria-controls="ser" role="tab" data-toggle="tab">
+                                    <span class="menlab">
+                                        <i class="fas fa-chevron-right"></i></span> 3.
                                     Статус ССС</a></li>
-                            <li role="presentation" class="pod1 hh" id="one31"><a href="#ser" aria-controls="ser" role="tab" data-toggle="tab">А. Обстеження серцево-судинної системи</a></li>
-                            <li role="presentation" id="one4" class="zag" onclick="hide11(this.id)"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 4.
-                                    Діабетична ретінопатія</a></li>
-                            <li role="presentation" class="pod1 hh" id="one41"><a href="#diab" aria-controls="diab" role="tab" data-toggle="tab">А. Обстеження очей</a></li>
+                            <li role="presentation" class="pod1 hh" id="one31">
+                                <a href="#ser" aria-controls="ser" role="tab" data-toggle="tab">А. Обстеження серцево-судинної системи</a></li>
+
+                            <!--4 розділ-->
+                            <li role="presentation" id="one4" class="zag" onclick="hide11(this.id)">
+                                <a href="#diab" aria-controls="diab" role="tab" data-toggle="tab">
+                                    <span class="menlab">
+                                        <i class="fas fa-chevron-right"></i></span> 4.Діабетична ретинопатія</a></li>
+                            <li role="presentation" class="pod1 hh" id="one41">
+                                <a href="#diab" aria-controls="diab" role="tab" data-toggle="tab">А. Обстеження очей</a></li>
+
+                            <!--5 розділ-->
                             <li role="presentation" id="one5" class="zag" onclick="hide11(this.id)"><a href="#nefr" aria-controls="nefr" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 5.
                                     Нефропатія</a></li>
                             <li role="presentation" class="pod1 hh" id="one51"><a href="#nefr" aria-controls="nefr" role="tab" data-toggle="tab">А. Обстеження нирок</a></li>
@@ -347,16 +651,15 @@ if(isset($_SESSION['user'])){
                                     Полінейроангіопатія</a></li>
                             <li role="presentation" class="pod1 hh" id="one61"><a href="#pol" aria-controls="pol" role="tab" data-toggle="tab">А. Полінейроангіопатія</a></li>
                             <li role="presentation" class="pod1 hh" id="one62"><a href="#stop" aria-controls="stop" role="tab" data-toggle="tab">Б. Обстеження стопи</a></li>
-                            <li role="presentation" id="one7" class="zag" onclick="hide11(this.id)"><a href="#lab" aria-controls="lab" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 7.
-                                    Лабораторні дослідження</a></li>
+                            <li role="presentation" id="one7" class="zag" onclick="hide11(this.id)"><a href="#lab" aria-controls="lab" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 7. Лабораторні дослідження</a></li>
                             <li role="presentation" class="pod1 hh" id="one71"><a href="#lab" aria-controls="lab" role="tab" data-toggle="tab">А. Лабораторні дослідження</a></li>
                             <li role="presentation" class="pod1 hh" id="one72"><a href="#bio" aria-controls="bio" role="tab" data-toggle="tab">Б. Біоматеріал</a></li>
                             <li role="presentation" id="one8" class="zag" onclick="hide11(this.id)"><a href="#lik" aria-controls="lik" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 8.
                                     Лікування</a></li>
                             <li role="presentation" class="pod1 hh" id="one81"><a href="#lik" aria-controls="lik" role="tab" data-toggle="tab">А. Лікування</a></li>
-                            <li role="presentation" id="one9" class="zag" onclick="hide11(this.id)"><a href="#gen " aria-controls="gen" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 9.
-                                   Геніаологічне дерево</a></li>
-                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Геніаологічне дерево</a></li>
+                            <li role="presentation" id="one9" class="zag" onclick="hide11(this.id)"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab"><span class="menlab"><i class="fas fa-chevron-right"></i></span> 9.
+                                    Генеалогічне дерево</a></li>
+                            <li role="presentation" class="pod1 hh" id="one91"><a href="#gen" aria-controls="gen" role="tab" data-toggle="tab">А. Генеалогічне дерево</a></li>
                         </ul>
 
 
@@ -390,43 +693,55 @@ if(isset($_SESSION['user'])){
                 </p-growl>
                 <p-blockui _ngcontent-c9="" basezindex="1500">
                     <div class="ui-blockui ui-widget-overlay ui-blockui-document"
-                         style="z-index: 15001001; display: none;"><i _ngcontent-c9=""
-                                                                      class="fa fa-circle-o-notch fa_custom fa-spin fa-3x fa-fw"
-                                                                      style="position:absolute;top:50%;left:50%"></i>
+                         style="z-index: 15001001; display: none;"><i _ngcontent-c9="" class="fa fa-circle-o-notch fa_custom fa-spin fa-3x fa-fw"
+  style="position:absolute;top:50%;left:50%"></i>
                     </div>
                 </p-blockui>
-                <form method="post" action="<?=Url::getAction('pacient','addcart')?>">
+                <form method="post"  action="<?=Url::getAction('pacient','addcart')?>">
                 <div _ngcontent-c9="" class="container">
-
-
-                        <!-- Tab panes -->
-
+                     <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="home">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>1.А. Загальні дані</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td><label>Прізвище <span class="red">*</span></label></td><td><input class="form-control" type="text" name="fname" placeholder=""></td><td></td></tr>
-                                        <tr><td><label>Ім'я <span class="red">*</span></label></td><td><input class="form-control" type="text" name="name" placeholder=""></td><td></td></tr>
-                                        <tr><td><label>По-батькові <span class="red">*</span></label></td><td><input class="form-control" type="text" name="sname" placeholder=""></td><td></td>
+                                            <td><label class="lb1">№ візиту </label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="nomV" value="1" readonly></td>
+                                            <td></td></tr>
+                                        <tr>
+                                            <td><label class="lb1">Дата візиту <span class="red">*</span></label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="date" value="<?php echo date('Y-m-d'); ?>" id="datv123" name="datV" placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Дата візиту')" oninput="setCustomValidity('')"></td>
+                                            <td></td></tr>
+                                        <tr>
+                                            <td><label class="lb1">Статус анкети </label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="statysA" value="Створено" readonly></td>
+                                            <td></td></tr>
+                                        <tr>
+
+                                            <td><label class="lb1">Власник анкети </label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="vlasnik" value="<? echo $_SESSION['klinika'];?>" readonly></td>
+                                            <td></td></tr>
+                                        <tr>
+                                            <td><label class="lb1">Прізвище <span class="red">*</span></label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="fname" id="fn123" placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Прізвище')" oninput="setCustomValidity('')"></td><td></td></tr>
+                                        <tr><td><label class="lb1">Ім'я <span class="red">*</span></label></td><td><input  class="form-control" type="text" name="name" id='nam123' placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Ім\'я' )" oninput="setCustomValidity('')"></td><td></td></tr>
+                                        <tr><td><label class="lb1">По-батькові <span class="red">*</span></label></td><td><input class="form-control" type="text" name="sname" id='sn123' placeholder="" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: По-батькові' )" oninput="setCustomValidity('')"></td><td></td>
                                         </tr>
                                         <tr>
                                             <td >
-                                                <label>Чи брали участь ви раніше в цьому дослідженні?</label>
+                                                <label>Чи брали участь ви раніше в цьому дослідженні?<span class="red">*</span></label>
                                                 <label class="hidd" id="h0">Якщо так, вкажіть ідентифікатор учасника <br> в минулому дослідженні (№ учасника)</label>
                                             </td>
                                          <td>
-                                                <select name="ychas" class="form-control" onchange="ss(this)">
-                                                    <option value="--" >--</option>
+                                                <select name="ychas" class="form-control" onchange="ss(this)" id="ych123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Участь у дослідженні' )" oninput="setCustomValidity('')">
+                                                    <option value="" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так" >Так</option>
-
                                                 </select>
                                                 <div style="display: flex;">
                                                 <input type="text" id="h1" class="form-control" name="nomIss" placeholder="" class="hidd">
                                                     <a href="#myModal1" class="btn btn-sm hidd" style='border:1px solid grey' id="h2" data-toggle="modal">...</a>
-
                                                 </div>
                                                 <link href="../../css/1.css" rel="stylesheet">
                                                 <div id="myModal1" class="modal fade">
@@ -446,14 +761,11 @@ if(isset($_SESSION['user'])){
                                                         <div class="modal-content">
                                                             <div class="modal-header" style="display: flex; justify-content: space-around;">
                                                                 <h4 class="modal-title">Пошук анкети</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
+                                                                <button type="button" class="close" data-dismiss="modal" onclick="cl()" aria-hidden="true">×</button>
                                                             </div>
                                                             <div class="modal-body" >
                                                                <!---------------------------------------------------------------------------->
-
-
-                                                                    <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                    <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                         <table id='modalFind' style="margin: 5px;">
                                                                             <tr>
                                                                                 <td><span class="l">Прізвище</span></td>
@@ -469,7 +781,7 @@ if(isset($_SESSION['user'])){
                                                                                 <td><span class="l">Ім`я</span></td>
                                                                                 <td><input type="text" name="name1" id="name" class="m1"></td>
                                                                                 <td><span class="l">Стать</span></td>
-                                                                                <td><select name="sex1" class="m4" id="sex">
+                                                                                <td ><select name="sex1" class="m4" id="sex">
                                                                                         <option value="--" >--</option>
                                                                                         <option value="Чоловіча">Чоловіча</option>
                                                                                         <option value="Жіноча">Жіноча</option>
@@ -482,16 +794,16 @@ if(isset($_SESSION['user'])){
                                                                                 <td><input type="text" name="sname1" id="sname" class="m1"></td>
                                                                                 <td><span class="l">Тип діабету</span></td>
                                                                                 <td><select name="typeDiab1" class="m4" id="typeDiab">
-                                                                                        <option value="--" >--</option>
-                                                                                        <option value="СД 1 типа">СД 1 типа</option>
-                                                                                        <option value="СД 2 типа">СД 2 типа</option>
-                                                                                        <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                            (LADA)
+                                                                                        <option value="">--</option>
+                                                                                        <option value="Не хворіє">Не хворіє</option>
+                                                                                        <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                        <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                        <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                            (LADA)</option>
+                                                                                        <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                        <option value="Панкреатогенний" >Панкреатогенний
                                                                                         </option>
-                                                                                        <option value="MODY-диабет">MODY-диабет</option>
-                                                                                        <option value="Панкреатогенный">Панкреатогенный
-                                                                                        </option>
-                                                                                        <option value="Другие">Другие
+                                                                                        <option value="Інший" >Інший
                                                                                         </option>
                                                                                     </select></td>
                                                                                 <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -539,9 +851,7 @@ if(isset($_SESSION['user'])){
 
                                                                     </form>
                                                              <div id="rezFind">
-
                                                              </div>
-
 <script>
     function findModal() {
         var moi=document.getElementById('moi').value;
@@ -572,16 +882,17 @@ if(isset($_SESSION['user'])){
         var zn=id.slice(1);
 
 document.getElementById('h1').value=zn;
+        $(".modal-backdrop").css("position", "relative");
 document.getElementById('zakr').click();
     }
-
-</script>
-
-
-                                                                <!------------------------------------------>
+function cl() {
+    $("#myModal2").css("display", "none");
+    $(".modal-backdrop").css("position", "relative");
+}
+</script>      <!------------------------------------------>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" id='zakr' data-dismiss="modal">Закрити</button>
+                                                                <button type="button" class="btn btn-default" id='zakr' onclick="cl()" aria-hidden="true" data-dismiss="modal">Закрити</button>
                                                                                                                            </div>
                                                         </div>
                                                     </div>
@@ -591,13 +902,12 @@ document.getElementById('zakr').click();
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;flex-direction: row; justify-content: space-between;align-items: flex-end;">
-                                                <label>Стать</label></td>
-                                                <td><select name="sex" class="form-control" style="width: 80%;">
-                                                        <option value="--" >--</option>
+                                            <td >
+                                                <label>Стать<span class="red">*</span></label></td>
+                                                <td style="width: 80%;"><select name="sex" class="form-control" id="stat123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Стать' )" oninput="setCustomValidity('')">
+                                                        <option value="" >--</option>
                                                         <option value="Чоловіча">Чоловіча</option>
                                                     <option value="Жіноча" >Жіноча</option>
-
                                                 </select>
                                             </td>
                                             <td></td>
@@ -608,17 +918,28 @@ document.getElementById('zakr').click();
 
                                             </td>
                                             <td>
-                                                <input type="date" name="datB" class="form-control">
+                                                <input type="date" name="datB" class="form-control" id="bear123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Дата нарождения' )" oninput="setCustomValidity('')">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <label>Помер</label></td>
+                                            <td style="width: 80%;"><select name="pomer" class="form-control" readonly>
+                                                    <option value="Ні">Ні</option>
+                                                    <option value="Так" >Так</option>
+
+                                                </select>
                                             </td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Телефон </label>
+                                                <label>Телефон <span class="red">*</span></label>
 
                                             </td>
                                             <td>
-                                                <input type="text" name="phone" class="form-control">
+                                                <input type="text" name="phone" class="form-control" id="telep123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Телефон' )" oninput="setCustomValidity('')">
                                             </td>
                                             <td></td>
                                         </tr>
@@ -654,12 +975,12 @@ document.getElementById('zakr').click();
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Статус роботи</label>
+                                                <label>Статус роботи<span class="red">*</span></label>
 
                                             </td>
                                             <td>
-                                                <select name="work" class="form-control" >
-                                                    <option value="--" >--</option>
+                                                <select name="work" class="form-control" id="status123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Статус роботи' )" oninput="setCustomValidity('')">
+                                                    <option value="" >--</option>
                                                     <option value="Не працюю, безробітний(а)">Не працюю, безробітний(а)</option>
                                                     <option value="Не працюю, інвалідність" >Не працюю, інвалідність</option>
                                                     <option value="Не працюю, відпустка по хворобі" >Не працюю, відпустка по хворобі</option>
@@ -672,7 +993,7 @@ document.getElementById('zakr').click();
                                         </tr>
                                         <tr>
                                             <td >
-                                                <label>Інформація про нарождення:</label>
+                                                <label>Інформація про нарождення:<span class="red">*</span></label>
 
                                             </td>
                                             <td>
@@ -689,18 +1010,21 @@ document.getElementById('zakr').click();
                                         </tr>
                                         <tr>
                                             <td >
-                                                <label>Вага при народженні:</label>
+                                                <label>Вага при народженні:<span class="red">*</span></label>
 
                                             </td>
                                             <td>
                                                 <table><tr>
-                                                        <td><input style='position: static;' type="radio" name="vesR" class="form-control" value="Низька (при нарожденні я був(ла) худим(ой))"></td>
-                                                        <td><label>Низька (при нарожденні я був(ла) худим(ой))</label></td></tr>
+                                                        <td><input style='position: static;' type="radio" name="vesR" class="form-control" value="Мала (при народженні я був(ла) дуже маленький(а))"></td>
+                                                        <td><label>Мала (при народженні я був(ла) дуже маленький(а))</label></td></tr>
                                                     <tr><td><input  style='position: static;' type="radio" name="vesR" class="form-control" value="Нормальна"></td>
                                                         <td><label>Нормальна</label></td></tr>
                                                     <tr><td><input  style='position: static;' type="radio" name="vesR" class="form-control" value="Я був (була) при народженні великим малюком"></td>
                                                         <td><label>Я був (була) при народженні великим малюком</label></td></tr>
+                                                    <tr><td><input  style='position: static;' type="radio" name="vesR" class="form-control" value="був одним з близнюків"></td>
+                                                        <td><label>був одним з близнюків</label></td></tr>
                                                     <tr><td><input   style='position: static;' type="radio" name="vesR" class="form-control" value="Не знаю" checked></td><td><label>Не знаю</label></td></tr>
+
                                                 </table></td>
                                             <td></td>
                                         </tr>
@@ -721,12 +1045,13 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="profile">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>1.Б. Сімейний анамнез</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr style="background: #295b8e; color:white;"><td colspan="3"><label>Батько:</label></td></tr>
                                         <tr>
-                                            <td><label>Прізвище</label></td><td><input class="form-control" type="text" name="fnameO" placeholder=""></td></tr>
-                                        <tr> <td><label>Ім'я</label></td><td><input class="form-control" type="text" name="nameO" placeholder=""></td></tr>
-                                        <tr><td><label>По-батькові</label></td><td><input class="form-control" type="text" name="snameO" placeholder=""></td>
+                                            <td><label class="lb1">Прізвище</label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="fnameO" placeholder=""></td></tr>
+                                        <tr> <td><label class="lb1">Ім'я</label></td><td><input class="form-control" type="text" name="nameO" placeholder=""></td></tr>
+                                        <tr><td><label class="lb1">По-батькові</label></td><td><input class="form-control" type="text" name="snameO" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -771,7 +1096,7 @@ document.getElementById('zakr').click();
                                                                 <!---------------------------------------------------------------------------->
 
 
-                                                                <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                                <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                     <table id='modalFind' style="margin: 5px;">
                                                                         <tr>
                                                                             <td><span class="l">Прізвище</span></td>
@@ -800,16 +1125,16 @@ document.getElementById('zakr').click();
                                                                             <td><input type="text" name="sname2" id="sname2" class="m1"></td>
                                                                             <td><span class="l">Тип діабету</span></td>
                                                                             <td><select name="typeDiab2" class="m4" id="typeDiab2">
-                                                                                    <option value="--" >--</option>
-                                                                                    <option value="СД 1 типа">СД 1 типа</option>
-                                                                                    <option value="СД 2 типа">СД 2 типа</option>
-                                                                                    <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                        (LADA)
+                                                                                    <option value="">--</option>
+                                                                                    <option value="Не хворіє">Не хворіє</option>
+                                                                                    <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                    <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                    <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                        (LADA)</option>
+                                                                                    <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                    <option value="Панкреатогенний" >Панкреатогенний
                                                                                     </option>
-                                                                                    <option value="MODY-диабет">MODY-диабет</option>
-                                                                                    <option value="Панкреатогенный">Панкреатогенный
-                                                                                    </option>
-                                                                                    <option value="Другие">Другие
+                                                                                    <option value="Інший" >Інший
                                                                                     </option>
                                                                                 </select></td>
                                                                             <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -928,7 +1253,7 @@ document.getElementById('zakr').click();
                                         <tr>
                                             <td>
                                                 <label>Чи хворів на діабет?</label>
-                                                <label class="hidd1" id="h2">Якщо так - яке було лікування у батька?</label>
+                                                <label class="hidd1" id="h245">Якщо так - яке було лікування у батька?</label>
                                             </td>
                                             <td>
                                                 <select name="lechOtez" class="form-control" onchange="ss1(this)">
@@ -950,9 +1275,9 @@ document.getElementById('zakr').click();
                                         </tr>
                                         <tr style="background: #295b8e;color:white;"><td colspan="3"><label>Мати:</label></td></tr>
                                         <tr>
-                                            <td><label>Прізвище</label></td><td><input class="form-control" type="text" name="fnameM" placeholder=""></td></tr>
-                                        <tr><td><label>Ім'я</label></td><td><input class="form-control" type="text" name="nameM" placeholder=""></td></tr>
-                                           <tr> <td><label>По-батькові</label></td><td><input class="form-control" type="text" name="snameM" placeholder=""></td>
+                                            <td><label class="lb1">Прізвище</label></td><td><input class="form-control" type="text" name="fnameM" placeholder=""></td></tr>
+                                        <tr><td><label class="lb1">Ім'я</label></td><td><input class="form-control" type="text" name="nameM" placeholder=""></td></tr>
+                                           <tr> <td><label class="lb1">По-батькові</label></td><td><input class="form-control" type="text" name="snameM" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td >
@@ -999,7 +1324,7 @@ document.getElementById('zakr').click();
                                                                 <!---------------------------------------------------------------------------->
 
 
-                                                                <form method="post" action="<?= Url::getAction('programm', 'findR') ?>">
+                                                                <form method="post" action="<?= Url::getAction('programm1', 'findR') ?>">
                                                                     <table id='modalFind' style="margin: 5px;">
                                                                         <tr>
                                                                             <td><span class="l">Прізвище</span></td>
@@ -1028,16 +1353,16 @@ document.getElementById('zakr').click();
                                                                             <td><input type="text" name="sname3" id="sname3" class="m1"></td>
                                                                             <td><span class="l">Тип діабету</span></td>
                                                                             <td><select name="typeDiab3" class="m4" id="typeDiab3">
-                                                                                    <option value="--" >--</option>
-                                                                                    <option value="СД 1 типа">СД 1 типа</option>
-                                                                                    <option value="СД 2 типа">СД 2 типа</option>
-                                                                                    <option value="Латентный аутоиммунный (LADA)">Латентный аутоиммунный
-                                                                                        (LADA)
+                                                                                    <option value="">--</option>
+                                                                                    <option value="Не хворіє">Не хворіє</option>
+                                                                                    <option value="ЦД 1 типу">ЦД 1 типу</option>
+                                                                                    <option value="ЦД 2 типу" >ЦД 2 типу</option>
+                                                                                    <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
+                                                                                        (LADA)</option>
+                                                                                    <option value="MODY-діабет" >MODY-діабет</option>
+                                                                                    <option value="Панкреатогенний" >Панкреатогенний
                                                                                     </option>
-                                                                                    <option value="MODY-диабет">MODY-диабет</option>
-                                                                                    <option value="Панкреатогенный">Панкреатогенный
-                                                                                    </option>
-                                                                                    <option value="Другие">Другие
+                                                                                    <option value="Інший" >Інший
                                                                                     </option>
                                                                                 </select></td>
                                                                             <td><span class="l">Тільки мої картки<sup style="color:#0056b3;">*</sup></span>
@@ -1130,7 +1455,8 @@ document.getElementById('zakr').click();
                                                                 <!------------------------------------------>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" id='zakr3' data-dismiss="modal">Закрити</button>
+                                                                <button type="button" class="btn btn-default" id='zakr3' data-dismiss="modal">Закрити
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1185,8 +1511,8 @@ document.getElementById('zakr').click();
                                             <td>
                                                 <label>Чи хворіли на діабет рідні
                                                     брати сестри?</label>
-                                                <label class="hidd1" id="h10">Якщо так – яке було лыкування у
-                                                    братыв/сестер?</label>
+                                                <label class="hidd1" id="h10">Якщо так – яке було лікування у
+                                                    братів/сестер?</label>
                                             </td>
                                             <td>
                                                 <select name="lechBS" class="form-control" onchange="ss5(this)">
@@ -1211,71 +1537,105 @@ document.getElementById('zakr').click();
                             </div>
                             <div role="tabpanel" class="tab-pane" id="messages">
                                 <fieldset style="margin-top: 30px;">
-                                    <h4>1.В. Інформація по голодомору</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <h4>1.В. Інформація щодо голодомору</h4>
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td>
-                                                <label>Голодувала ваша сім'я в 1932-33, 1941-45
-                                                    і / або 1946-47 роках:</label>
-                                                <label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
+                                            <td><label class="lb1">Голодувала ваша сім'я в 1932-33, 1941-45
+                                                    і / або 1946-47 роках:<span class="red">*</span></label>
+                                                <!--<label class="hidd" id="h12">Якщо сім`я голодувала - вказати період
                                                     голодування сім`ї
-                                                </label>
+                                                </label>-->
                                             </td>
-                                            <td>
-                                                <select name="golodSem" class="form-control" onchange="ss6(this)">
-                                                    <option value="--" >--</option>
+                                            <td style="width: 100%;">
+                                                <select name="golodSem" class="form-control" id="golodsem123" onchange="ss6(this)" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Голодувала ваша сім\'я в 1932-33, 1941-45 і  або 1946-47 роках:' )" oninput="setCustomValidity('')">
+                                                    <option value="" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так" >Так</option>
                                                     <option value="Не знаю" >Не знаю</option>
                                                 </select>
-                                                <input type="text" id="h13" class="form-control hidd" name="periodGolod" placeholder="">
+                                             <!--   <table class="showGolod" id="tabGolod"><tr><td><label> - 1932-33</label>
+                                                            <input type="checkbox" name="g1" id="g1" value="1932-33" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input type="checkbox" name="g2" id="g2" value="1941-45" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input type="checkbox" name="g3" id="g3" value="1946-47" class="form-control">
+                                                        </td></tr></table>
+                                                <!--<input type="text" id="h13" class="form-control hidd" name="periodGolod" placeholder="">-->
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="showGolod" id="mamGolod">
                                             <td>
                                                 <label>Мати:</label></td><td>
-                                                <select name="golodM" class="form-control">
+                                                <table class="showGolod" id="tabGolodM"><tr><td><label> - 1932-33</label>
+                                                            <input type="checkbox" name="g1m" id="g1m" value="1932-33" onchange="ss677()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input type="checkbox" name="g2m" id="g2m" value="1941-45" onchange="ss677()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input type="checkbox" name="g3m" id="g3m" value="1946-47" onchange="ss677()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr></table>
+                                         <!--       <select name="golodM" id="golodM" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="1932-33">1932-33</option>
                                                     <option value="1941-45" >1941-45</option>
                                                     <option value="1946-47" >1946-47</option>
 
                                                     <option value="Не знаю" >Не знаю</option>
-                                                </select>
+                                                </select>-->
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showGolod" id="papGolod">
                                             <td>
                                                 <label>Батько:</label></td><td>
-                                                <select name="golodO" class="form-control">
-                                                    <option value="--" >--</option>
-                                                    <option value="1932-33">1932-33</option>
-                                                    <option value="1941-45" >1941-45</option>
-                                                    <option value="1946-47" >1946-47</option>
+                                                <table class="showGolod" id="tabGolodO"><tr><td><label> - 1932-33</label>
+                                                            <input type="checkbox" name="g1o" id="g1o" value="1932-33" onchange="ss688()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input type="checkbox" name="g2o" id="g2o" value="1941-45" onchange="ss688()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input type="checkbox" name="g3o" id="g3o" value="1946-47" onchange="ss688()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr></table>
+                                                <!--   <select name="golodO" id="golodO" class="form-control">
+                                                       <option value="--" >--</option>
+                                                       <option value="1932-33">1932-33</option>
+                                                       <option value="1941-45" >1941-45</option>
+                                                       <option value="1946-47" >1946-47</option>
 
-                                                    <option value="Не знаю" >Не знаю</option>
-                                                </select>
+                                                       <option value="Не знаю" >Не знаю</option>
+                                                   </select>-->
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showGolod" id="bratGolod">
                                             <td>
-                                                <label>Родные брати/сестри:</label></td><td>
-                                                <select name="golodSister" class="form-control">
+                                                <label>Рідні брати/сестри:</label></td><td>
+                                                <table class="showGolod" id="tabGolodS"><tr><td><label> - 1932-33</label>
+                                                            <input type="checkbox" name="g1s" id="g1s" value="1932-33" onchange="ss699()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1941-45</label>
+                                                            <input type="checkbox" name="g2s" id="g2s" value="1941-45" onchange="ss699()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr>
+                                                    <tr><td><label> - 1946-47</label>
+                                                            <input type="checkbox" name="g3s" id="g3s" value="1946-47" onchange="ss699()" oninput="setCustomValidity('')" class="form-control">
+                                                        </td></tr></table>
+                                               <!-- <select name="golodSister" id="golodSister" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="1932-33">1932-33</option>
                                                     <option value="1941-45" >1941-45</option>
                                                     <option value="1946-47" >1946-47</option>
 
                                                     <option value="Не знаю" >Не знаю</option>
-                                                </select>
+                                                </select>-->
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Померли чи мати / батько / рідні брати
-                                                    або сестри з причин, пов`язаних з
+                                                <label>Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з
                                                     голодом в 1932-33, 1941-45 і / або
-                                                    1946-47 році:</label></td><td>
-                                                <select name="death1" class="form-control">
-                                                    <option value="--" >--</option>
+                                                    1946-47 році: <span class="red">*</span></label></td><td>
+                                                <select name="death1" class="form-control" id="death123" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Чи помер хтось з членів сім’ї (мати / батько / рідні брати або сестри) з причин, пов`язаних з голодом в 1932-33, 1941-45 і або 1946-47 році:' )" oninput="setCustomValidity('')">
+                                                    <option value="" >--</option>
                                                     <option value="Ні" >Ні</option>
                                                     <option value="Так-1932-33">Так-1932-33</option>
                                                     <option value="Так-1941-45" >Так-1941-45</option>
@@ -1286,12 +1646,11 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr><tr>
                                             <td>
-                                                <label>Пережили ви період голоду в
-                                                    1932-33, 1941-45 і / або 1946-47 роках
-                                                    (Голодували ви?). Якщо так - вказати
-                                                    період:</label></td><td>
-                                                <select name="death2" class="form-control">
-                                                    <option value="--" >--</option>
+                                                <label>Чи голодували Ви особисто у періоди голоду в
+                                                    1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати
+                                                    період:<span class="red"> *</span></label></td><td>
+                                                <select name="death2" class="form-control" id="death234" required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Чи голодували Ви особисто у періоди голоду в 1932-33, 1941-45 і / або 1946-47 роках голодомору. Якщо так - вказати період:')" oninput="setCustomValidity('')">
+                                                    <option value="" >--</option>
                                                     <option value="Ні" >Ні</option>
                                                     <option value="Так-1932-33">Так-1932-33</option>
                                                     <option value="Так-1941-45" >Так-1941-45</option>
@@ -1308,22 +1667,23 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="settings">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.А. Антропометричні дані</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td><label>Вага (кг)</label></td><td><input class="form-control" type="text" name="ves" placeholder=""></td></tr>
-                                        <tr><td><label>Зріст (см)</label></td><td><input class="form-control" type="text" name="rost" placeholder=""></td></tr>
-                                            <tr><td><label>Об`єм талії (см)</label></td><td><input class="form-control" type="text" name="tal" placeholder=""></td>
+                                            <td><label class="lb1">Вага (кг)</label></td>
+                                            <td style="width: 100%;"><input class="form-control" type="text" name="ves" placeholder=""></td></tr>
+                                        <tr><td><label class="lb1">Зріст (см)</label></td><td><input class="form-control" type="text" name="rost" placeholder=""></td></tr>
+                                            <tr><td><label class="lb1">Окружність талії (см)</label></td><td><input class="form-control" type="text" name="tal" placeholder=""></td>
                                         </tr>
                                         <tr>
-                                            <td><label>Окружність стегон (см)</label></td><td><input class="form-control" type="text" name="bed" placeholder=""></td></tr>
-                                        <tr><td><label>Індекс маси тіла (кг/м 2 )</label></td><td><input class="form-control" type="text" name="index" ></td></tr>
-                                           <tr> <td><label>Систолічний артеріальний тиск (сидячи) 0`</label></td>
+                                            <td><label class="lb1">Окружність стегон (см)</label></td><td><input class="form-control" type="text" name="bed" placeholder=""></td></tr>
+                                        <tr><td><label class="lb1">Індекс маси тіла (кг/м 2 )</label></td><td><input class="form-control" type="text" name="index" ></td></tr>
+                                           <tr> <td><label class="lb1">Систолічний артеріальний тиск (сидячи) 0`</label></td>
                                                <td><input type="text"  class="form-control" name="art" placeholder="">
 
 
                                                </td>
                                         </tr>
-                                        <tr> <td><label>Систолічний артеріальний тиск (сидячи) 10`</label></td>
+                                        <tr> <td><label class="lb1">Систолічний артеріальний тиск (сидячи) 10`</label></td>
                                             <td>
                                                 <input type="text"  class="form-control" name="systisk" placeholder="">
 
@@ -1332,14 +1692,14 @@ document.getElementById('zakr').click();
 
                                         <tr>
 
-                                            <td><label>Діастолічний артеріальний тиск (сидячи) 0`</label></td><td>
+                                            <td><label class="lb1">Діастолічний артеріальний тиск (сидячи) 0`</label></td><td>
                                                 <input type="text"  class="form-control" name="art1" placeholder="">
                                             </td>
 
                                         </tr>
                                         <tr>
 
-                                            <td><label>Діастолічний артеріальний тиск (сидячи) 10`</label></td><td>
+                                            <td><label class="lb1">Діастолічний артеріальний тиск (сидячи) 10`</label></td><td>
                                                 <input type="text"  class="form-control" name="disttisk" placeholder="">
                                             </td>
 
@@ -1350,27 +1710,28 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="zhitt">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.Б. Спосіб життя</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
 
                                         <tr>
-                                            <td><label>Ви палите?</label></td><td>
-                                                <select class="form-control" name="smouk">
+                                            <td><label class="lb1">Ви палите?</label></td>
+                                            <td style="width: 100%;">
+                                                <select class="form-control" name="smouk" onchange="showPal(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так">Так</option>
                                                 </select>
                                             </td>
-                                        </tr><tr>
-                                            <td><label>Якщо курите, як часто?</label></td><td>
-                                                <select class="form-control" name="smoukTime">
+                                        </tr><tr class="showPal" id="chastoPal">
+                                            <td><label class="lb1">Якщо курите, як часто?</label></td><td>
+                                                <select class="form-control" name="smoukTime" id="smoukTime">
                                                     <option value="--" >--</option>
                                                     <option value="Кожен день">Кожен день</option>
                                                     <option value="Кілька днів на тиждень">Кілька днів на тиждень</option>
                                                     <option value="Дуже рідко">Дуже рідко</option>
                                                 </select></td>
-                                        </tr><tr>
-                                            <td><label>Кількість викурених сигарет за
-                                                    1 день</label></td><td><input class="form-control" type="text" name="smokeKol" placeholder=""></td>
+                                        </tr><tr class="showPal" id="kolPal">
+                                            <td><label class="lb1">Кількість викурених сигарет за
+                                                    1 день</label></td><td><input class="form-control" type="text" id="smoukkol" name="smokeKol" placeholder=""></td>
                                         </tr>
                                         <tr>
                                             <td >
@@ -1397,15 +1758,16 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="hist">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.В. Історія хвороби:</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
                                             <td >
-                                                <label>Тип діабету:</label>
+                                                <label class="lb1">Тип діабету:<span class="red"> *</span></label>
 
                                             </td>
-                                            <td>
-                                                <select name="typeDiab" class="form-control">
-                                                    <option value="--" >--</option>
+                                            <td style="width: 100%;">
+                                                <select name="typeDiab" id="typeDiab12" class="form-control" onchange="showDiab(this.value)"  required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Тип діабету )" oninput="setCustomValidity('')">
+                                                    <option value="">--</option>
+                                                    <option value="Не хворіє">Не хворіє</option>
                                                     <option value="ЦД 1 типу">ЦД 1 типу</option>
                                                     <option value="ЦД 2 типу" >ЦД 2 типу</option>
                                                     <option value="Латентний аутоімунний (LADA)" >Латентний аутоімунний
@@ -1419,20 +1781,20 @@ document.getElementById('zakr').click();
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="showDiabet" id="showDiabRik">
                                             <td>
-                                                <label>Рік постановки діагнозу:</label></td><td>
-                                                <input type="text" name="yearD" class="form-control">
+                                                <label>Рік постановки діагнозу:<span class="red"> *</span></label></td><td>
+                                                <input type="text" name="yearD" id="yearD" class="form-control"  oninput="setCustomValidity('')"> <!--  required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Рік постановки діагнозу' )"-->
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showDiabet" id="showDiabVik">
                                             <td>
-                                                <label>Вік дебюту діабету (років):</label></td><td>
-                                                <input type="text" name="vekD" class="form-control">
+                                                <label>Вік дебюту діабету (років):<span class="red"> *</span></label></td><td>
+                                                <input type="text" name="vekD" id="vekD" class="form-control"   oninput="setCustomValidity('')"><!-- required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Вік дебюту діабету (років)' )"-->
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showDiabet" id="showDiabkol">
                                             <td>
-                                                <label>Тривалість діабету (років):</label></td><td>
-                                                <input type="text" name="longD" class="form-control">
+                                                <label>Тривалість діабету (років):<span class="red"> *</span></label></td><td>
+                                                <input type="text" name="longD" id="longD" class="form-control"  oninput="setCustomValidity('')"> <!--   required oninvalid="this.setCustomValidity('Потрібно заповнити обов\'язкове поле: Тривалість діабету (років)' )"-->
                                             </td>
                                         </tr>
 
@@ -1442,13 +1804,13 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="bol">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>2.Г. Хвороби, що супруводжують:</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
                                             <td >
-                                                <label>Інфекційні:</label>
+                                                <label class="lb1">Інфекційні:</label>
 
                                             </td>
-                                            <td colspan="2">
+                                            <td colspan="2" style="width: 100%;">
                                                 <textarea name="inf" class="form-control"></textarea>
 
                                             </td>
@@ -1503,15 +1865,58 @@ document.getElementById('zakr').click();
 
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td><label class="lb1">ЧИ хворієте Ви на онкологічні захворювання?</label></td><td>
+                                                <select name="Onko" class="form-control" onchange="onko(this.value)">
+                                                    <option value="--" >--</option>
+                                                    <option value="Ні">Ні</option>
+                                                    <option value="Так">Так</option>
+
+                                                </select>
+                                            </td>
+                                        </tr><tr class="onkoshow" id="vidOnkoz">
+                                            <td>
+                                                <label class="lb1">Вкажіть вид онкозахворювання</label></td><td>
+                                                <input type="text" name="VidOnko" id="vidOnko" class="form-control">
+                                            </td>
+                                        </tr><tr class="onkoshow" id="datOnko">
+                                            <td>
+                                                <label class="lb1">Дата постановки діагнозу
+                                                    онкозахворювання</label></td><td>
+                                                <input type="date" name="dateOnko" id="dateOnko" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr class="onkoshow" id="likOnko">
+                                            <td><label class="lb1">Якщо так - лікування онкозахворювання
+                                                    (Препарати - назва препаратів,
+                                                    група)?</label>
+
+                                            </td>
+                                            <td>
+                                                <select name="OnkoLek" class="form-control" id="onkoLek">
+                                                    <option value="--" >--</option>
+                                                    <option value="Ні">Ні</option>
+                                                    <option value="Хіміотерапія">Хіміотерапія</option>
+                                                    <option value="Імунотерапія">Імунотерапія</option>
+                                                    <option value="Гормональна терапія">Гормональна терапія</option>
+                                                    <option value="Комбінована (хіміо + тергетная терапія)">Комбінована (хіміо + тергетная терапія)</option>
+                                                    <option value="Таргетная терапія">Таргетная терапія</option>
+                                                    <option value="Хірургічне">Хірургічне</option>
+                                                    <option value="Інші">Інші</option>
+                                                </select>
+                                            </td>
+
+                                        </tr>
                                     </table>
                                 </fieldset>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="ser">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>3.А. Обстеження серцево-судинної системи</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label>Чи був у вас інфаркт?</label></td><td>
+                                            <td><label class="lb1">Чи був у вас інфаркт?</label></td>
+                                            <td style="width: 100%;">
                                                 <select name="infarkt" class="form-control" onchange="addIn(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1523,7 +1928,7 @@ document.getElementById('zakr').click();
                                                 <table id="ttt" width="250px"><tbody></tbody></table></td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label>Чи був у вас інсульт?</label></td><td>
+                                            <td><label>Чи був у вас інсульт?</label></td><td>
                                                 <select name="insult" class="form-control" onchange="addIn1(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1534,7 +1939,7 @@ document.getElementById('zakr').click();
                                                 <table id="tttIns" width="250px"><tbody></tbody></table></td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label>Хронічна серцева
+                                            <td><label>Хронічна серцева
                                                     недостатність - вказати стадію</label>
 
                                             </td>
@@ -1549,7 +1954,8 @@ document.getElementById('zakr').click();
                                                     <option value="Стадія III, Період Б (стадія IIIб)">Стадія III, Період Б (стадія IIIб)</option>
                                                 </select>
 
-                                            <div style="display: flex;"><span id="kiStad" style="display: flex;"></span>
+                                            <div style="display: flex;flex-direction: column;">
+                                                <span id="kiStad" style="display: flex;flex-direction: column;"></span>
                                                 <span id="kiStad2" style="display: flex; width: 100px;"></span>
                                             </div></td>
                                         </tr>
@@ -1559,16 +1965,16 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="diab">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>4.А. Обстеження очей</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дата обстеження очного дна: дд-мм-рр</label>
+                                            <td><label class="lb1">Дата обстеження очного дна: дд-мм-рр</label>
 
                                             </td>
-                                            <td><input type="date" class="form-control" name="glaz"></td>
+                                            <td style="width: 100%"><input type="date" class="form-control" name="glaz"></td>
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex; width: 500px;"><label class="lb1">Діабетична ретинопатія?</label></td><td>
+                                            <td><label class="lb1">Діабетична ретинопатія?</label></td><td>
                                                 <select name="diabDiab" class="form-control" onchange="addDiab(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1580,19 +1986,20 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Непролиферативная ретинопатія?</label></td><td>
+                                            <td><label class="lb1">Непроліферативна ретинопатія?</label></td><td>
                                                 <select name="diabNep" class="form-control" onchange="addNep(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
-                                                    <option value="Так">Так</option>
+                                                    <option value="Так - легкого ступеню">Так - легкого ступеню</option>
+                                                    <option value="Так - середнього ступеню">Так - середнього ступеню</option>
+                                                    <option value="Так - важкого ступеню">Так - важкого ступеню</option>
                                                 </select>
                                           <span id="kiNep"></span>
-
                                                 <span id="kiNep2"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Препроліфератівная ретинопатія?</label></td><td>
+                                            <td><label class="lb1">Препроліферативна ретинопатія?</label></td><td>
                                                 <select name="diabPrep" class="form-control" onchange="addPrep(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1603,18 +2010,19 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Пролиферативная ретинопатія?</label></td><td>
+                                            <td><label class="lb1">Проліферативна ретинопатія?</label></td><td>
                                                 <select name="diabPrep2" class="form-control" onchange="addPrep2(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
-                                                    <option value="Так">Так</option>
+                                                    <option value="Так - проліферативна діабетична ретинопатія з низьким ризиком">Так - проліферативна діабетична ретинопатія з низьким ризиком</option>
+                                                    <option value="Так - проліферативна діабетична ретинопатія з високим ризиком">Так - проліферативна діабетична ретинопатія з високим ризиком</option>
                                                 </select>
                                            <span id="kiPrep12"></span>
                                                 <span id="kiPrep22"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Сліпота?</label></td><td>
+                                            <td><label class="lb1">Сліпота?</label></td><td>
                                                 <select name="Slep" class="form-control" onchange="addSlep(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1625,7 +2033,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Лазерне лікування?</label></td><td>
+                                            <td><label class="lb1">Лазерне лікування?</label></td><td>
                                                 <select name="Lazer" class="form-control" onchange="addLazer(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1636,7 +2044,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Катаракта?</label></td><td>
+                                            <td><label class="lb1">Катаракта?</label></td><td>
                                                 <select name="Katar" class="form-control" onchange="addKatar(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1647,7 +2055,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Макулопатія?</label></td><td>
+                                            <td><label class="lb1">Макулопатія?</label></td><td>
                                                 <select name="Mal" class="form-control" onchange="addMal(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1658,7 +2066,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Глаукома?</label></td><td>
+                                            <td><label class="lb1">Глаукома?</label></td><td>
                                                 <select name="Glauk" class="form-control" onchange="addGlauk(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1669,7 +2077,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">На сьогодні лікування ДР:</label></td><td>
+                                            <td><label class="lb1">На сьогодні лікування ДР:</label></td><td>
                                                 <select name="LechDR" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1691,16 +2099,16 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="nefr">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>5.А. Обстеження нирок</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дата обстеження нирок:: дд-мм-рр</label>
+                                            <td><label class="lb1">Дата обстеження нирок:: дд-мм-рр</label>
 
                                             </td>
-                                            <td><input type="date" class="form-control" name="pochki"></td>
+                                            <td style="width: 80%"><input type="date" class="form-control" name="pochki"></td>
 
                                         </tr>
                                         <tr>
-                                            <td style="display: flex; width: 500px;"><label class="lb1">Діабетична нефропатія?</label></td><td>
+                                            <td><label class="lb1">Діабетична нефропатія?</label></td><td>
                                                 <select name="diabNefro" class="form-control" onchange="addNefro(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1711,7 +2119,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Хронічна ниркова недостатність?</label></td><td>
+                                            <td><label class="lb1">Хронічна ниркова недостатність?</label></td><td>
                                                 <select name="diabPochNEd" class="form-control" onchange="addPochNEd(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1722,7 +2130,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Хронічна ниркова недостатність - це заключна стадія?</label></td><td>
+                                            <td><label class="lb1">Хронічна ниркова недостатність заключна стадія?</label></td><td>
                                                 <select name="diabPochSt" class="form-control" onchange="addPochSt(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1733,7 +2141,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Діаліз?</label></td><td>
+                                            <td><label class="lb1">Діаліз?</label></td><td>
                                                 <select name="diabDializ" class="form-control" onchange="addDializ(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1745,7 +2153,7 @@ document.getElementById('zakr').click();
                                         </tr>
 
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Поточні методи лікування:
+                                            <td><label class="lb1">Поточні методи лікування:
                                                     ліки (назви та група):</label>
 
                                             </td>
@@ -1775,7 +2183,7 @@ document.getElementById('zakr').click();
                                             <td ><label class="lb1">Дата обстеження: дд-мм-рр</label>
 
                                             </td>
-                                            <td><input type="date" class="form-control" name="datPoli"></td>
+                                            <td style="width: 100%"><input type="date" class="form-control" name="datPoli"></td>
 
                                         </tr>
                                         <tr>
@@ -1821,18 +2229,18 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr><tr>
                                             <td><label class="lb1">Чи є біль в обох ногах?</label></td><td>
-                                                <select name="Bol" class="form-control" >
+                                                <select name="Bol" class="form-control" onchange="bolNoga(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні, болю немає">Ні, болю немає</option>
                                                     <option value="Ні, біль з одного боку">Ні, біль з одного боку</option>
                                                     <option value="Так">Так</option>
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showNoga" id="bolStopa">
                                             <td>
                                                 <label class="lb1">Якщо біль в обох стопах, як вона
                                                     проявляється?</label></td><td>
-                                                <select name="Boltwo" class="form-control" >
+                                                <select name="Boltwo" class="form-control" id="Boltwo">
                                                     <option value="--">--</option>
                                                     <option value="Спонтанна">Спонтанна</option>
                                                     <option value="Постійна">Постійна</option>
@@ -1841,9 +2249,9 @@ document.getElementById('zakr').click();
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="showNoga" id="bolIntens">
                                             <td ><label class="lb1">Яка інтенсивність болю (шкала від 1 до 5)?</label></td><td>
-                                                <select name="BolInten" class="form-control" >
+                                                <select name="BolInten" class="form-control" id="BolInten">
                                                     <option value="--">--</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -1853,9 +2261,9 @@ document.getElementById('zakr').click();
 
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showNoga" id="bolProjav">
                                             <td><label class="lb1">Як проявляється біль?</label></td><td>
-                                                <select name="Bolkak" class="form-control" >
+                                                <select name="Bolkak" class="form-control" id="Bolkak">
                                                     <option value="--">--</option>
                                                         <option value="Печіння">Печіння</option>
                                                     <option value="Викручування">Викручування</option>
@@ -1867,7 +2275,7 @@ document.getElementById('zakr').click();
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">Прийом препаратів?</label></td><td>
-                                                <select name="Preparat" class="form-control"  >
+                                                <select name="Preparat" class="form-control" onchange="preparat(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так">Так</option>
@@ -1876,9 +2284,9 @@ document.getElementById('zakr').click();
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="showPrep" id="whatPrep">
                                             <td ><label class="lb1">Якщо так, розписати які препарати?</label></td><td>
-                                                <select name="PreparatKakie" class="form-control" >
+                                                <select name="PreparatKakie" class="form-control" id="PreparatKakie">
                                                     <option value="--">--</option>
                                                     <option value="Антиконвульсанти (прегабалін, габапентин)">Антиконвульсанти (прегабалін, габапентин)</option>
                                                     <option value="Антидепресанти (Дулоксетин - інгібітори зворотного захоплення серотоніну. НА)">
@@ -1900,9 +2308,9 @@ document.getElementById('zakr').click();
                                 <fieldset style="margin-top: 30px;">
                                     <h4>6.Б. Обстеження стопи</label>
                                         <div id="tab-content10"</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label>Дата обстеження стопи: дд-мм-рр?</label></td><td>
+                                            <td><label class="lb1">Дата обстеження стопи: дд-мм-рр?</label></td><td style="width: 100%;">
                                                 <input type="date" name="datStopObsl" class="form-control">
                                             </td>
                                         </tr><tr>
@@ -1933,14 +2341,14 @@ document.getElementById('zakr').click();
                                                 </select>
                                             </td>
                                         </tr><tr>
-                                            <td><label>Зниження / відсутність рефлексів?</label></td><td>
+                                            <td><label class="lb1">Зниження / відсутність рефлексів?</label></td><td>
                                                 <select name="Reflex" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так">Так</option>
                                                 </select></td>
                                         </tr><tr>
-                                            <td><label>Наявність виразок?</label></td><td>
+                                            <td><label class="lb1">Наявність виразок?</label></td><td>
                                                 <select name="Jazv" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1957,14 +2365,14 @@ document.getElementById('zakr').click();
                                                 </select>
                                             </td>
                                         </tr><tr>
-                                            <td><label>Пульс на стопі?</label></td><td>
+                                            <td><label class="lb1">Пульс на стопі?</label></td><td>
                                                 <select name="PylsStopa" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так">Так</option>
                                                 </select></td>
                                         </tr><tr>
-                                            <td><label>Шунтування / ангіопластика?</label></td><td>
+                                            <td><label class="lb1">Шунтування / ангіопластика?</label></td><td>
                                                 <select name="Shynt" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1973,7 +2381,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><label>Перемежовуються кульгавість?</label></td><td>
+                                            <td ><label>Синдром переміжної кульгавості?</label></td><td>
                                                 <select name="Hrom" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -1981,7 +2389,7 @@ document.getElementById('zakr').click();
                                                 </select>
                                             </td>
                                         </tr><tr>
-                                            <td><label>Ампутація?</label></td><td>
+                                            <td><label class="lb1">Ампутація?</label></td><td>
                                                 <select name="Ampyt" class="form-control" onchange="addAmput(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -2003,9 +2411,9 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="lab">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>7.А. Лабораторні дослідження</h4>
-                                    <table class='mainT' id="forTab1" style="width: 100%;">
+                                    <table class='mainT' id="forTab1" style="width: 80%;">
                                         <tr>
-                                            <td ><label class="lb1">Дата обстеження: дд-мм-рр</label></td><td>
+                                            <td ><label class="lb1">Дата обстеження: дд-мм-рр</label></td><td style="width: 100%;">
                                                 <input type="date" class="form-control" name="datLab">
                                             </td>
                                         </tr><tr>
@@ -2020,7 +2428,7 @@ document.getElementById('zakr').click();
                                         </tr><tr>
                                             <td>
                                                 <label class="lb1">О котрій годині був останній прийом їжі (напередодні ввечері)?</label></td><td>
-                                                <input name="Pisha" type="text" class="form-control" placeholder="">
+                                                <input name="Pisha" type="time" class="form-control" placeholder="">
 
                                             </td>
                                         </tr>
@@ -2032,7 +2440,7 @@ document.getElementById('zakr').click();
                                         <tr>
 
                                             <td>
-                                                <label class="lb1">Показник, nmol / l</label></td><td>
+                                                <label class="lb1">Показник, ммоль/л</label></td><td>
                                                 <input type="text" name="nmol" class="form-control">
                                             </td>
                                         </tr><tr>
@@ -2042,7 +2450,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr style="background: #295b8e;">
-                                            <td><label class="lb1" style="color:white;">Глікозилювання гемоглобін?</label></td>
+                                            <td><label class="lb1" style="color:white;">Глікований гемоглобін?</label></td>
                                             <td></td>
 
                                         </tr>
@@ -2168,22 +2576,21 @@ document.getElementById('zakr').click();
                                         <tr>
                                             <td >
                                                 <label class="lb1">Протеїнурія</label></td><td>
-                                                <select name="Protein" class="form-control">
+                                                <select name="Protein" class="form-control" onchange="protein(this.value)">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
                                                     <option value="Так">Так</option>
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showProt" id="prote">
                                             <td>
                                                 <label class="lb1">Останній вимір, мг / сут</label></td><td>
-                                                <input type="text" name="posIzm" class="form-control">
+                                                <input type="text" name="posIzm" id="posIzm" class="form-control">
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showProt" id="datprote">
                                             <td>
                                                 <label class="lb1">Дата, дд-мм-рр</label></td><td>
-                                                <input type="date" name="datProtein" class="form-control">
-
+                                                <input type="date" name="datProtein" id="datProtein" class="form-control">
                                             </td>
                                         </tr>
                                         <tr>
@@ -2260,20 +2667,20 @@ document.getElementById('zakr').click();
 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr style="display: none;">
                                             <td >
 
                                                 <label class="lb1">C-пептид, показник:</label></td><td>
                                                 <input type="text" name="Peptid" class="form-control">
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr style="display: none;">
                                             <td>
                                                 <label class="lb1">C-пептид, одиниця виміру:</label></td><td>
-                                               <!-- <input type="text" name="PeptiEdIzm" class="form-control">
-                                            --></td>
+                                                <input type="text" name="PeptiEdIzm" class="form-control">
+                                            </td>
                                         </tr><tr>
                                             <td>
-                                                <label class="lb1">pmol/l</label></td><td>
+                                                <label class="lb1">C-пептид, одиниця виміру нг/мл:</label></td><td>
                                                 <input type="text" name="PeptidPmol" class="form-control">
 
                                             </td>
@@ -2281,7 +2688,7 @@ document.getElementById('zakr').click();
                                         <tr>
                                             <td >
 
-                                                <label class="lb1">nmol/l:</label></td><td>
+                                                <label class="lb1">C-пептид, одиниця виміру nmol/l:</label></td><td>
                                                 <input type="text" name="PeptidNmol" class="form-control">
                                             </td>
                                         </tr><tr>
@@ -2312,10 +2719,10 @@ document.getElementById('zakr').click();
                                 <fieldset style="margin-top: 30px;">
                                     <h4>7.Б. Біоматеріал</label>
                                         <div id="tab-content12"</h4>
-                                    <table class='mainT' style="width: 100%;">
+                                    <table class='mainT' style="width: 80%;">
                                         <tr>
                                             <td >
-                                                <label>Сиворотка?</label></td><td>
+                                                <label class="lb1">Сиворотка?</label></td><td style="width: 100%">
                                                 <select name="Sivor" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Ні">Ні</option>
@@ -2383,9 +2790,10 @@ document.getElementById('zakr').click();
                             <div role="tabpanel" class="tab-pane" id="lik">
                                 <fieldset style="margin-top: 30px;">
                                     <h4>8.А. Лікування</h4>
-                                    <table class='mainT' id="forTab2" style="width: 100%;">
+                                    <table class='mainT' id="forTab2" style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Лікування цукрового діабету</label></td><td>
+                                            <td><label class="lb1">Лікування цукрового діабету</label></td>
+                                            <td style="width: 100%">
                                                 <select name="LechDIabet" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Не проводиться">Не проводиться</option>
@@ -2397,7 +2805,7 @@ document.getElementById('zakr').click();
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Дієта</label></td><td>
+                                            <td><label class="lb1">Дієта</label></td><td>
                                                 <select name="dieta" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Так" >Так</option>
@@ -2409,18 +2817,19 @@ document.getElementById('zakr').click();
                                         <tr>
                                             <td>
                                                 <label class="lb1">Лікування діабету: інсулін (препарат, доза прийому, кратність)</label></td><td>
-                                                <select name="LechInsul" class="form-control">
+                                                <select name="LechInsul" class="form-control" onchange="showIns(this.value)">
                                                     <option value="--" >--</option>
-                                                    <option value="Базисная инсулинотерапия">Базисна інсулінотерапії</option>
+                                                    <option value="Ні" >Ні</option>
+                                                    <option value="Базисна інсулінотерапія">Базисна інсулінотерапія</option>
                                                     <option value="Помпова інсулінотерапія">Помпова інсулінотерапія</option>
                                                     <option value="Змішаний">Змішаний</option>
 
                                                 </select>
                                             </td>
-                                        </tr><tr>
+                                        </tr><tr class="showIns" id="insyl">
                                             <td>
                                                 <label class="lb1">Дата початку інсулінотерапії (дд- мм-рр)</label></td><td>
-                                                <input type="date" name="datLechDiab" class="form-control">
+                                                <input type="date" name="datLechDiab" id="datLechDiab" class="form-control">
                                             </td>
                                         </tr>
                                         <tr>
@@ -2441,7 +2850,6 @@ document.getElementById('zakr').click();
                                                 <label class="lb1">Лікування гіпертонії (препарат, доза прийому, кратність)</label></td><td>
                                                 <select name="LechGiper" class="form-control">
                                                     <option value="--" >--</option>
-                                                    <option value="Ні" >Ні</option>
                                                     <option value="Не проводиться">Не проводиться</option>
                                                     <option value="Бета-блокатори">Бета-блокатори</option>
                                                     <option value="ACE-інгібітори">ACE-інгібітори</option>
@@ -2456,7 +2864,6 @@ document.getElementById('zakr').click();
                                                 <label class="lb1">Лікування гіперліпідемії</label></td><td>
                                                 <select name="LechLipidGiper" class="form-control">
                                                     <option value="--" >--</option>
-                                                    <option value="Ні" >Ні</option>
                                                     <option value="Не проводиться">Не проводиться</option>
                                                     <option value="Статини">Статини</option>
                                                     <option value="Фібрати">Фібрати</option>
@@ -2465,57 +2872,17 @@ document.getElementById('zakr').click();
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><label class="lb1">Хворієте (хворіли) ви онкозахворюваннями?</label></td><td>
-                                                <select name="Onko" class="form-control">
-                                                    <option value="--" >--</option>
-                                                    <option value="Ні">Ні</option>
-                                                    <option value="Так">Так</option>
 
-                                                </select>
-                                            </td>
-                                        </tr><tr>
-                                            <td>
-                                                <label class="lb1">Вкажіть вид онкозахворювання</label></td><td>
-                                                <input type="text" name="VidOnko" class="form-control">
-                                            </td>
-                                        </tr><tr>
-                                            <td>
-                                                <label class="lb1">Дата постановки діагнозу
-                                                    онкозахворювання</label></td><td>
-                                                <input type="date" name="dateOnko" class="form-control">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label class="lb1">Якщо так - лікування онкозахворювання
-                                                    (Препарати - назва препаратів,
-                                                    група)?</label>
-
-                                            </td>
-                                            <td>
-                                                <select name="OnkoLek" class="form-control">
-                                                    <option value="--" >--</option>
-                                                    <option value="Ні">Ні</option>
-                                                    <option value="Хіміотерапія">Хіміотерапія</option>
-                                                    <option value="Імунотерапія">Імунотерапія</option>
-                                                    <option value="Гормональна терапія">Гормональна терапія</option>
-                                                    <option value="Комбінована (хіміо + тергетная терапія)">Комбінована (хіміо + тергетная терапія)</option>
-                                                    <option value="Таргетная терапія">Таргетная терапія</option>
-                                                    <option value="Хірургічне">Хірургічне</option>
-                                                    <option value="Інші">Інші</option>
-                                                </select>
-                                            </td>
-
-                                        </tr>
                                     </table>
                                 </fieldset>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="gen">
                                 <fieldset style="margin-top: 30px;">
-                                    <h4>9.А. Геніаологічне дерево</h4>
-                                    <table class='mainT' id="forTab2" style="width: 100%;">
+                                    <h4>9.А. Генеалогічне дерево</h4>
+                                    <table class='mainT' id="forTab2" style="width: 80%;">
                                         <tr>
-                                            <td style="display: flex;"><label class="lb1">Геніаологічне дерево</label></td><td>
+                                            <td><label class="lb1">Генеалогічне дерево</label></td>
+                                            <td style="width: 100%">
                                                 <select name="gen" class="form-control">
                                                     <option value="--" >--</option>
                                                     <option value="Так">Так</option>
@@ -2533,10 +2900,30 @@ document.getElementById('zakr').click();
 
                     </div>
                     <br>
+                    <script type="text/javascript">
+                        <!--
+
+                     /*   function chekval( )
+                        {
+                            valid = true;
+
+                            if ( document.getElementById("name").value =='' or document.getElementById("fname").value =='' or document.getElementById("sname").value =='' or document.getElementById("datB").value =='')
+                            {
+                                alert ( "Заповніть обов`язкові поля!" );
+                                valid = false;
+                            }
+
+                            return valid;
+                        }*/
+
+                        //-->
+                    </script>
+                    <br>
+
                     <div class="controls" style="display: table; margin: 0 auto; text-align: center;" >
-                        <a href="javascript:void(0)" class="btn btn-default prev" style="border: 1px solid darkblue;color:darkblue;">< Попередня</a>
-                        <input type="submit" name="save" class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Зберегти">
-                        <a href="javascript:void(0)" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна ></a>
+                        <a href="#" class="btn btn-default prev" style="border: 1px solid darkblue;color:darkblue;">< Попередня</a>
+                        <input name="save_all" type="submit" name="save"  class="btn" style="border: 1px solid darkblue;color:darkblue;" value="Зберегти" onclick="validShow() ">
+                        <a href="#" class="btn btn-default next" style="border: 1px solid darkblue;color:darkblue;">Наступна ></a>
 
                     </div>
         </form>
@@ -2551,6 +2938,7 @@ document.getElementById('zakr').click();
                 $(document).ready(function(){
 
                     var tab = $('#myTab');
+
                     var num = tab.find('.nav-tabs li').length - 1;
 
                     $('.next').click(function(){
@@ -2561,8 +2949,11 @@ document.getElementById('zakr').click();
                         if(index == num) {
                             var next = tab.find('.nav-tabs').find('li').eq(0);
                         }
+                        if( index == 3 || index == 8 || index == 10 || index == 12 || index == 14 || index == 17 || index == 20 || index == 22 || index == 24 || index == 0 || index == 4 || index == 9 || index == 11 || index == 13 || index == 15 || index == 18 || index == 21) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index+2).show(index+2);
+                        }
                         else {
-                            var next = cur.next('li');
+                            var next = cur.next('li').show(index);
                         }
 
                         next.find('a').tab('show');
@@ -2572,8 +2963,12 @@ document.getElementById('zakr').click();
                         var cur = tab.find('li.active');
                         var index = cur.index();
 
-                        if(index == 0) {
-                            var next = tab.find('.nav-tabs').find('li').eq(num);
+                        if(index == 0 || index == 4 || index == 9 || index == 11 || index == 13 || index == 15 || index == 18 || index == 21) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index-1);
+                        }
+                        if( index == 1 || index == 5 || index == 10 || index == 12 ||  index == 14 || index == 16 || index == 19 || index == 22 || index == 24 ) {
+                            var next = tab.find('.nav-tabs').find('li').eq(index-2);
+
                         }
                         else {
                             var next = cur.prev('li');
@@ -2754,17 +3149,20 @@ document.getElementById('zakr').click();
             var el22=document.getElementById("kiAngin4");
             var lab11 = document.createElement("label");
             var option= document.createElement("option");
-            option.innerText="пальців стоп";
+            option.innerText="--";
             var option1= document.createElement("option");
-            option1.innerText="вище стопи до коліна";
+            option1.innerText="пальців стоп";
             var option2= document.createElement("option");
-            option2.innerText="вище коліна";
+            option2.innerText="вище стопи до коліна";
+            var option3= document.createElement("option");
+            option3.innerText="вище коліна";
 var select=document.createElement("select");
             lab11.innerText="Яка ангіопатія?";
 lab11.id="kakAng";
 select.appendChild(option);
             select.appendChild(option1);
             select.appendChild(option2);
+            select.appendChild(option3);
 select.id="kakAngio";
 select.name="kakAngio";
 select.setAttribute("class", "form-control");
@@ -3031,33 +3429,7 @@ el22.appendChild(select);
         }
 
     }
-    function addPrep2(el) {
-        if(el=='Ні' || el=='--') {
 
-            var el = document.getElementById('datPrep2');
-            var el1 = document.getElementById('datPrep2L');
-            el.remove();
-            el1.remove();
-        }
-        else{
-
-            var lab = document.createElement("label");
-            var inp1 = document.createElement('input');
-            inp1.type = 'date';
-            inp1.name = 'datPrep2';
-            inp1.id = 'datPrep2';
-            inp1.setAttribute("class", "form-control");
-            inp1.setAttribute("width", "100px");
-            lab.innerText='Дата постановки';
-            lab.id='datPrep2L';
-            var sp=document.getElementById('kiPrep12');
-            var sp2=document.getElementById('kiPrep22');
-            sp.appendChild(lab);
-            sp2.appendChild(inp1);
-
-        }
-
-    }
     function addPrep(el) {
         if(el=='Ні' || el=='--') {
 
@@ -3093,7 +3465,15 @@ el22.appendChild(select);
             el.remove();
             el1.remove();
         }
+
         else{
+            var el = document.getElementById('datNep');
+            var el1 = document.getElementById('datNepL');
+            if(el)
+            {
+                el.remove();
+                el1.remove();
+            }
 
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
@@ -3184,9 +3564,19 @@ el22.appendChild(select);
             //   var row = document.createElement("tr");
             //   var td = document.createElement("td");
             var lab = document.createElement("label");
-            var inp1 = document.createElement('input');
-            inp1.type = 'number';
-            inp1.max='3';
+            var inp1 = document.createElement('select');
+            var opt=document.createElement("option");
+            var opt1=document.createElement("option");
+            var opt2=document.createElement("option");
+            var opt0=document.createElement("option");
+            opt.text='1';
+            opt1.text='2';
+            opt2.text='3';
+            opt0.text='';
+            inp1.appendChild(opt0);
+            inp1.appendChild(opt);
+            inp1.appendChild(opt1);
+            inp1.appendChild(opt2);
             inp1.name = 'kolins';
             inp1.id = 'kolins';
             inp1.setAttribute("class", "form-control");
@@ -3246,7 +3636,7 @@ el22.appendChild(select);
 
         for(var i=0; i<kolIns;i++){
             var td = document.createElement("td");
-            var td1 = document.createElement("td1");
+           // var td1 = document.createElement("td1");
             var row = document.createElement("tr");
             var lab = document.createElement("label");
             var inp1 = document.createElement('input');
@@ -3259,9 +3649,9 @@ el22.appendChild(select);
             lab.innerText='Інсульт № '+kolS+'(рік)';
             lab.id='datInsL'+i;
             td.appendChild(lab);
-            td1.appendChild(inp1);
+            td.appendChild(inp1);
             row.appendChild(td);
-            row.appendChild(td1);
+           // row.appendChild(td1);
             tbody.appendChild(row);
         }
     }
@@ -3276,8 +3666,20 @@ el22.appendChild(select);
         //   var row = document.createElement("tr");
         //   var td = document.createElement("td");
            var lab = document.createElement("label");
-           var inp1 = document.createElement('input');
-           inp1.type = 'text';
+           var inp1 = document.createElement('select');
+           var opt=document.createElement("option");
+           var opt1=document.createElement("option");
+           var opt2=document.createElement("option");
+           var opt0=document.createElement("option");
+           opt.text='1';
+           opt1.text='2';
+           opt2.text='3';
+           opt0.text='';
+           inp1.appendChild(opt0);
+           inp1.appendChild(opt);
+           inp1.appendChild(opt1);
+           inp1.appendChild(opt2);
+
            inp1.name = 'kolinf';
            inp1.id = 'kolinf';
            inp1.setAttribute("class", "form-control");
@@ -3339,7 +3741,7 @@ if(elD){
 
 for(var i=0; i<kolInf;i++){
     var td = document.createElement("td");
-    var td1 = document.createElement("td1");
+   // var td1 = document.createElement("td1");
     var row = document.createElement("tr");
     var lab = document.createElement("label");
     var inp1 = document.createElement('input');
@@ -3352,22 +3754,13 @@ for(var i=0; i<kolInf;i++){
     lab.innerText='Інфаркт № '+kolS+'(рік)';
     lab.id='datInfL'+i;
     td.appendChild(lab);
-    td1.appendChild(inp1);
+    td.appendChild(inp1);
     row.appendChild(td);
-    row.appendChild(td1);
+   // row.appendChild(td1);
     tbody.appendChild(row);
 }
     }
-    function ss6(el) {
-        if (el.value == 'Так') {
-            document.getElementById('h12').style.display = 'block';
-            document.getElementById('h13').style.display = 'block';
-        }
-        else {
-            document.getElementById('h12').style.display = 'none';
-            document.getElementById('h13').style.display = 'none';
-        }
-    }
+
     function ss(el) {
 if(el.value=='Так'){
     document.getElementById('h0').style.display='block';
@@ -3381,13 +3774,14 @@ else{
 }
     }
     function ss1(el) {
-        if(el.value=='Так'){
-            document.getElementById('h2').style.display='block';
-            document.getElementById('h3').style.display='block';
+        if (el.value == 'Так') {
+            document.getElementById('h245').style.display = 'block';
+            document.getElementById('h3').style.display = 'block';
         }
-        else{
-            document.getElementById('h2').style.display='none';
-            document.getElementById('h3').style.display='none';
+        else {
+            document.getElementById('h245').style.display = 'none';
+            document.getElementById('h3').style.display = 'none';
+            document.getElementById('h3').value='--';
         }
     }
     function ss2(el) {
@@ -3415,16 +3809,7 @@ else{
             document.getElementById('h71').style.display='none';
         }
     }
-    function ss4(el) {
-        if(el.value=='Так'){
-            document.getElementById('h8').style.display='block';
-            document.getElementById('h9').style.display='block';
-        }
-        else{
-            document.getElementById('h8').style.display='none';
-            document.getElementById('h9').style.display='none';
-        }
-    }
+
     function ss5(el) {
         if(el.value=='Так'){
             document.getElementById('h10').style.display='block';
@@ -3433,6 +3818,7 @@ else{
         else{
             document.getElementById('h10').style.display='none';
             document.getElementById('h11').style.display='none';
+            document.getElementById('h11').value='--';
         }
     }
     function openCity(evt, cityName) {

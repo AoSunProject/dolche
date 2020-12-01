@@ -17,7 +17,7 @@ private function __construct()
         PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
     ];
 
-    $this->dbh=new PDO("","","",$opt
+    $this->dbh=new PDO("mysql:host=mysql.ukrdomen.com;dbname=uh1108308_dlc","uh1108308_dlc","NPyuW3gnhxQT",$opt
          );
     $this->dbh->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
     $this->tables = $this->dbh->query("SHOW TABLES;")->fetchAll(PDO::FETCH_COLUMN);
@@ -32,10 +32,50 @@ return $this;
 }
 public function exec($query, array $data=[]){
 
-    //echo $query;
-      $stmt = $this->dbh->prepare($query);
-      $stmt->execute($data);
+
+    $stmt = $this->dbh->prepare($query);
+    $stmt->execute($data);
 }
+    public function exec1($query, array $data=[]){
+
+        //echo $query;
+        return $this->query($query,$data);
+
+    }
+    public function insertvizit($id_k,$nomPac){
+        $date=date('y.m.d');
+        $nv="Select max(nomV) from karta where nomPac={$nomPac}";
+
+        $tmp=$this->query($nv);
+        $maxv=$tmp[0]['max(nomV)']+1;
+
+    $st="INSERT INTO `karta`(`fname`, `name`, `sname`, `ychas`, `nomIss`, `sex`, `datB`, `city`, `rajon`, `work`, `week`, `fnameO`, `nameO`, `snameO`, `ychasOtez`, `nomIssO`, `datBOtez`, `oblOtez`, `cityOtez`, `lechOtez`, `lechOtezKak`, `fnameM`, `nameM`, `snameM`, `ychasM`, `nomIssM`, `datBM`, `oblM`, `cityM`, `lechM`, `lechMKak`, `lechBS`, `lechBSKak`, `golodM`, `golodO`, `golodSister`, `death1`, `death2`, `ves`, `rost`, `tal`, `bed`, `index`, `art`, `smouk`, `smoukTime`, `smokeKol`, `alkogol`, `typeDiab`, `yearD`, `vekD`, `longD`, `inf`, `aut`, `porok`, `endoc`, `patol`, `DGR`, `infarkt`, `kolInf`, `datInf`, `insult`, `kolIns`, `datIns`, `glaz`, `diabDiab`, `diabNep`, `diabPrep`, `diabPrep2`, `Slep`, `Lazer`, `Katar`, `Mal`, `Glauk`, `LechDR`, `datDiab`, `datNep`, `datPrep`, `datPrep2`, `datSlep`, `datLazer`, `datKatar`, `datMal`, `datGlauk`, `OST`, `pochki`, `diabNefro`, `datNefro`, `diabPochNEd`, `datPochNEd`, `diabPochSt`, `datPochSt`, `diabDializ`, `datDializ`, `LechPoch`, `datPoli`, `diabAngin`, `datAngin`, `kakAngio`, `diabNejr`, `datNejr`, `diabStopp`, `Bol`, `golodSem`, `periodGolod`, `bearn`, `vesR`, `Boltwo`, `BolInten`, `Bolkak`, `Preparat`, `PreparatKakie`, `datStopObsl`, `SnizhT`, `Chyvs`, `NarVibr`, `Reflex`, `Jazv`, `GnojJazv`, `PylsStopa`, `Shynt`, `Hrom`, `Ampyt`, `kakAmput1`, `datAmput`, `datLab`, `Natosh`, `Pisha`, `nmol`, `Datnmol`, `vidsot`, `gemogl`, `Datgemogl`, `Datkrovi`, `eritr`, `gemogl2`, `lekoz`, `nejtrof`, `monozit`, `limfoz`, `tromb`, `mpv`, `dryg`, `kreat`, `datkreat`, `kreatMocha`, `datMocha`, `klirkreat`, `Protein`, `posIzm`, `datProtein`, `Mikroalmb`, `kakMikro1`, `datMikro`, `Lipiddat`, `Holest`, `LipidVis`, `LipidNiz`, `Trigliz`, `Asparta`, `Alanin`, `BelocS`, `Peptid`, `PeptiEdIzm`, `PeptidPmol`, `PeptidNmol`, `S_Pep`, `Sivor`, `Plazma`, `DNK`, `PHK`, `Sluna`, `Biopat`, `PrimZAbKrov`, `LechDIabet`, `LechInsul`, `datLechDiab`, `diabLechTab`, `LechGiper`, `LechLipidGiper`, `Onko`, `VidOnko`, `dateOnko`, `OnkoLek`, `id_user`, `dateSave`, `hronSerd`, `date_izm`, `art1`, `datStad`, `del_k`, `phone`, `email`, `vagaPN`, `systisk`,
+ `atGad`, `atGaddat`, `dieta`, `gen`, `disttisk`, 
+ `nomV`, `datV`, `statysA`, `vlasnik`, `pomer`, `nomPac`) select `fname`, `name`, `sname`, `ychas`, `nomIss`,
+  `sex`, `datB`, `city`, `rajon`, `work`, `week`, `fnameO`, `nameO`, `snameO`, `ychasOtez`, `nomIssO`, `datBOtez`,
+   `oblOtez`, `cityOtez`, `lechOtez`, `lechOtezKak`, `fnameM`, `nameM`, `snameM`, `ychasM`, `nomIssM`, `datBM`, `oblM`,
+    `cityM`, `lechM`, `lechMKak`, `lechBS`, `lechBSKak`, `golodM`, `golodO`, `golodSister`, `death1`, `death2`, `ves`, `rost`, 
+    `tal`, `bed`, `index`, `art`, `smouk`, `smoukTime`, `smokeKol`, `alkogol`, `typeDiab`, `yearD`, `vekD`, `longD`, `inf`, `aut`,
+     `porok`, `endoc`, `patol`, `DGR`, `infarkt`, `kolInf`, `datInf`, `insult`, `kolIns`, `datIns`, `glaz`, `diabDiab`, `diabNep`, 
+     `diabPrep`, `diabPrep2`, `Slep`, `Lazer`, `Katar`, `Mal`, `Glauk`, `LechDR`, `datDiab`, `datNep`, `datPrep`, `datPrep2`, `datSlep`,
+      `datLazer`, `datKatar`, `datMal`, `datGlauk`, `OST`, `pochki`, `diabNefro`, `datNefro`, `diabPochNEd`, `datPochNEd`, `diabPochSt`, 
+      `datPochSt`, `diabDializ`, `datDializ`, `LechPoch`, `datPoli`, `diabAngin`, `datAngin`, `kakAngio`, `diabNejr`, `datNejr`, `diabStopp`,
+       `Bol`, `golodSem`, `periodGolod`, `bearn`, `vesR`, `Boltwo`, `BolInten`, `Bolkak`, `Preparat`, `PreparatKakie`, `datStopObsl`, 
+       `SnizhT`, `Chyvs`, `NarVibr`, `Reflex`, `Jazv`, `GnojJazv`, `PylsStopa`, `Shynt`, `Hrom`, `Ampyt`, `kakAmput1`, `datAmput`, `datLab`, 
+       `Natosh`, `Pisha`, `nmol`, `Datnmol`, `vidsot`, `gemogl`, `Datgemogl`, `Datkrovi`, `eritr`, `gemogl2`, `lekoz`, `nejtrof`, `monozit`,
+        `limfoz`, `tromb`, `mpv`, `dryg`, `kreat`, `datkreat`, `kreatMocha`, `datMocha`, `klirkreat`, `Protein`, `posIzm`, `datProtein`,
+         `Mikroalmb`, `kakMikro1`, `datMikro`, `Lipiddat`, `Holest`, `LipidVis`, `LipidNiz`, `Trigliz`, `Asparta`, `Alanin`, `BelocS`, 
+         `Peptid`, `PeptiEdIzm`, `PeptidPmol`, `PeptidNmol`, `S_Pep`, `Sivor`, `Plazma`, `DNK`, `PHK`, `Sluna`, `Biopat`, `PrimZAbKrov`, 
+         `LechDIabet`, `LechInsul`, `datLechDiab`, `diabLechTab`, `LechGiper`, `LechLipidGiper`, `Onko`, `VidOnko`, `dateOnko`, `OnkoLek`,
+          `id_user`, `dateSave`, `hronSerd`, `date_izm`, `art1`, `datStad`, `del_k`, `phone`, `email`, `vagaPN`, `systisk`,
+ `atGad`, `atGaddat`, `dieta`, `gen`, `disttisk`, 
+ $maxv, '$date', `statysA`, `vlasnik`, `pomer`, `nomPac` from karta where id={$id_k}";
+        $stmt = $this->dbh->prepare($st);
+        $stmt->execute();
+$id=$this->dbh->lastInsertId();
+
+return $id;
+    }
 public function query($query,array $data=[],$mode=PDO::FETCH_ASSOC){
     $stmt = $this->dbh->prepare($query);
     $stmt->execute($data);
@@ -45,7 +85,7 @@ public function select($where="1",array $data=[],array $columns=NULL){
     if($this->table===NULL)throw new Exception("Table was not be selected");
     $collist = $columns===NULL ? "*":"`".implode("`,`",$columns)."`";
     $q="SELECT {$collist} FROM `{$this->table}` WHERE {$where}";
-  // echo $q; die();
+  //echo $q; die();
       $this->table=NULL;
 
     return $this->query($q,$data);
@@ -125,6 +165,10 @@ public function insert(array $data){
            $this->exec($q,$data);
         $this->table=NULL;
         return $this->dbh->lastInsertId();
+    }
+    public function insertz($st){
+            $this->exec($st,$data);
+              return $this->dbh->lastInsertId();
     }
 public function deleteWhere($where="0",array $data=[]){
     if($this->table===NULL)throw new Exception("Table was not be selected");
@@ -236,12 +280,13 @@ public function deleteWhere($where="0",array $data=[]){
         $k=1;
         foreach ($values as $field=>$value){
             $q.="`{$field}`='{$value}'";
-            if($k<198){
+            if($k<206){
                 $q.=",";
             }
             $k=$k+1;
         }
         $q.=" WHERE {$where}";
+
         $data = array_merge($data,$new_values);
 //echo $q;die();
         $this->exec($q,$data);

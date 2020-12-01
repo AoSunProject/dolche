@@ -3156,7 +3156,7 @@ $jscomp.polyfill("Array.prototype.find", function (f) {
         sPageButtonActive: "current",
         sPageButtonDisabled: "disabled",
         sStripeOdd: "odd",
-        sStripeEven: "even",
+         sStripeEven: "even",
         sRowEmpty: "dataTables_empty",
         sWrapper: "dataTables_wrapper",
         sFilter: "dataTables_filter",

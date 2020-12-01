@@ -37,7 +37,7 @@ public function action_index(){
                                 $_SESSION["user"] = $this->post("login");
                                 $_SESSION["role"] = $vv['role'];
                                 $_SESSION["id"] = $vv['id'];
-                                $this->redirect(Url::local("programm"));
+                                $this->redirect(Url::local("programm2/?start=А"));
 
 
                         }

@@ -536,7 +536,7 @@ if(isset($_SESSION['user'])){
                                             </td>
                                         </tr><tr>
                                             <td>
-                                                <label>Родные брати/сестри:</label></td><td>
+                                                <label>Рідні брати/сестри:</label></td><td>
                                                 <select name="golodSister" class="form-control">
                                                     <option value="" <? if( $karta[0]['golodSister']==''){echo 'selected';}?>></option>
                                                     <option value="1932-33" <? if( $karta[0]['golodSister']=='1932-33'){echo 'selected';}?>>1932-33</option>
@@ -589,7 +589,7 @@ if(isset($_SESSION['user'])){
                                         <tr>
                                             <td><label>Вага (см)</label></td><td><input class="form-control" value="<? echo $karta[0]['ves'];?>" type="text" name="ves" placeholder="72"></td>
                                         </tr><tr> <td><label>Зріст (см)</label></td><td><input class="form-control" value="<? echo $karta[0]['rost'];?>" type="text" name="rost" placeholder="172"></td>
-                                        </tr><tr>    <td><label>Об`єм талії (см)</label></td><td><input class="form-control" value="<? echo $karta[0]['tal'];?>" type="text" name="tal" placeholder="90"></td>
+                                        </tr><tr>    <td><label>Окружність талії (см)</label></td><td><input class="form-control" value="<? echo $karta[0]['tal'];?>" type="text" name="tal" placeholder="90"></td>
                                         </tr>
                                         <tr>
                                             <td><label>Окружність стегон (см)</label></td><td><input class="form-control" value="<? echo $karta[0]['bed'];?>" type="text" name="bed" placeholder="100"></td>
@@ -1823,7 +1823,7 @@ if(isset($_SESSION['user'])){
                                             </td>
                                         </tr><tr>
                                             <td>
-                                                <label class="lb1">pmol/l</label></td><td>
+                                                <label class="lb1">нг/мл</label></td><td>
                                                 <input type="text" name="PeptidPmol" value='<? echo $karta[0]['PeptidPmol'];?>' class="form-control">
 
                                             </td>
@@ -1979,7 +1979,7 @@ if(isset($_SESSION['user'])){
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="lb1">Хворієте (хворіли) ви онкозахворюваннями?</label></td><td>
+                                            <td><label class="lb1">ЧИ хворієте Ви на онкологічні захворювання?</label></td><td>
                                                 <select name="Onko" class="form-control">
                                                     <option value="Ні" <? if( $karta[0]['Onko']=='Ні'){echo 'selected';}?>>Ні</option>
                                                     <option value="Так" <? if( $karta[0]['Onko']=='Так'){echo 'selected';}?>>Так</option>
